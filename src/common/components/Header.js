@@ -14,20 +14,21 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     position: 'fixed',
-    width: '100vw'
+    width: '100vw',
+    zIndex: 10,
+    top: 0
   },
   child: {
     position: 'relative',
-    margin: theme.spacing(0.2, 4),
     color: theme.palette.common.white,
     '&>*': {
       fontWeight: 900,
+      margin: theme.spacing(0.2, 1),
       color: theme.palette.common.white,
       textDecoration: 'none'
     }
   },
   root: { position: 'fixed' }
-  
 }))
 
 const Header = () => {
@@ -38,6 +39,7 @@ const Header = () => {
   if (isSuperUserPath(router.query.role)) {
     return <Box className={classes.topBar}>
       <Typography className={classes.child}>
+        <Link component={Typography} href={`/${user.role && user.role.toLowerCase()}`}>Dashboard</Link>
         <Link component={Typography} href={'/'}>Visit Site</Link>
       </Typography>
       <Typography className={classes.child}>{user.name} ({user.role})</Typography>

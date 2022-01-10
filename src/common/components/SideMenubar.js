@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     height: '100vh',
     position: 'fixed',
-    margin: theme.spacing(3.4, 0),
+    margin: theme.spacing(3, 0),
     '& > *': {
       width: theme.spacing(20),
       color: theme.palette.common.white,
@@ -40,14 +40,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const NavLink = ({ path, text, exact }) => {
+const NavLink = ({ path, text }) => {
   const classes = useStyles()
   const router = useRouter()
-  const pathName = '/' + router.query.role
   
-  const className = false
-    ? `${classes.active} ${classes.normal}`
-    : classes.normal
+  const className = path === router.asPath ? `${classes.active} ${classes.normal}` : classes.normal
   
   return <Link href={path}>
     <Typography className={className}>{text}</Typography>
@@ -67,7 +64,7 @@ const SideMenubar = () => {
   }
   
   return <div className={classes.root}>
-    <NavLink path={`/${path}`} text='Dashboard' exact={true} />
+    <NavLink path={`/${path}`} text='Dashboard' />
     <NavLink path={`/${path}/pages`} text='Pages' />
     <NavLink path={`/${path}/posts`} text='Posts' />
     <NavLink path={`/${path}/comments`} text='Comments' />

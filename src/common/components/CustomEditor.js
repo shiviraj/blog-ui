@@ -9,41 +9,39 @@ import List from '@editorjs/list'
 import Quote from '@editorjs/quote'
 import SimpleImage from '@editorjs/simple-image'
 import Header from '@editorjs/header'
+import Marker from '@editorjs/marker'
 import { createReactEditorJS } from 'react-editor-js'
+import { initHeaders } from '../../API/axios'
 
-const CustomEditor = ({ data, handleChange }) => {
+const CustomEditor = ({ id, data, handleChange }) => {
   const EDITOR_JS_TOOLS = {
     embed: Embed,
-    header: Header,
-    list: List,
+    header: { class: Header, inlineToolbar: true, shortcut: 'CMD+SHIFT+H' },
+    list: { class: List, inlineToolbar: true, shortcut: 'CMD+SHIFT+L' },
+    marker: { class: Marker, shortcut: 'CMD+SHIFT+M' },
+    delimiter: { class: Delimiter },
+    inlineCode: { class: InlineCode, shortcut: 'OPTION+CMD+SHIFT+C' },
     code: Code,
     linkTool: LinkTool,
     image: {
       class: Image,
       config: {
-        uploader: {
-          uploadByFile(file) {
-            // let formData = new FormData()
-            // formData.append('images', file)
-            // return API.imageUpload(formData).then((res) => {
-            //   imageArray.push(res.data.data)
-            //   return {
-            return { success: 1, file: { url: 'res.data.data' } }
-            // }
-          }
-// )
-// }
-        }
-      }
+        endpoints: {
+          byFile: `http://localhost:3001/api/media/upload-image/${id}`,
+          byUrl: `http://localhost:3001/api/media/upload-image-byUrl/${id}`
+        },
+        additionalRequestHeaders: { authorization: initHeaders().authorization }
+      },
+      shortcut: 'CMD+SHIFT+I'
     },
-    quote: Quote,
-    checklist: CheckList, delimiter: Delimiter, inlineCode: InlineCode, simpleImage: SimpleImage
+    quote: { class: Quote, inlineToolbar: true, shortcut: 'CMD+SHIFT+Q' },
+    checklist: CheckList,
+    simpleImage: SimpleImage
   }
   
   const ReactEditorJS = createReactEditorJS()
   
-  return <ReactEditorJS onChange={handleChange} tools={EDITOR_JS_TOOLS}
-                        defaultValue={data} />
+  return <ReactEditorJS onChange={handleChange} tools={EDITOR_JS_TOOLS} defaultValue={data} />
 }
 
 export default CustomEditor

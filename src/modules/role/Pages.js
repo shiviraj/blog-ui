@@ -1,8 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import TableData from './components/Table'
-import AddNewPage from './components/AddNewPage'
 import { Box } from '@material-ui/core'
+import AddNew from './components/AddNew'
+import API from '../../API'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,7 +79,7 @@ const Pages = () => {
   const classes = useStyles()
   
   return <Box className={classes.root}>
-    <AddNewPage />
+    <AddNew addNew={API.pages.addPage} type={'page'} />
     <TableData columns={columns} rows={rows} />
   </Box>
 }

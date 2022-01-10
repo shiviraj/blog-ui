@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/styles'
 import SideMenubar from '../../common/components/SideMenubar'
 import { isSuperUserPath } from '../../config/roles'
 import { ROUTES } from '../../config/routes'
-import TitleBar from './components/TitleBar'
+import TitleBar from './posts/components/TitleBar'
 
 const useStyles = makeStyles((theme) => ({
   root: {

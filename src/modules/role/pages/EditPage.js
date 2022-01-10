@@ -37,21 +37,30 @@ const EditPage = () => {
   const router = useRouter()
   const toast = useToast()
   const [content, setContent] = useState(null)
+  const [published, setPublished] = useState(false)
   const [saving, setSaving] = useState(false)
   
   const handleTitleUpdate = (event) => {
-    setContent({ ...content, title: event.target.value })
+    setContent({ ...content, title: event.target.value, published: false })
   }
   
   const handleUpdateContent = async (instance) => {
     const data = await instance.saver.save()
-    setContent({ ...content, content: data })
+    setContent({ ...content, content: data, published: false })
+  }
+  
+  const handlePublishOrUpdate = () => {
+    setPublished(true)
+    setContent({ ...content, published: true })
   }
   
   useEffect(() => {
     if (router.query && router.query.pageId) {
       API.pages.getPage(router.query.pageId)
-        .then(setContent)
+        .then((content) => {
+          setPublished(content.published)
+          setContent({ ...content, published: false })
+        })
         .catch((error) => toast.error(error))
     }
   }, [router.query])
@@ -59,7 +68,8 @@ const EditPage = () => {
   useEffect(() => {
     setSaving(true)
     if (content) {
-      API.pages.updatePage(content).catch(() => ({}))
+      API.pages.updatePage(content)
+        .catch(() => ({}))
         .then(() => setSaving(false))
     }
   }, [content])
@@ -69,12 +79,14 @@ const EditPage = () => {
   return <Box className={classes.root}>
     <Box className={classes.actionBar}>
       <Typography>{saving ? 'Saving...' : 'Saved'}</Typography>
-      <ButtonWithLoader loading={saving} size={'small'}>{content.published ? 'Update' : 'Publish'}</ButtonWithLoader>
+      <ButtonWithLoader onClick={handlePublishOrUpdate} loading={saving} size={'small'}>
+        {published ? 'Update' : 'Publish'}
+      </ButtonWithLoader>
     </Box>
     <Input onChange={handleTitleUpdate} className={classes.title}
            defaultValue={content.title} placeholder={'Page' +
     ' Title'} disableUnderline />
-    {CustomEditor && <CustomEditor data={content.content} handleChange={handleUpdateContent} />}
+    {CustomEditor && <CustomEditor id={content.pageId} data={content.content} handleChange={handleUpdateContent} />}
   </Box>
 }
 

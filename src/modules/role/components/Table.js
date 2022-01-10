@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   Box,
   Table,
@@ -10,14 +9,14 @@ import {
   TableRow
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import lodash from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-  
-  },
   head: {
+    padding: theme.spacing(1),
     backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    textAlign: 'center'
   },
   tableBody: {
     maxHeight: theme.spacing(100)
@@ -26,63 +25,59 @@ const useStyles = makeStyles((theme) => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover
     }
+  },
+  cell: {
+    margin: 0,
+    padding: 0,
+    textAlign: 'center'
   }
 }))
 
-const TableData = ({ columns, rows }) => {
+const TableData = ({ columns, rows, pagination, setPagination, id }) => {
   const classes = useStyles()
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
   
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
+    setPagination({ ...pagination, page: newPage })
   }
   
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
+    setPagination({ ...pagination, page: 0, rowsPerPage: +event.target.value })
   }
   
-  return <Box boxShadow={4} className={classes.root}>
+  return <Box boxShadow={4}>
     <TableContainer className={classes.tableBody}>
       <Table stickyHeader aria-label='sticky table'>
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
-              <TableCell key={column.id} className={classes.head}>
+            {columns.map((column, index) => (
+              <TableCell key={column.id + index} className={classes.head}>
                 {column.label}
               </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row, index) => {
-              return (
-                <TableRow hover key={row.code + index} className={classes.body}>
-                  {columns.map((column) => {
-                    const value = row[column.id]
-                    return (
-                      <TableCell key={column.id}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    )
-                  })}
-                </TableRow>
-              )
-            })}
+          {rows.map((row, index) =>
+            <TableRow hover key={index} className={classes.body}>
+              {columns.map((column, id) => {
+                const value = lodash.get(row, column.id)
+                return (
+                  <TableCell key={column.id + id} className={classes.cell}>
+                    {column.format ? column.format(value) : value}
+                  </TableCell>
+                )
+              })}
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </TableContainer>
     <TablePagination
-      rowsPerPageOptions={[10, 25, 50, 100].filter(it => it <= rows.length)}
+      rowsPerPageOptions={pagination.pageOptions}
       component='div'
-      count={rows.length}
-      rowsPerPage={rowsPerPage}
-      page={page}
+      count={pagination.total}
+      rowsPerPage={pagination.rowsPerPage}
+      page={pagination.page}
       onChangePage={handleChangePage}
       onChangeRowsPerPage={handleChangeRowsPerPage}
     />
