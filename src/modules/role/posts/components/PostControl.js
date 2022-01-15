@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@material-ui/core'
 import ButtonWithLoader from '../../../../common/components/ButtonWithLoader'
 import { makeStyles } from '@material-ui/styles'
+import { useToast } from '../../../../common/components/ToastWrapper'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,9 +19,15 @@ const useStyles = makeStyles((theme) => ({
 
 const PostControl = ({ loader, savePost, post }) => {
   const classes = useStyles()
+  const toast = useToast()
   
   const handlePublishOrUpdate = () => {
     savePost(post, 'PUBLISH')
+      .then((data) => toast.success(data.message))
+      .catch((data) => {
+        console.log(data)
+        toast.error(data.message)
+      })
   }
   
   return <Box className={classes.root}>

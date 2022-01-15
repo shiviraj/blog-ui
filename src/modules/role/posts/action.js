@@ -1,22 +1,28 @@
 import API from '../../../API'
 
-export const POST = 'POST'
+export const EDIT_POST = 'EDIT_POST'
 
-export const SET_LOADER = `SET_${POST}_LOADER`
-export const GET_POST = `GET_${POST}`
-export const SET_POST = `SET_${POST}`
+export const SET_LOADER = `SET_${EDIT_POST}_LOADER`
+export const GET_EDIT_POST = `GET_${EDIT_POST}`
+export const SET_EDIT_POST = `SET_${EDIT_POST}`
 
-export const setPost = (post) => ({ type: SET_POST, post })
+export const setEditPost = (post) => ({ type: SET_EDIT_POST, post })
 
-export const savePost = (dispatch, post, postStatus = 'DRAFT') => {
+export const saveEditPost = (dispatch, post, postStatus = 'DRAFT') => {
   dispatch({ type: SET_LOADER, loader: true })
-  API.posts.updatePost({ ...post, postStatus })
-    .then(setPost)
-    .catch(() => ({}))
-    .then(dispatch({ type: SET_LOADER, loader: false }))
+  return API.posts.updatePost({ ...post, postStatus })
+    .then((post) => setEditPost(post))
+    .then(() => {
+      dispatch({ type: SET_LOADER, loader: false })
+      return { message: 'Successfully updated post' }
+    })
+    .catch(() => {
+      dispatch({ type: SET_LOADER, loader: false })
+      throw new Error('Failed to updated post')
+    })
 }
 
-export const getPost = async (dispatch, postId) => {
+export const getEditPost = async (dispatch, postId) => {
   API.posts.getPost(postId)
-    .then(post => dispatch({ type: GET_POST, post }))
+    .then(post => dispatch({ type: GET_EDIT_POST, post }))
 }

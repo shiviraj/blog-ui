@@ -1,14 +1,14 @@
-import { GET_POST, SET_LOADER, SET_POST } from './action'
+import { GET_EDIT_POST, SET_LOADER, SET_EDIT_POST } from './action'
 
 const initialState = {
   post: null,
   loader: false
 }
 
-const postReducer = (state = initialState, action) => {
+const editPostReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_POST:
-    case SET_POST:
+    case GET_EDIT_POST:
+    case SET_EDIT_POST:
       return { ...state, post: { ...state.post, ...action.post } }
     case SET_LOADER:
       return { ...state, loader: action.loader }
@@ -17,4 +17,4 @@ const postReducer = (state = initialState, action) => {
   }
 }
 
-export default postReducer
+export default editPostReducer

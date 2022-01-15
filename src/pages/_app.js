@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
-import { ThemeProvider } from '@material-ui/styles'
 import theme from '../theme/theme'
 import HeadTag from '../common/components/HeadTag'
 import Layout from '../common/components/Layout'
-import { Router } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import { onRouteChange } from '../utils/routing'
 import ToastWrapper from '../common/components/ToastWrapper'
-import { ROUTES } from '../config/routes'
 import API from '../API'
 import { Provider, useDispatch } from 'react-redux'
 import store from '../store'
 import { setUser } from '../modules/user/action'
+import './style.css'
+import { ThemeProvider } from '@mui/styles'
 
 const MyApp = ({ Component, pageProps, ...rest }) => {
   useEffect(() => {
@@ -33,12 +33,11 @@ const MyApp = ({ Component, pageProps, ...rest }) => {
 
 const WithValidatedProfile = ({ children, ...rest }) => {
   const dispatch = useDispatch()
+  const router = useRouter()
   useEffect(() => {
-    const pathname = Router.pathname || rest.router.pathname
-    if (pathname !== ROUTES.LOGIN && pathname !== ROUTES.OAUTH) {
+    if (!router.pathname.startsWith('/login'))
       API.users.validateUser()
         .then((user) => dispatch(setUser(user)))
-    }
   }, [])
   
   return <>{children}</>

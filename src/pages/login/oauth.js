@@ -5,16 +5,22 @@ import API from '../../API'
 import { useToast } from '../../common/components/ToastWrapper'
 import { handleLogin } from '../../utils/auth'
 import PageError from '../../common/components/PageError'
+import { setUser } from '../../modules/user/action'
+import { useDispatch } from 'react-redux'
 
 const OAuth = () => {
   const [error, setError] = useState(false)
   const router = useRouter()
   const toast = useToast()
+  const dispatch = useDispatch()
   
   useEffect(() => {
     if (router.query && router.query.code) {
       API.oauth.signIn(router.query.code)
-        .then((data) => handleLogin(data))
+        .then((data) => {
+          dispatch(setUser(data.user))
+          handleLogin(router, data)
+        })
         .catch((error) => {
           setError(true)
           toast.error(error)

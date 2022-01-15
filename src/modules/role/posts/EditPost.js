@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center'
   },
   title: {
+    width: '100%',
     fontSize: theme.spacing(4),
     padding: '0 20%'
   }
@@ -47,7 +48,8 @@ const EditPost = ({ loader, post, fetchPost, savePost, setPost }) => {
   
   return <Box className={classes.root}>
     <Box className={classes.content}>
-      <Input onChange={handleTitleUpdate} className={classes.title} defaultValue={post.title} disableUnderline />
+      <Input onChange={handleTitleUpdate} className={classes.title} defaultValue={post.title} disableUnderline
+             multiline />
       {CustomEditor && <CustomEditor id={post.postId} data={post.content} handleChange={handleUpdateContent} />}
     </Box>
     <Divider orientation={'vertical'} flexItem />

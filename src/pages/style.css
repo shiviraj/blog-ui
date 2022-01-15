@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Epilogue-Medium;
+    height: 100vh;
+    width: 100vw
+}
+
+.inline-code {
+    color: crimson;
+    background-color: #f1f1f1;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.cdx-marker {
+    background-color: rgba(245, 235, 111, 0.29);
+}

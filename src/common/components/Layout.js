@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/styles'
 import Header from './Header'
 import { ROUTES } from '../../config/routes'
-import Footer from './Footer'
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -20,7 +19,7 @@ const Layout = ({ children }) => {
   return <>
     {pathname !== ROUTES.LOGIN && <Header />}
     <div className={classes.body}>{children}</div>
-    <Footer />
+    {/*<Footer />*/}
   </>
 }
 

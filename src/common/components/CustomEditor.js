@@ -2,6 +2,8 @@ import CheckList from '@editorjs/checklist'
 import Delimiter from '@editorjs/delimiter'
 import Code from '@editorjs/code'
 import Embed from '@editorjs/embed'
+import Table from '@editorjs/table'
+import Raw from '@editorjs/raw'
 import Image from '@editorjs/image'
 import InlineCode from '@editorjs/inline-code'
 import LinkTool from '@editorjs/link'
@@ -15,7 +17,9 @@ import { initHeaders } from '../../API/axios'
 
 const CustomEditor = ({ id, data, handleChange }) => {
   const EDITOR_JS_TOOLS = {
-    embed: Embed,
+    embed: { class: Embed },
+    raw: Raw,
+    table: Table,
     header: { class: Header, inlineToolbar: true, shortcut: 'CMD+SHIFT+H' },
     list: { class: List, inlineToolbar: true, shortcut: 'CMD+SHIFT+L' },
     marker: { class: Marker, shortcut: 'CMD+SHIFT+M' },

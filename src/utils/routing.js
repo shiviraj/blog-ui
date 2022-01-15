@@ -4,7 +4,8 @@ const onRouteChange = () => {
   handleRouteChange()
 }
 
-const redirectTo = (path) => {
+const redirectTo = (path, router) => {
+  if (router) return router.push(path)
   if (window.location.pathname !== path) {
     window.location.assign(path)
   }

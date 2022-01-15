@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles} from '@material-ui/core/styles';
-import {Fab, useScrollTrigger, Zoom} from '@material-ui/core';
-import {KeyboardArrowUp} from '@material-ui/icons';
+import { Fab, makeStyles, useScrollTrigger, Zoom } from '@mui/material'
+import { KeyboardArrowUp } from '@mui/icons-material'
 
 const useStyles = makeStyles((theme) => ({
   scrollTop: {

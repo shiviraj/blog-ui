@@ -20,7 +20,7 @@ const utils = {
             handleUnauthorized()
             reject()
           } else {
-            reject(error.response.data)
+            reject(error.response && error.response.data)
           }
         })
     })

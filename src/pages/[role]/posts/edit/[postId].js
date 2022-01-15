@@ -1,12 +1,12 @@
 import EditPost from '../../../../modules/role/posts/EditPost'
 import { connect } from 'react-redux'
-import { getPost, savePost, setPost } from '../../../../modules/role/posts/action'
+import { getEditPost, saveEditPost, setEditPost } from '../../../../modules/role/posts/action'
 
-const mapStateToProps = (state) => ({ post: state.post.post, loader: state.post.loader })
+const mapStateToProps = (state) => ({ post: state.editPost.post, loader: state.editPost.loader })
 const mapDispatchToProps = (dispatch) => ({
-  fetchPost: (postId) => getPost(dispatch, postId),
-  savePost: (post, postStatus) => savePost(dispatch, post, postStatus),
-  setPost: (post) => dispatch(setPost(post))
+  fetchPost: (postId) => getEditPost(dispatch, postId),
+  savePost: (post, postStatus) => saveEditPost(dispatch, post, postStatus),
+  setPost: (post) => dispatch(setEditPost(post))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPost)

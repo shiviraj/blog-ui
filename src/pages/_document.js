@@ -33,8 +33,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head />
-        <body
-          style={{ margin: 0, padding: 0, fontFamily: 'Roboto', height: '100vh', width: '100vw', fontSize: '16px' }}>
+        <body>
         <Main />
         <NextScript />
         </body>

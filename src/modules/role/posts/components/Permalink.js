@@ -30,8 +30,8 @@ const Permalink = ({ post, setPost }) => {
       fullWidth
       required />
     <Box pt={1}>
-      <Link href={`/post/${post.url}`} className={classes.link}>
-        {`${baseUrl}/post/${url}`}
+      <Link href={`/posts/${post.url}`} className={classes.link}>
+        {`${baseUrl}/posts/${url}`}
       </Link>
     </Box>
   </Accordion>
