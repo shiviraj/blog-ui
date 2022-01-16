@@ -1,8 +1,7 @@
 import { Box, Divider, Typography } from '@mui/material'
 import CommentInput from './CommentInput'
-import DisplayComments from './DisplayComments'
+import DisplayAllComments from './DisplayAllComments'
 import { styled } from '@mui/styles'
-import { useState } from 'react'
 
 const Container = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
@@ -14,14 +13,13 @@ const Container = styled(Box)(({ theme }) => ({
 }))
 
 const PostComments = ({ comments, post }) => {
-  const [expand, setExpand] = useState(false)
-  return <Container>
+  return <Container id={'comment'}>
     <Typography variant={'h5'} pl={2} pt={1}>
       {comments.length > 1 ? 'Comments' : 'Comment'} ({comments.length})
     </Typography>
-    <CommentInput postId={post.postId} placeholder={'What are your thoughts?'} expand={expand} setExpand={setExpand} />
+    <CommentInput postId={post.postId} placeholder={'What are your thoughts?'} />
     <Divider />
-    <DisplayComments postId={post.postId} comments={comments} />
+    <DisplayAllComments postId={post.postId} comments={comments} />
   </Container>
 }
 

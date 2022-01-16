@@ -1,7 +1,7 @@
 import { Box, Chip, Divider, Stack } from '@mui/material'
 import React, { useState } from 'react'
 import { styled } from '@mui/styles'
-import CommentItem from './CommentItem'
+import DisplayComment from './DisplayComment'
 
 const ViewMoreChip = styled(Chip)(({ theme }) => ({
   position: 'relative',
@@ -19,16 +19,18 @@ const ViewMoreChip = styled(Chip)(({ theme }) => ({
 
 const commentCount = 1
 
-const DisplayComments = ({ postId, comments }) => {
+const DisplayAllComments = ({ postId, comments, visible = true, level = 0 }) => {
   const [visibleCommentCount, setVisibleCommentCount] = useState(commentCount)
   
   const handleViewMore = () => setVisibleCommentCount(visibleCommentCount + commentCount)
   const visibleComments = comments.slice(0, visibleCommentCount)
   
+  if (!visible) return <></>
+  
   return <Box>
     {visibleComments.map((comment, index) =>
       <React.Fragment key={comment.commentId + index}>
-        <CommentItem comment={comment} />
+        <DisplayComment comment={comment} postId={postId} level={level} />
         {(index < visibleComments.length - 1) && <Divider style={{ margin: '0 16px' }} />}
       </React.Fragment>)}
     {visibleCommentCount < comments.length && <Stack direction={'row'} justifyContent={'center'}>
@@ -37,4 +39,4 @@ const DisplayComments = ({ postId, comments }) => {
   </Box>
 }
 
-export default DisplayComments
+export default DisplayAllComments

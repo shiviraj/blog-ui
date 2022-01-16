@@ -5,6 +5,7 @@ export const SET_POST = `SET_${POST}`
 
 export const SET_LOADER = `${SET_POST}_LOADER`
 export const SET_POST_COMMENTS = `${SET_POST}_COMMENTS`
+export const UPDATE_POST_COMMENT = `UPDATE_${POST}_COMMENT`
 export const SET_POST_TAGS = `${SET_POST}_TAGS`
 export const SET_POST_CATEGORIES = `${SET_POST}_CATEGORIES`
 export const SET_POST_AUTHOR = `${SET_POST}_AUTHOR`
@@ -12,6 +13,7 @@ export const SET_POST_AUTHOR = `${SET_POST}_AUTHOR`
 export const setLoader = (loader) => ({ type: SET_POST, loader })
 export const setPost = (post) => ({ type: SET_POST, post })
 export const setComments = (comments) => ({ type: SET_POST_COMMENTS, comments })
+export const updatePostComment = (comment) => ({ type: UPDATE_POST_COMMENT, comment })
 export const setAuthor = (author) => ({ type: SET_POST_AUTHOR, author })
 export const setTags = (tags) => ({ type: SET_POST_TAGS, tags })
 export const setCategories = (categories) => ({ type: SET_POST_CATEGORIES, categories })

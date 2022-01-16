@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Collapse, Input, Stack, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { styled } from '@mui/styles'
 import { Save } from '@mui/icons-material'
@@ -30,11 +30,15 @@ const EditableComment = styled(Collapse)(({ theme }) => ({
   padding: 0
 }))
 
-const CommentInput = ({ postId, placeholder, expand, setExpand, placeholderDisable = false }) => {
+const CommentInput = (props) => {
+  const { postId, placeholder, expand: defaultExpand, placeholderDisable = false, parentComment = null } = props
+  const [expand, setExpand] = useState(defaultExpand || false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const toast = useToast()
   const user = useSelector(state => state.user)
+  
+  useEffect(() => setExpand(defaultExpand), [defaultExpand])
   
   const handleCancel = () => {
     setExpand(false)
@@ -44,7 +48,7 @@ const CommentInput = ({ postId, placeholder, expand, setExpand, placeholderDisab
   
   const handleAddComment = () => {
     setLoading(true)
-    API.comments.addComment(postId, { message, userId: user.userId })
+    API.comments.addComment(postId, { message, userId: user.userId, parentComment })
       .then(() => {
         setMessage('')
         toast.success('You have made a successful comment, It will be visible on this post once it approved by Author!!')

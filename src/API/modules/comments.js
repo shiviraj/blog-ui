@@ -9,6 +9,10 @@ const comments = (host = '') => {
     },
     getComments(postId) {
       return axios.fetch(`${host}/api/comments/${postId}`)
+    },
+    addLikeOrDislike(commentId, likeOrDislike) {
+      const options = { method: METHODS.PUT, data: likeOrDislike }
+      return axios.fetch(`${host}/api/comments/${commentId}`, options)
     }
   }
 }

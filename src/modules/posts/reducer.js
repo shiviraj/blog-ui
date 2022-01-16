@@ -1,4 +1,13 @@
-import { SET_LOADER, SET_POST, SET_POST_AUTHOR, SET_POST_CATEGORIES, SET_POST_COMMENTS, SET_POST_TAGS } from './action'
+import {
+  SET_LOADER,
+  SET_POST,
+  SET_POST_AUTHOR,
+  SET_POST_CATEGORIES,
+  SET_POST_COMMENTS,
+  SET_POST_TAGS,
+  UPDATE_POST_COMMENT
+} from './action'
+import { createNestedList, updateComment } from './utils/utils'
 
 const initialState = {
   post: {},
@@ -17,7 +26,10 @@ const postReducer = (state = initialState, action) => {
     case SET_LOADER:
       return { ...state, loader: action.loader }
     case SET_POST_COMMENTS:
-      return { ...state, comments: action.comments }
+      return { ...state, comments: createNestedList(action.comments) }
+    case UPDATE_POST_COMMENT:
+      const comments = updateComment(state.comments, action.comment)
+      return { ...state, comments: [...comments] }
     case SET_POST_TAGS:
       return { ...state, tags: action.tags }
     case SET_POST_CATEGORIES:
