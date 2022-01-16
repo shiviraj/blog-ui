@@ -1,10 +1,9 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { Comment, ThumbDownOutlined, ThumbUpOutlined } from '@mui/icons-material'
-import { FlexContainer } from '../../../common/components/styled/FlexContainer'
 import { styled } from '@mui/styles'
 
 const Container = styled(Box)(({ theme }) => ({
-  margin: theme.spacing(2, 0),
+  // margin: theme.spacing(2, 0),
   display: 'flex',
   alignItems: 'center',
   marginRight: theme.spacing(4),
@@ -14,25 +13,25 @@ const Container = styled(Box)(({ theme }) => ({
   }
 }))
 
-const UserResponse = ({ post, comments }) => {
+const UserResponse = ({ likes, dislikes, comments }) => {
   
   // TODO user liked or not
   // TODO if user clicks on like or dislike it should be login first
   
-  return <FlexContainer>
+  return <Stack direction={'row'} mt={1} mb={1}>
     <Container>
       <ThumbUpOutlined />
-      <Typography variant={'body1'}>{post.likes}</Typography>
+      <Typography variant={'body1'}>{likes.length}</Typography>
     </Container>
     <Container>
       <ThumbDownOutlined />
-      <Typography variant={'body1'}>{post.disLikes}</Typography>
+      <Typography variant={'body1'}>{dislikes.length}</Typography>
     </Container>
-    {post.commentsAllowed && <Container>
+    <Container>
       <Comment />
       <Typography variant={'body1'}>{comments.length}</Typography>
-    </Container>}
-  </FlexContainer>
+    </Container>
+  </Stack>
 }
 
 export default UserResponse

@@ -5,7 +5,20 @@ import { useSelector } from 'react-redux'
 import { styled } from '@mui/styles'
 import { Save } from '@mui/icons-material'
 import API from '../../../API'
-import { setComments } from '../action'
+import { useToast } from '../../../common/components/ToastWrapper'
+
+const Container = styled(Box)(({ theme }) => ({
+  minHeight: theme.spacing(3),
+  padding: theme.spacing(1, 1.5),
+  border: `1px solid ${theme.palette.divider}`,
+  '&.disable': {
+    padding: theme.spacing(0),
+    border: `1px solid transparent`,
+    minHeight: 0
+  },
+  borderRadius: theme.spacing(1),
+  margin: theme.spacing(1, 2)
+}))
 
 const Summary = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey[500],
@@ -17,10 +30,10 @@ const EditableComment = styled(Collapse)(({ theme }) => ({
   padding: 0
 }))
 
-const CommentInput = ({ postId, comments }) => {
-  const [expand, setExpand] = useState(false)
+const CommentInput = ({ postId, placeholder, expand, setExpand, placeholderDisable = false }) => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const toast = useToast()
   const user = useSelector(state => state.user)
   
   const handleCancel = () => {
@@ -29,22 +42,25 @@ const CommentInput = ({ postId, comments }) => {
     setMessage('')
   }
   
-  const handleAddComment = (e) => {
+  const handleAddComment = () => {
     setLoading(true)
-    API.posts.addComment(postId, { message, userId: user.userId })
-      .then((comment) => setComments([comment, ...comments]))
-      .catch()
+    API.comments.addComment(postId, { message, userId: user.userId })
+      .then(() => {
+        setMessage('')
+        toast.success('You have made a successful comment, It will be visible on this post once it approved by Author!!')
+      })
+      .catch(() => toast.error('Something went wrong, Please try again!!'))
       .then(() => setLoading(false))
   }
   
-  return <Box boxShadow={2} mt={1} p={1} pl={2} style={{ minHeight: 24 }}>
+  return <Container className={(placeholderDisable && !expand) ? 'disable' : ''}>
     <Collapse in={expand}>
       <Stack direction={'row'} spacing={1} alignItems={'center'} mb={2}>
         <Avatar src={user.profile} alt={user.username} />
         <Typography>{user.name}</Typography>
       </Stack>
     </Collapse>
-    <Summary onClick={() => setExpand(true)}>{message ? '' : 'What are your thoughts?'}</Summary>
+    {(placeholderDisable && !expand) || <Summary onClick={() => setExpand(true)}>{message ? '' : placeholder}</Summary>}
     <EditableComment in={expand}>
       <Input value={message} onChange={e => setMessage(e.target.value)} disableUnderline fullWidth multiline />
     </EditableComment>
@@ -57,7 +73,7 @@ const CommentInput = ({ postId, comments }) => {
         </LoadingButton>
       </Stack>
     </Collapse>
-  </Box>
+  </Container>
 }
 
 export default CommentInput

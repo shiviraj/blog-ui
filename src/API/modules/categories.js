@@ -9,6 +9,10 @@ const categories = (host = '') => {
     addNewCategory(value) {
       const options = { method: METHODS.POST, data: value }
       return axios.fetch(`${host}/api/categories`, options)
+    },
+    getCategories(categories) {
+      const options = { method: METHODS.POST, data: categories }
+      return axios.fetch(`${host}/api/categories/categories`, options)
     }
   }
 }

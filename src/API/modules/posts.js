@@ -22,13 +22,6 @@ const posts = (host = '') => {
     },
     getPostByUrl(postUrl) {
       return axios.fetch(`${host}/api/posts/${postUrl}`)
-    },
-    getComments(postId) {
-      return axios.fetch(`${host}/api/posts/${postId}/comments`)
-    },
-    addComment(postId, comment) {
-      const options = { method: METHODS.POST, data: comment }
-      return axios.fetch(`${host}/api/posts/${postId}/comments`, options)
     }
   }
 }

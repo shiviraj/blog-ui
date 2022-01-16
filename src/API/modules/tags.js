@@ -6,6 +6,10 @@ const tags = (host = '') => {
     addNewTag(value) {
       const options = { method: METHODS.POST, data: value }
       return axios.fetch(`${host}/api/tags`, options)
+    },
+    getTags(tagIds) {
+      const options = { method: METHODS.POST, data: tagIds }
+      return axios.fetch(`${host}/api/tags/tags`, options)
     }
   }
 }

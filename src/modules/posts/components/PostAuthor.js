@@ -13,11 +13,11 @@ const Container = styled(Box)(({ theme }) => ({
   }
 }))
 
-const PostAuthor = ({ post, comments }) => {
+const PostAuthor = ({ post, author, comments }) => {
   return <FlexContainer m={[1, 0]} alignItems={'center'}>
     <Container>
-      <Avatar src={post.author.profile} />
-      <Typography>{post.author.name}</Typography>
+      <Avatar src={author.profile} alt={author.name} />
+      <Typography>{author.name}</Typography>
     </Container>
     <Container>
       <DateRange />
