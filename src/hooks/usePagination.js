@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react'
 import lodash from 'lodash'
 
-
 const usePagination = (total = 1) => {
   const [pagination, setPagination] = useState({ page: 0, total, pageOptions: [], rowsPerPage: 10 })
   

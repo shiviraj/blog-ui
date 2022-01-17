@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from '@mui/material'
-import CommentInput from './CommentInput'
-import DisplayAllComments from './DisplayAllComments'
+import CommentInput from './components/CommentInput'
+import DisplayAllComments from './components/DisplayAllComments'
 import { styled } from '@mui/styles'
 
 const Container = styled(Box)(({ theme }) => ({

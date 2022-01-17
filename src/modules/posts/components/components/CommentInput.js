@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { styled } from '@mui/styles'
 import { Save } from '@mui/icons-material'
-import API from '../../../API'
-import { useToast } from '../../../common/components/ToastWrapper'
+import API from '../../../../API'
+import { useToast } from '../../../../common/components/ToastWrapper'
 
 const Container = styled(Box)(({ theme }) => ({
   minHeight: theme.spacing(3),

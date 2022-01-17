@@ -22,6 +22,10 @@ const posts = (host = '') => {
     },
     getPostByUrl(postUrl) {
       return axios.fetch(`${host}/api/posts/${postUrl}`)
+    },
+    addLikeOrDislike(postId, likeOrDislike) {
+      const options = { method: METHODS.PUT, data: likeOrDislike }
+      return axios.fetch(`${host}/api/posts/${postId}`, options)
     }
   }
 }

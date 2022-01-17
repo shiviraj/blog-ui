@@ -1,5 +1,5 @@
 import RawHTML from '../../../common/components/RawHTML'
-import TableDetails from './TableDetails'
+import TableDetails from './components/TableDetails'
 import React from 'react'
 import { Box, Checkbox, FormControlLabel, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material'
 import { FiberManualRecord, FormatQuote } from '@mui/icons-material'

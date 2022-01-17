@@ -1,37 +1,24 @@
-import { Box, Stack, Typography } from '@mui/material'
-import { Comment, ThumbDownOutlined, ThumbUpOutlined } from '@mui/icons-material'
-import { styled } from '@mui/styles'
+import { useDispatch, useSelector } from 'react-redux'
+import API from '../../../API'
+import { setPost } from '../action'
+import UserActivity from './components/UserActivity'
 
-const Container = styled(Box)(({ theme }) => ({
-  // margin: theme.spacing(2, 0),
-  display: 'flex',
-  alignItems: 'center',
-  marginRight: theme.spacing(4),
-  '&>*': {
-    display: 'flex',
-    marginRight: theme.spacing(1)
+
+const UserResponse = ({ post, comments }) => {
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
+  
+  const handleLikeOrDislike = (type) => () => {
+    const key = `${type}s`
+    const action = post[key].includes(user.userId) ? 'REMOVE' : 'ADD'
+    API.posts.addLikeOrDislike(post.postId, { action: `${action}_${type}`.toUpperCase() })
+      .then((post) => dispatch(setPost(post)))
   }
-}))
-
-const UserResponse = ({ likes, dislikes, comments }) => {
   
-  // TODO user liked or not
-  // TODO if user clicks on like or dislike it should be login first
-  
-  return <Stack direction={'row'} mt={1} mb={1}>
-    <Container>
-      <ThumbUpOutlined />
-      <Typography variant={'body1'}>{likes.length}</Typography>
-    </Container>
-    <Container>
-      <ThumbDownOutlined />
-      <Typography variant={'body1'}>{dislikes.length}</Typography>
-    </Container>
-    <Container>
-      <Comment />
-      <Typography variant={'body1'}>{comments.length}</Typography>
-    </Container>
-  </Stack>
+  return <UserActivity likes={post.likes} mt={2} mb={2}
+                       dislikes={post.dislikes}
+                       handleLikeOrDislike={handleLikeOrDislike}
+                       list={comments} />
 }
 
 export default UserResponse

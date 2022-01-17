@@ -17,7 +17,7 @@ const ViewMoreChip = styled(Chip)(({ theme }) => ({
   }
 }))
 
-const commentCount = 1
+const commentCount = 5
 
 const DisplayAllComments = ({ postId, comments, visible = true, level = 0 }) => {
   const [visibleCommentCount, setVisibleCommentCount] = useState(commentCount)
