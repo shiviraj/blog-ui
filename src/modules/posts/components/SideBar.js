@@ -1,7 +1,5 @@
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
-const PostTitle = () => {
-  return <Typography variant={'h4'}>Sidebar</Typography>
-}
+const PostTitle = () => <Typography variant={'h4'}>Sidebar</Typography>
 
 export default PostTitle

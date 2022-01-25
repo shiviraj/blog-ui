@@ -1,30 +1,20 @@
-import { makeStyles } from '@material-ui/styles'
-import { Box, IconButton, Tooltip } from '@material-ui/core'
-import { Delete, Edit, Publish } from '@material-ui/icons'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '&>*': {
-      margin: theme.spacing(0, 0.2)
-    }
-  }
-}))
+import { IconButton, Stack, Tooltip } from '@mui/material'
+import { Delete, Edit, Publish } from '@mui/icons-material'
 
 const ActionBar = ({ id }) => {
-  const classes = useStyles()
   const router = useRouter()
   const path = router.asPath
   
-  return <Box className={classes.root}>
-    <Tooltip title='Edit'>
-      <Link href={`${path}/edit/${id}`}>
-        <IconButton aria-label='edit' size='small' color={'error'}>
+  return <Stack spacing={0.5} direction={'row'} justifyContent={'center'}>
+    <Link href={`${path}/edit/${id}`}>
+      <Tooltip title='Edit'>
+        <IconButton aria-label='edit' size='small'>
           <Edit fontSize='inherit' color={'inherit'} />
         </IconButton>
-      </Link>
-    </Tooltip>
+      </Tooltip>
+    </Link>
     <Tooltip title='Publish'>
       <IconButton aria-label='publish' size='small'>
         <Publish fontSize='inherit' />
@@ -35,7 +25,7 @@ const ActionBar = ({ id }) => {
         <Delete fontSize='inherit' />
       </IconButton>
     </Tooltip>
-  </Box>
+  </Stack>
 }
 
 export default ActionBar

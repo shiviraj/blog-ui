@@ -1,49 +1,39 @@
-import { makeStyles } from '@material-ui/styles'
 import React, { useState } from 'react'
 import Accordion from '../../../../common/components/Accordion'
-import { Box, Chip, TextField } from '@material-ui/core'
 import API from '../../../../API'
-import _ from 'lodash'
-
-const useStyles = makeStyles((theme) => ({
-  tags: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    '&>*': {
-      margin: theme.spacing(0, 1, 1, 0)
-    }
-  }
-}))
+import lodash from 'lodash'
+import { useDispatch, useSelector } from 'react-redux'
+import { setTags } from '../action'
+import { Chip, Stack, TextField } from '@mui/material'
 
 const Tags = ({ post, setPost }) => {
-  const classes = useStyles()
   const [tagName, setTagName] = useState('')
+  const tags = useSelector((state) => state.editPost.tags)
+  const dispatch = useDispatch()
   
-  const handleDelete = tagId => () => {
-    const tags = post.tags.filter(tag => tag.tagId !== tagId)
-    setPost({ tags })
+  const handleDelete = (tagId) => () => {
+    dispatch(setTags(post.tags.filter((tag) => tag.tagId !== tagId)))
   }
   // TODO: While adding a new tag there should be some suggestions for tag
-  const handleKeyUp = (e) => {
-    if (e.key === 'Enter' && tagName.trim()) {
+  const handleKeyUp = (event) => {
+    if (event.key === 'Enter' && tagName.trim()) {
       API.tags.addNewTag({ name: tagName })
-        .then((tag) => setPost({ tags: _.uniqWith(post.tags.concat(tag), _.isEqual) }))
+        .then((tag) => setPost({ tags: lodash.uniqWith(post.tags.concat(tag), lodash.isEqual) }))
         .then(() => setTagName(''))
     }
   }
   
   return <Accordion title={'Tags'}>
-    <Box className={classes.tags}>
+    <Stack direction={'row'} spacing={1} mb={1}>
       {
-        post.tags.map(({ name, tagId }) =>
-          <Chip size={'small'} key={tagId} label={name} onDelete={handleDelete(tagId)} />)
+        tags.map(({ name, tagId }) => <Chip color={'primary'} size={'small'} key={tagId} label={name}
+                                            onDelete={handleDelete(tagId)} />)
       }
-    </Box>
+    </Stack>
     <TextField
       value={tagName}
-      disabled={post.tags.length >= 5}
-      onChange={(e) => setTagName(e.target.value)}
+      disabled={tags.length >= 5}
+      onChange={(event) => setTagName(event.target.value)}
       onKeyPress={handleKeyUp}
       label={'Add New Tag'}
       variant={'outlined'} size={'small'}

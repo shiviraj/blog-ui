@@ -28,7 +28,7 @@ const DisplayComment = ({ comment, postId, level }) => {
         <Avatar src={comment.user.profile} alt={comment.user.username} />
         <Stack>
           <Typography>{comment.user.name}</Typography>
-          <Typography className={'time'}>{moment(comment.commentedOn).fromNow()}</Typography>
+          <Typography>{moment(comment.commentedOn).fromNow()}</Typography>
         </Stack>
       </Stack>
       <Typography>{comment.message}</Typography>

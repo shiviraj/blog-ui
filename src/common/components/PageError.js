@@ -1,22 +1,17 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { styled } from '@mui/styles'
+import { Box } from '@mui/material'
 
-const useStyles = makeStyles((theme) => ({
-  error: {
-    display: 'flex',
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '70vh',
-    color: theme.palette.error.main,
-    fontSize: theme.spacing(4)
-  }
+const Error = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexGrow: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '70vh',
+  color: theme.palette.error.main,
+  fontSize: theme.spacing(4)
 }))
 
-const PageError = ({ message }) => {
-  const classes = useStyles()
-  return <Box className={classes.error}>{message}</Box>
-}
+const PageError = ({ message }) => <Error>{message}</Error>
 
 export default PageError

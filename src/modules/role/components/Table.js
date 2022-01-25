@@ -1,5 +1,7 @@
+import lodash from 'lodash'
 import {
-  Box,
+  Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -7,81 +9,63 @@ import {
   TableHead,
   TablePagination,
   TableRow
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-import lodash from 'lodash'
+} from '@mui/material'
+import { styled } from '@mui/styles'
 
-const useStyles = makeStyles((theme) => ({
-  head: {
+const TableHeadRow = styled(TableRow)(({ theme }) => ({
+  '&>*': {
     padding: theme.spacing(1),
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
     textAlign: 'center'
-  },
-  tableBody: {
-    maxHeight: theme.spacing(100)
-  },
-  body: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover
-    }
-  },
-  cell: {
-    margin: 0,
-    padding: 0,
-    textAlign: 'center'
   }
 }))
 
-const TableData = ({ columns, rows, pagination, setPagination, id }) => {
-  const classes = useStyles()
-  
-  const handleChangePage = (event, newPage) => {
-    setPagination({ ...pagination, page: newPage })
+const TableBodyRow = styled(TableRow)(({ theme }) => ({
+  padding: 0,
+  margin: 0,
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover
   }
+}))
+
+const TableData = ({ columns, rows, pagination, setPagination }) => {
+  const handleChangePage = (event, newPage) => setPagination({ ...pagination, page: newPage })
   
   const handleChangeRowsPerPage = (event) => {
-    setPagination({ ...pagination, page: 0, rowsPerPage: +event.target.value })
+    setPagination({ ...pagination, page: 0, rowsPerPage: Number(event.target.value) })
   }
   
-  return <Box boxShadow={4}>
-    <TableContainer className={classes.tableBody}>
-      <Table stickyHeader aria-label='sticky table'>
+  return <Stack boxShadow={4} component={Paper}>
+    <TableContainer style={{ maxHeight: '75vh' }}>
+      <Table stickyHeader>
         <TableHead>
-          <TableRow>
-            {columns.map((column, index) => (
-              <TableCell key={column.id + index} className={classes.head}>
-                {column.label}
-              </TableCell>
-            ))}
-          </TableRow>
+          <TableHeadRow>
+            {columns.map((column, index) => <TableCell key={column.id + index}>{column.label}</TableCell>)}
+          </TableHeadRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) =>
-            <TableRow hover key={index} className={classes.body}>
-              {columns.map((column, id) => {
-                const value = lodash.get(row, column.id)
-                return (
-                  <TableCell key={column.id + id} className={classes.cell}>
-                    {column.format ? column.format(value) : value}
-                  </TableCell>
-                )
-              })}
-            </TableRow>
-          )}
+          {rows.map((row, index) => <TableBodyRow hover key={index}>
+            {columns.map((column, id) => {
+              const value = lodash.get(row, column.id)
+              return <TableCell key={column.id + id} style={{ margin: 0, padding: 8 }}>
+                {column.format ? column.format(value) : value}
+              </TableCell>
+            })}
+          </TableBodyRow>)}
         </TableBody>
       </Table>
     </TableContainer>
     <TablePagination
-      rowsPerPageOptions={pagination.pageOptions}
+      rowsPerPageOptions={[...pagination.pageOptions]}
       component='div'
       count={pagination.total}
       rowsPerPage={pagination.rowsPerPage}
       page={pagination.page}
-      onChangePage={handleChangePage}
-      onChangeRowsPerPage={handleChangeRowsPerPage}
+      onPageChange={handleChangePage}
+      onRowsPerPageChange={handleChangeRowsPerPage}
     />
-  </Box>
+  </Stack>
   
 }
 

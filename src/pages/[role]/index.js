@@ -1,6 +1,6 @@
 import Role from '../../modules/role'
 import Dashboard from '../../modules/role/Dashboard'
 
-export default function Index() {
-  return <Role title={'Dashboard'} component={Dashboard} />
-}
+const Index = () => <Role title={'Dashboard'} component={Dashboard} />
+
+export default Index

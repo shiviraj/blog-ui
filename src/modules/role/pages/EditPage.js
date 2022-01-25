@@ -1,39 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/styles'
-import { Box, Input, Typography } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import { useToast } from '../../../common/components/ToastWrapper'
 import API from '../../../API'
 import Loader from '../../../common/components/Loader'
 import dynamic from 'next/dynamic'
-import ButtonWithLoader from '../../../common/components/ButtonWithLoader'
+import { Box, Input, Typography } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 
 const CustomEditor = dynamic(() => import( '../../../common/components/CustomEditor'), { ssr: false })
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: theme.spacing(10)
-  },
-  actionBar: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    '&>*': {
-      marginLeft: theme.spacing(1)
-    }
-  },
-  title: {
-    fontSize: theme.spacing(4),
-    borderBottom: 'none'
-  }
-}))
-
-
+// eslint-disable-next-line max-lines-per-function,max-statements
 const EditPage = () => {
-  const classes = useStyles()
   const router = useRouter()
   const toast = useToast()
   const [content, setContent] = useState(null)
@@ -57,9 +34,9 @@ const EditPage = () => {
   useEffect(() => {
     if (router.query && router.query.pageId) {
       API.pages.getPage(router.query.pageId)
-        .then((content) => {
-          setPublished(content.published)
-          setContent({ ...content, published: false })
+        .then((data) => {
+          setPublished(data.published)
+          setContent({ ...data, published: false })
         })
         .catch((error) => toast.error(error))
     }
@@ -74,16 +51,18 @@ const EditPage = () => {
     }
   }, [content])
   
-  if (!content) return <Loader />
+  if (!content) {
+    return <Loader />
+  }
   
-  return <Box className={classes.root}>
-    <Box className={classes.actionBar}>
+  return <Box>
+    <Box>
       <Typography>{saving ? 'Saving...' : 'Saved'}</Typography>
-      <ButtonWithLoader onClick={handlePublishOrUpdate} loading={saving} size={'small'}>
+      <LoadingButton onClick={handlePublishOrUpdate} loading={saving} size={'small'}>
         {published ? 'Update' : 'Publish'}
-      </ButtonWithLoader>
+      </LoadingButton>
     </Box>
-    <Input onChange={handleTitleUpdate} className={classes.title}
+    <Input onChange={handleTitleUpdate}
            defaultValue={content.title} placeholder={'Page' +
     ' Title'} disableUnderline />
     {CustomEditor && <CustomEditor id={content.pageId} data={content.content} handleChange={handleUpdateContent} />}

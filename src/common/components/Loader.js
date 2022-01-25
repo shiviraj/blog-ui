@@ -1,18 +1,13 @@
-import {makeStyles} from '@material-ui/styles'
-import {Box, CircularProgress} from '@material-ui/core'
+import { Box, CircularProgress } from '@mui/material'
+import { styled } from '@mui/styles'
 
-const useStyles = makeStyles(() => ({
-  root: {
-    height: '80vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+const Container = styled(Box)(() => ({
+  height: '80vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
 }))
 
-const Loader = () => {
-  const classes = useStyles()
-  return <Box className={classes.root}><CircularProgress color="primary"/></Box>
-}
+const Loader = () => <Container><CircularProgress color='primary' /></Container>
 
 export default Loader

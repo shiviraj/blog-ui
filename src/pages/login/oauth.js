@@ -7,6 +7,7 @@ import { handleLogin } from '../../utils/auth'
 import PageError from '../../common/components/PageError'
 import { setUser } from '../../modules/user/action'
 import { useDispatch } from 'react-redux'
+import Login from '../../modules/login'
 
 const OAuth = () => {
   const [error, setError] = useState(false)
@@ -21,15 +22,17 @@ const OAuth = () => {
           dispatch(setUser(data.user))
           handleLogin(router, data)
         })
-        .catch((error) => {
+        .catch((err) => {
           setError(true)
-          toast.error(error)
+          toast.error(err)
         })
     }
   }, [router.query])
   
   if (error) {
-    return <PageError message={'Something went wrong, Please try again!!'} />
+    return <PageError message={'Something went wrong, Please try again!!'}>
+      <Login />
+    </PageError>
   }
   
   return <Loader />

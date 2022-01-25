@@ -1,4 +1,4 @@
-import Role from '../../modules/role'
-import Pages from '../../modules/role/Pages'
+import Home from '../../modules/home'
 
-export default () => <Role title={'Comments'} component={Pages} />
+// export default () => <Role title={'Comments'} component={Pages} />
+export default Home

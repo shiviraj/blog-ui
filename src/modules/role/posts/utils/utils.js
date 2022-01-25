@@ -1,10 +1,14 @@
 const findNestedItem = (list, categoryId) => {
   for (let index = 0; index < list.length; index++) {
     const category = list[index]
-    if (category.categoryId === categoryId) return category
+    if (category.categoryId === categoryId) {
+      return category
+    }
     if (category.child) {
       const item = findNestedItem(category.child, categoryId)
-      if (item) return item
+      if (item) {
+        return item
+      }
     }
   }
   return null
@@ -15,8 +19,9 @@ const createNestedList = (list) => {
   return list.reduce((nestedList, category) => {
     if (category.parentCategory) {
       const listItem = findNestedItem(list, category.parentCategory)
-      if (listItem)
+      if (listItem) {
         listItem.child = listItem.child ? listItem.child.concat(category) : [category]
+      }
     } else {
       nestedList.push(category)
     }

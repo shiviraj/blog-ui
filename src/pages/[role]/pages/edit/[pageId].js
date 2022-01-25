@@ -1,6 +1,6 @@
-import Role from '../../../../modules/role'
-import EditPage from '../../../../modules/role/pages/EditPage'
+import Home from '../../../../modules/home'
 
-export default function Page() {
-  return <Role title={'Edit Page'} component={EditPage} />
-}
+// export default function Page() {
+//   return <Role title={'Edit Page'} component={EditPage} />
+// }
+export default Home

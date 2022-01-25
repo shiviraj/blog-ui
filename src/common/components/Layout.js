@@ -1,25 +1,23 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { makeStyles } from '@material-ui/styles'
 import Header from './Header'
 import { ROUTES } from '../../config/routes'
+import { styled } from '@mui/styles'
 
-const useStyles = makeStyles((theme) => ({
-  body: {
-    flexGrow: 1,
-    minHeight: '100vh',
-    zIndex: -1
-  }
+const Body = styled('div')(() => ({
+  flexGrow: 1,
+  minHeight: '100vh',
+  width: '100vw', margin: 0,
+  padding: 0,
+  zIndex: -1
 }))
 
 const Layout = ({ children }) => {
-  const classes = useStyles()
   const router = useRouter()
   const { pathname } = router
   return <>
     {pathname !== ROUTES.LOGIN && <Header />}
-    <div className={classes.body}>{children}</div>
-    {/*<Footer />*/}
+    <Body>{children}</Body>
   </>
 }
 

@@ -57,7 +57,7 @@ const CommentInput = (props) => {
       .then(() => setLoading(false))
   }
   
-  return <Container className={(placeholderDisable && !expand) ? 'disable' : ''}>
+  return <Container>
     <Collapse in={expand}>
       <Stack direction={'row'} spacing={1} alignItems={'center'} mb={2}>
         <Avatar src={user.profile} alt={user.username} />

@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/styles'
 import TableData from './components/Table'
-import { Box } from '@material-ui/core'
 import API from '../../API'
 import AddNew from './components/AddNew'
 import usePagination from '../../hooks/usePagination'
 import { formatDate } from '../../utils/utils'
 import RawHTML from '../../common/components/RawHTML'
 import ActionBar from './components/ActionBar'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: theme.spacing(10)
-  }
-}))
+import { Stack } from '@mui/material'
 
 const columns = [
   { id: 'postId', label: 'PostId' },
@@ -33,11 +23,10 @@ const columns = [
       return <RawHTML children={value} n2br={true} />
     }
   },
-  { id: 'postId', label: 'Action', format: (value) => <RawHTML><ActionBar id={value} /></RawHTML> }
+  { id: 'postId', label: 'Action', format: (value) => <ActionBar id={value} /> }
 ]
 
 const Posts = () => {
-  const classes = useStyles()
   const { pagination, setPagination, setTotalPages } = usePagination(1)
   const [posts, setPosts] = useState([])
   
@@ -51,10 +40,10 @@ const Posts = () => {
       .then(setPosts)
   }, [pagination.page, pagination.rowsPerPage])
   
-  return <Box className={classes.root}>
+  return <Stack m={2} mb={10}>
     <AddNew addNew={API.posts.addPost} type={'post'} />
     <TableData columns={columns} rows={posts} pagination={pagination} setPagination={setPagination} />
-  </Box>
+  </Stack>
 }
 
 export default Posts

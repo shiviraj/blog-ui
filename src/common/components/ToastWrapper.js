@@ -37,7 +37,7 @@ const ToastWrapper = ({ children }) => {
     toastRef.current.closeSnackbar(key)
   }
   
-  return <Toast maxSnack={5} anchorOrigin={{ horizontal: 'right', vertical: 'top' }} autoHideDuration={20000}
+  return <Toast maxSnack={5} anchorOrigin={{ horizontal: 'right', vertical: 'top' }} autoHideDuration={10000}
                 ref={toastRef} aria-multiline={true}
                 action={(key) => <IconButton onClick={onClickDismiss(key)}><Close /></IconButton>}
   >

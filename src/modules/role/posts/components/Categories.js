@@ -1,21 +1,18 @@
-import { makeStyles } from '@material-ui/styles'
-import { Box, Checkbox, Collapse, FormControlLabel, Link } from '@material-ui/core'
+import { Box, Checkbox, Collapse, FormControlLabel, Link } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import API from '../../../../API'
 import Accordion from '../../../../common/components/Accordion'
 import { sort } from '../utils/utils'
 import AddNewCategoryForm from './AddNewCategoryForm'
+import { styled } from '@mui/styles'
 import theme from '../../../../theme/theme'
 
-const useStyles = makeStyles((theme) => ({
-  option: {
-    margin: theme.spacing(0.5, 0),
-    padding: theme.spacing(0)
-  }
+const CheckboxOption = styled(Checkbox)(({ theme: themes }) => ({
+  margin: themes.spacing(0.5, 0),
+  padding: themes.spacing(0)
 }))
 
 const Categories = ({ post, setPost }) => {
-  const classes = useStyles()
   const [allCategories, setAllCategories] = useState(null)
   const [addNewCategory, setAddNewCategory] = useState(false)
   
@@ -24,38 +21,34 @@ const Categories = ({ post, setPost }) => {
       .then((categories) => setAllCategories(sort(categories)))
   }, [])
   
-  const isCategoryIdMatched = (categoryId) => category => category.categoryId === categoryId
+  const isCategoryIdMatched = (categoryId) => (category) => category === categoryId
   const findCategory = (categoryId) => allCategories.find(isCategoryIdMatched(categoryId))
+  const isChecked = (categoryId) => Boolean(post.categories.find((category) => category === categoryId))
   
   const handleChange = (categoryId) => () => {
     const categories = isChecked(categoryId)
-      ? post.categories.filter(category => category.categoryId !== categoryId)
+      ? post.categories.filter((category) => category !== categoryId)
       : post.categories.concat(findCategory(categoryId))
     setPost({ categories })
   }
   
-  const isChecked = (categoryId) => {
-    return !!post.categories.find((category) => category.categoryId === categoryId)
+  if (!allCategories) {
+    return <></>
   }
-  
-  if (!allCategories) return <></>
   
   return <Accordion title={'Categories'}>
     <Box>
-      {allCategories.map((category) =>
-        <FormControlLabel
-          key={category.categoryId}
-          label={category.name}
-          style={{ marginLeft: theme.spacing(category.level * 2) }}
-          control={
-            <Checkbox
-              className={classes.option}
-              size={'small'}
-              onChange={handleChange(category.categoryId)}
-              checked={isChecked(category.categoryId)} />
-          }
-        />
-      )}
+      {allCategories.map((category) => <FormControlLabel
+        key={category.categoryId}
+        label={category.name}
+        style={{ marginLeft: theme.spacing(category.level * 2) }}
+        control={
+          <CheckboxOption
+            size={'small'}
+            onChange={handleChange(category.categoryId)}
+            checked={isChecked(category.categoryId)} />
+        }
+      />)}
       <Collapse in={addNewCategory}>
         <AddNewCategoryForm
           post={post}
@@ -63,7 +56,9 @@ const Categories = ({ post, setPost }) => {
           allCategories={allCategories}
           setAllCategories={setAllCategories} />
       </Collapse>
-      <Link style={{ cursor: 'pointer' }} onClick={() => setAddNewCategory(!addNewCategory)}>Add New Category</Link>
+      <Link style={{ cursor: 'pointer', fontFamily: 'Roboto' }} onClick={() => setAddNewCategory(!addNewCategory)}>
+        Add New Category
+      </Link>
     </Box>
   </Accordion>
 }

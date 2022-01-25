@@ -1,21 +1,15 @@
-import { Box, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { styled } from '@mui/styles'
+import { Box, Typography } from '@mui/material'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.grey[300],
-    width: '100%',
-    color: theme.palette.primary.main,
-    textAlign: 'center'
-  },
-  title: {}
+const Container = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.grey[300],
+  width: '100%',
+  color: theme.palette.primary.main,
+  textAlign: 'center'
 }))
 
-const TitleBar = ({ title }) => {
-  const classes = useStyles()
-  return <Box className={classes.root} boxShadow={2}>
-    <Typography className={classes.title} variant={'h4'}>{title}</Typography>
-  </Box>
-}
+const TitleBar = ({ title }) => <Container boxShadow={2}>
+  <Typography variant={'h4'}>{title}</Typography>
+</Container>
 
 export default TitleBar

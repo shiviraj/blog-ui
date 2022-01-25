@@ -1,18 +1,16 @@
-import { Box, Link, TextField } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
 import Accordion from '../../../../common/components/Accordion'
 import { useEffect, useState } from 'react'
+import { styled } from '@mui/styles'
+import { Box, Link, TextField } from '@mui/material'
 
-const useStyles = makeStyles((theme) => ({
-  link: {
-    padding: theme.spacing(3, 0),
-    margin: theme.spacing(3, 0),
-    textDecoration: 'none'
-  }
+const PostLink = styled(Link)(({ theme }) => ({
+  padding: theme.spacing(3, 0),
+  margin: theme.spacing(3, 0),
+  fontFamily: 'Roboto',
+  textDecoration: 'none'
 }))
 
 const Permalink = ({ post, setPost }) => {
-  const classes = useStyles()
   const [url, setUrl] = useState(post.url)
   const baseUrl = window ? window.location.toString().split('/').slice(0, 3).join('/') : ''
   
@@ -22,17 +20,18 @@ const Permalink = ({ post, setPost }) => {
     <TextField
       defaultValue={url}
       label={'Url slug'}
-      onChange={(e) => setUrl(e.target.value)}
+      onChange={(event) => setUrl(event.target.value)}
       variant={'outlined'}
       color={'primary'}
       size={'small'}
       InputLabelProps={{ shrink: true }}
       fullWidth
+      multiline
       required />
     <Box pt={1}>
-      <Link href={`/posts/${post.url}`} className={classes.link}>
+      <PostLink href={`/posts/${post.url}`}>
         {`${baseUrl}/posts/${url}`}
-      </Link>
+      </PostLink>
     </Box>
   </Accordion>
 }

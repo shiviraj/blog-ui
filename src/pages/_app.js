@@ -9,8 +9,8 @@ import API from '../API'
 import { Provider, useDispatch } from 'react-redux'
 import store from '../store'
 import { setUser } from '../modules/user/action'
-import './style.css'
 import { ThemeProvider } from '@mui/styles'
+// import '../common/components/styles.css'
 
 const MyApp = ({ Component, pageProps, ...rest }) => {
   useEffect(() => {
@@ -31,13 +31,14 @@ const MyApp = ({ Component, pageProps, ...rest }) => {
   </Provider>
 }
 
-const WithValidatedProfile = ({ children, ...rest }) => {
+const WithValidatedProfile = ({ children }) => {
   const dispatch = useDispatch()
   const router = useRouter()
   useEffect(() => {
-    if (!router.pathname.startsWith('/login'))
+    if (!router.pathname.startsWith('/login')) {
       API.users.validateUser()
         .then((user) => dispatch(setUser(user)))
+    }
   }, [])
   
   return <>{children}</>

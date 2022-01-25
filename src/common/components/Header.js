@@ -1,53 +1,50 @@
 import React from 'react'
-import Appbar from './Header/Appbar'
-import Menubar from './Header/Menubar'
-import { makeStyles } from '@material-ui/core/styles'
 import { useRouter } from 'next/router'
-import { isSuperUserPath } from '../../config/roles'
-import { Box, Typography } from '@material-ui/core'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
+import { styled } from '@mui/styles'
+import { Box, Typography } from '@mui/material'
+import { isSuperUserPath } from '../../config/roles'
+import Appbar from './Header/Appbar'
+import Menubar from './Header/Menubar'
 
-const useStyles = makeStyles((theme) => ({
-  topBar: {
-    backgroundColor: theme.palette.common.black,
-    display: 'flex',
-    justifyContent: 'space-between',
-    position: 'fixed',
-    width: '100vw',
-    zIndex: 10,
-    top: 0
-  },
-  child: {
-    position: 'relative',
+const Container = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.common.black,
+  display: 'flex',
+  justifyContent: 'space-between',
+  position: 'fixed',
+  width: '100vw',
+  zIndex: 10,
+  top: 0
+}))
+
+const Item = styled(Typography)(({ theme }) => ({
+  position: 'relative',
+  color: theme.palette.common.white,
+  '&>*': {
+    fontWeight: 900,
+    margin: theme.spacing(0.2, 1),
     color: theme.palette.common.white,
-    '&>*': {
-      fontWeight: 900,
-      margin: theme.spacing(0.2, 1),
-      color: theme.palette.common.white,
-      textDecoration: 'none'
-    }
-  },
-  root: { position: 'fixed' }
+    textDecoration: 'none'
+  }
 }))
 
 const Header = () => {
-  const classes = useStyles()
   const router = useRouter()
   const user = useSelector((state) => state.user)
   
   if (isSuperUserPath(router.query.role)) {
-    return <Box className={classes.topBar}>
-      <Typography className={classes.child}>
+    return <Container>
+      <Item>
         <Link component={Typography} href={`/${user.role && user.role.toLowerCase()}`}>Dashboard</Link>
         <Link component={Typography} href={'/'}>Visit Site</Link>
-      </Typography>
-      <Typography className={classes.child}>{user.name} ({user.role})</Typography>
-    </Box>
+      </Item>
+      <Item>{user.name} ({user.role})</Item>
+    </Container>
   }
   
   return <React.Fragment>
-    <Appbar className={classes.root} />
+    <Appbar style={{ position: 'fixed' }} />
     <Menubar />
   </React.Fragment>
 }

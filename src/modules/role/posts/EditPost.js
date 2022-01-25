@@ -1,32 +1,37 @@
 import React, { useEffect } from 'react'
-import { makeStyles } from '@material-ui/styles'
-import { Box, Divider, Input } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import Loader from '../../../common/components/Loader'
 import dynamic from 'next/dynamic'
+import { Box, Divider, Input, Stack } from '@mui/material'
+import { styled } from '@mui/styles'
 import RightSideBar from './components/RightSideBar'
 
 const CustomEditor = dynamic(() => import( '../../../common/components/CustomEditor'), { ssr: false })
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    marginTop: theme.spacing(3)
-  },
-  content: {
-    width: '100%',
-    justifyContent: 'center'
-  },
-  title: {
-    width: '100%',
-    fontSize: theme.spacing(4),
-    padding: '0 20%'
+const InputText = styled(Input)(({ theme }) => ({
+  width: '100%',
+  fontSize: theme.spacing(4),
+  fontWeight: 'bolder'
+}))
+
+const Content = styled(Box)(({ theme }) => ({
+  alignSelf: 'center',
+  width: '100%',
+  fontSize: theme.spacing(2.2),
+  fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+  [theme.breakpoints.up('md')]: {
+    width: theme.spacing(112),
+    '& .ce-block__content,& .ce-toolbar__content': {
+      maxWidth: '100%',
+      textAlign: 'justify'
+    },
+    '& .ce-block__content .ce-paragraph': {
+      textIndent: theme.spacing(4)
+    }
   }
 }))
 
-
 const EditPost = ({ loader, post, fetchPost, savePost, setPost }) => {
-  const classes = useStyles()
   const router = useRouter()
   
   const handleTitleUpdate = (event) => {
@@ -44,17 +49,21 @@ const EditPost = ({ loader, post, fetchPost, savePost, setPost }) => {
     }
   }, [router.query])
   
-  if (!post) return <Loader />
+  if (!post) {
+    return <Loader />
+  }
   
-  return <Box className={classes.root}>
-    <Box className={classes.content}>
-      <Input onChange={handleTitleUpdate} className={classes.title} defaultValue={post.title} disableUnderline
-             multiline />
-      {CustomEditor && <CustomEditor id={post.postId} data={post.content} handleChange={handleUpdateContent} />}
-    </Box>
+  return <Stack mt={3} direction={'row'} justifyContent={'space-between'}>
+    <Stack justifyContent={'center'} style={{ width: '100%' }}>
+      <Content>
+        <InputText onChange={handleTitleUpdate} defaultValue={post.title} disableUnderline
+                   multiline />
+        {CustomEditor && <CustomEditor id={post.postId} data={post.content} handleChange={handleUpdateContent} />}
+      </Content>
+    </Stack>
     <Divider orientation={'vertical'} flexItem />
     <RightSideBar post={post} loader={loader} savePost={savePost} setPost={setPost} />
-  </Box>
+  </Stack>
 }
 
 export default EditPost

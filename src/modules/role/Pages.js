@@ -1,18 +1,17 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/styles'
 import TableData from './components/Table'
-import { Box } from '@material-ui/core'
 import AddNew from './components/AddNew'
 import API from '../../API'
+import { Box } from '@mui/material'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: theme.spacing(10)
-  }
-}))
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     margin: theme.spacing(2),
+//     display: 'flex',
+//     flexDirection: 'column',
+//     marginBottom: theme.spacing(10)
+//   }
+// }))
 
 const columns = [
   { id: 'sNo', label: 'S.No.' },
@@ -75,13 +74,9 @@ const rows = [
   createData('Brazil', 'BR', 210147125, 8515767)
 ].map((it, index) => ({ sNo: index + 1, ...it }))
 
-const Pages = () => {
-  const classes = useStyles()
-  
-  return <Box className={classes.root}>
+const Pages = () => <Box>
     <AddNew addNew={API.pages.addPage} type={'page'} />
     <TableData columns={columns} rows={rows} />
   </Box>
-}
 
 export default Pages

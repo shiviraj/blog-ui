@@ -1,13 +1,12 @@
 import React from 'react'
-import Document from 'next/document'
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document'
 import { ServerStyleSheet as StyledComponentSheets } from 'styled-components'
-import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/core/styles'
+import { ServerStyleSheets } from '@mui/styles'
 
-class MyDocument extends Document {
+class MyDocument extends NextDocument {
   static async getInitialProps(ctx) {
     const styledComponentSheet = new StyledComponentSheets()
-    const materialUiSheets = new MaterialUiServerStyleSheets()
+    const materialUiSheets = new ServerStyleSheets()
     const originalRenderPage = ctx.renderPage
     try {
       ctx.renderPage = () => originalRenderPage({
@@ -29,11 +28,12 @@ class MyDocument extends Document {
     }
   }
   
+  // eslint-disable-next-line class-methods-use-this
   render() {
     return (
       <Html>
         <Head />
-        <body>
+        <body style={{ margin: 0, padding: 0 }}>
         <Main />
         <NextScript />
         </body>

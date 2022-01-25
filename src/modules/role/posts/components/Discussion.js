@@ -1,15 +1,15 @@
 import React from 'react'
 import Accordion from '../../../../common/components/Accordion'
-import { Checkbox, FormControlLabel } from '@material-ui/core'
+import { Checkbox, FormControlLabel } from '@mui/material'
 
 const Discussion = ({ post, setPost }) => {
-  const handleCheckbox = (e) => {
-    setPost({ commentsAllowed: e.target.checked })
+  const handleCheckbox = (event) => {
+    setPost({ commentsAllowed: event.target.checked })
   }
   
   return <Accordion title={'Discussion'}>
     <FormControlLabel
-      control={<Checkbox checked={post.commentsAllowed} onChange={handleCheckbox} />}
+      control={<Checkbox checked={post.commentsAllowed} color={'primary'} onChange={handleCheckbox} />}
       label='Allow Comments' />
   </Accordion>
 }

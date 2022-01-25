@@ -1,28 +1,29 @@
-import { makeStyles } from '@material-ui/styles'
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
 import React, { useState } from 'react'
+import { Button, Divider, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import API from '../../../../API'
 import { sort } from '../utils/utils'
-import theme from '../../../../theme/theme'
+import { styled } from '@mui/styles'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '&>*': {
-      margin: theme.spacing(0.5, 0)
-    }
-  },
-  button: {
-    padding: theme.spacing(0.5, 2)
+const Form = styled('form')(({ theme }) => ({
+  '&>*': {
+    margin: theme.spacing(0.5, 0)
   }
 }))
 
+const Item = styled(MenuItem)(({ theme, level }) => ({
+  paddingLeft: theme.spacing(level * 2 + 2)
+}))
+
+const CategoryButton = styled(Button)(({ theme }) => ({
+  padding: theme.spacing(0.5, 2)
+}))
+
 const AddNewCategoryForm = ({ post, setPost, allCategories, setAllCategories }) => {
-  const classes = useStyles()
   const [name, setName] = useState('')
   const [parentCategory, setParentCategory] = useState('000')
   
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = (event) => {
+    event.preventDefault()
     API.categories.addNewCategory({})
       .then((category) => {
         setPost({ category: post.categories.concat(category) })
@@ -30,30 +31,34 @@ const AddNewCategoryForm = ({ post, setPost, allCategories, setAllCategories }) 
       })
   }
   
-  return <form className={classes.root} onSubmit={handleSubmit}>
+  return <Form onSubmit={handleSubmit}>
+    <Divider />
     <TextField
       value={name}
-      onChange={(e) => setName(e.target.value)}
+      onChange={(event) => setName(event.target.value)}
       label={'Add New Category'}
-      variant={'outlined'} size={'small'}
+      variant={'outlined'}
+      size={'small'}
       required
       fullWidth />
-    <FormControl variant={'outlined'} size={'small'} fullWidth>
+    <FormControl size={'small'} fullWidth>
       <InputLabel>Parent Category</InputLabel>
       <Select
         value={parentCategory}
-        onChange={(e) => setParentCategory(e.target.value)}
+        onChange={(event) => setParentCategory(event.target.value)}
         label={'Parent Category'}>
         <MenuItem value={'000'}>--Parent Category--</MenuItem>
-        {allCategories.map(({ level, categoryId, name }) =>
-          <MenuItem value={categoryId} style={{ paddingLeft: theme.spacing(level * 2 + 2) }}
-                    key={categoryId}>{name}</MenuItem>)}
+        {allCategories.map(({ level, categoryId, name: categoryName }) => <Item value={categoryId} level={level}
+                                                                                key={categoryId}>
+          {categoryName}
+        </Item>)}
       </Select>
     </FormControl>
-    <Button type={'submit'} className={classes.button} variant={'outlined'} color={'primary'} size={'small'}>
+    <CategoryButton variant={'outlined'} color={'primary'} size={'small'}>
       Add New Category
-    </Button>
-  </form>
+    </CategoryButton>
+    <Divider />
+  </Form>
 }
 
 export default AddNewCategoryForm

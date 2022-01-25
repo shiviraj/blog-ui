@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 // import { makeStyles } from '@material-ui/styles'
 //
 // const useStyles = makeStyles((theme) => ({
@@ -9,11 +9,8 @@ import { Box } from '@material-ui/core'
 //   }
 // }))
 
-const Dashboard = () => {
-  const classes = {}
-  return <Box className={classes.root}>
-  </Box>
-}
+const Dashboard = () => <Box>
+</Box>
 
 export default Dashboard
 

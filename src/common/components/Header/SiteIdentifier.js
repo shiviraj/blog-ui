@@ -1,25 +1,19 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
 import { useSelector } from 'react-redux'
+import { styled } from '@mui/styles'
+import { Box, Typography } from '@mui/material'
 
-const classes = {}
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     paddingBottom: theme.spacing(1),
-//     lineHeight: theme.spacing(0.1)
-//   }
-// }))
+const Container = styled(Box)(({ theme }) => ({
+  paddingBottom: theme.spacing(1),
+  lineHeight: theme.spacing(0.1)
+}))
 
 const SiteIdentifier = () => {
-  // const classes = useStyles()
   const site = useSelector((state) => state.site)
-  return <Box className={classes.root}>
-    <Box>
-      <Typography variant={'h5'}>{site.title}</Typography>
-    </Box>
+  return <Container>
+    <Box><Typography variant={'h5'}>{site.title}</Typography></Box>
     <Box><span>{site.tagLine}</span></Box>
-  </Box>
+  </Container>
 }
 
 export default SiteIdentifier
