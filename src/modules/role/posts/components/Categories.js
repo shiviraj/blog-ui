@@ -13,7 +13,7 @@ const CheckboxOption = styled(Checkbox)(({ theme: themes }) => ({
 }))
 
 const Categories = ({ post, setPost }) => {
-  const [allCategories, setAllCategories] = useState(null)
+  const [allCategories, setAllCategories] = useState([])
   const [addNewCategory, setAddNewCategory] = useState(false)
   
   useEffect(() => {
@@ -30,10 +30,6 @@ const Categories = ({ post, setPost }) => {
       ? post.categories.filter((category) => category !== categoryId)
       : post.categories.concat(findCategory(categoryId))
     setPost({ categories })
-  }
-  
-  if (!allCategories) {
-    return <></>
   }
   
   return <Accordion title={'Categories'}>

@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Link, Typography } from '@mui/material'
 import { useToast } from '../../../../common/components/ToastWrapper'
 import { LoadingButton } from '@mui/lab'
 import { styled } from '@mui/styles'
@@ -26,7 +26,7 @@ const PostControl = ({ loader, savePost, post }) => {
   
   return <Container>
     <Typography>{loader ? 'Saving...' : 'Saved'}</Typography>
-    <Button variant={'outlined'} size={'small'}>Preview</Button>
+    <Button href={`/posts/${post.url}`} component={Link} variant={'outlined'} size={'small'}>Preview</Button>
     <LoadingButton onClick={handlePublishOrUpdate} variant={'contained'} loading={loader} size={'small'}>
       {post.postStatus === 'PUBLISH' ? 'Update' : 'Publish'}
     </LoadingButton>

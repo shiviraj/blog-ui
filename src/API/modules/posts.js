@@ -20,13 +20,17 @@ const posts = (host = '') => {
     getMyPostsCount() {
       return axios.fetch(`${host}/api/posts/author/my-posts/count`)
     },
+    isUrlAvailable(postId, url) {
+      return axios.fetch(`${host}/api/posts/author/${postId}/url-available/${url}`)
+    },
     getPostByUrl(postUrl) {
       return axios.fetch(`${host}/api/posts/${postUrl}`)
     },
     addLikeOrDislike(postId, likeOrDislike) {
       const options = { method: METHODS.PUT, data: likeOrDislike }
       return axios.fetch(`${host}/api/posts/${postId}`, options)
-    }
+    },
+    
   }
 }
 

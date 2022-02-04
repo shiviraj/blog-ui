@@ -12,6 +12,6 @@ const Error = styled(Box)(({ theme }) => ({
   fontSize: theme.spacing(4)
 }))
 
-const PageError = ({ message }) => <Error>{message}</Error>
+const PageError = ({ message }) => <Error>{message || 'Something went wrong!!'}</Error>
 
 export default PageError

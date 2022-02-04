@@ -16,9 +16,13 @@ const editPostReducer = (state = initialState, action) => {
     case SET_LOADER:
       return { ...state, loader: action.loader }
     case SET_EDIT_POST_CATEGORIES:
-      return { ...state, categories: action.categories }
+      return {
+        ...state,
+        categories: action.categories,
+        post: { ...state.post, categories: action.categories.map((it) => it.categoryId) }
+      }
     case SET_EDIT_POST_TAGS:
-      return { ...state, tags: action.tags }
+      return { ...state, tags: action.tags, post: { ...state.post, tags: action.tags.map((it) => it.tagId) } }
     default:
       return state
   }

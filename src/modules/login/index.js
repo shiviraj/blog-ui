@@ -4,6 +4,7 @@ import API from '../../API'
 import Loader from '../../common/components/Loader'
 import { Box, Button, Link, Typography } from '@mui/material'
 import { styled } from '@mui/styles'
+import PageError from '../../common/components/PageError'
 
 const Container = styled(Box)(() => ({
   height: '100vh',
@@ -18,15 +19,21 @@ const Container = styled(Box)(() => ({
 
 const Login = () => {
   const [clientId, setClientId] = useState(null)
+  const [error, setError] = useState(false)
   const site = useSelector((state) => state.site)
   
   useEffect(() => {
     API.oauth.getClientId()
       .then(setClientId)
+      .catch(() => setError(true))
   }, [])
   
-  if (!clientId) {
+  if (!clientId && !error) {
     return <Loader />
+  }
+  
+  if (error) {
+    return <PageError />
   }
   
   return <Container>

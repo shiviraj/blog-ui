@@ -21,7 +21,7 @@ const RightSideBar = ({ loader, post, savePost, setPost }) => <Container>
     <StatusAndVisibility post={post} />
     <Permalink post={post} setPost={setPost} />
     <Categories post={post} setPost={setPost} />
-    <Tags post={post} setPost={setPost} />
+    <Tags />
     <Discussion post={post} setPost={setPost} />
   </Box>
 </Container>

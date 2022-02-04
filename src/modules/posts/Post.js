@@ -10,10 +10,14 @@ const Post = (props) => {
   const router = useRouter()
   
   useEffect(() => {
-    if (router.query && router.query.postUrl) fetchPost(router.query.postUrl)
+    if (router.query && router.query.postUrl) {
+      fetchPost(router.query.postUrl)
+    }
   }, [router.query])
   
-  if (!post.postId) return <Loader />
+  if (!post.postId) {
+    return <Loader />
+  }
   
   return <Stack direction={'row'} justifyContent={'space-between'}>
     <PostDetails {...props} />

@@ -18,7 +18,7 @@ export const saveEditPost = (dispatch, post, postStatus = 'DRAFT') => {
   return API.posts.updatePost({ ...post, postStatus })
     .then((editPost) => setEditPost(editPost))
     .then(() => {
-      dispatch({ type: SET_LOADER, loader: false })
+      dispatch(setLoader(false))
       return { message: 'Successfully updated post' }
     })
     .catch(() => {
