@@ -4,7 +4,7 @@ import { styled } from '@mui/styles'
 import { Box, Link, TextField } from '@mui/material'
 import API from '../../../../API'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPost } from '../../../post/action'
+import { setEditPost } from '../action'
 
 const PostLink = styled(Link)(({ theme }) => ({
   padding: theme.spacing(3, 0),
@@ -22,10 +22,7 @@ const Permalink = () => {
   const baseUrl = window ? window.location.toString().split('/').slice(0, 3).join('/') : ''
   
   useEffect(() => {
-    dispatch(setPost({ ...post, url }))
-  }, [url])
-  
-  useEffect(() => {
+    dispatch(setEditPost({ ...post, url }))
     // eslint-disable-next-line require-unicode-regexp,prefer-named-capture-group
     const regexp = /^[a-z][a-z0-9\\-]+$/i
     if (url && regexp.exec(url)) {

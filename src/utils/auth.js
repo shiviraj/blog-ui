@@ -9,12 +9,10 @@ const logout = () => {
 }
 
 const handleUnauthorized = () => {
-  // clearStorage()
   redirectTo(ROUTES.LOGIN)
 }
 
 const handleLogin = (router, data) => {
-  console.log(data)
   setStorage(StorageKeys.AUTH, data)
   redirectTo(ROUTES.HOME[data.user.role], router)
 }
