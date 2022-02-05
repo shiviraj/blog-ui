@@ -16,12 +16,9 @@ const columns = [
   { id: 'tags', label: 'Tags', format: (value) => value.map(it => it.name).join(', ') },
   { id: 'comments', label: 'Comments' },
   {
-    id: 'postDate',
+    id: 'createdAt',
     label: 'Date',
-    format: ({ published, publishedOn, createdAt }) => {
-      const value = published ? `Published On:\n${formatDate(publishedOn)}` : `Created At:\n${formatDate(createdAt)}`
-      return <RawHTML children={value} n2br={true} />
-    }
+    format: (date) => <RawHTML children={`Created At:\n${formatDate(date)}`} n2br={true} />
   },
   { id: 'postId', label: 'Action', format: (value) => <ActionBar id={value} /> }
 ]

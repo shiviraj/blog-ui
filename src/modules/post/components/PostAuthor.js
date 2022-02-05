@@ -1,7 +1,6 @@
 import { formatDateTime } from '../../../utils/utils'
-import { Avatar, Box, Link, Typography } from '@mui/material'
-import { Comment, DateRange } from '@mui/icons-material'
-import { FlexContainer } from '../../../common/components/styled/FlexContainer'
+import { Avatar, Box, Link, Stack, Typography } from '@mui/material'
+import { Comment, DateRange, Person } from '@mui/icons-material'
 import { styled } from '@mui/styles'
 
 const Container = styled(Box)(({ theme }) => ({
@@ -15,21 +14,21 @@ const Container = styled(Box)(({ theme }) => ({
   }
 }))
 
-const PostAuthor = ({ post, author, comments }) => {
-  return <FlexContainer m={[1, 0]} alignItems={'center'}>
+const PostAuthor = ({ post, author, comments, icon }) => {
+  return <Stack direction={'row'} spacing={1} alignItems={'center'}>
     <Container>
-      <Avatar src={author.profile} alt={author.name} />
+      {icon ? <Person /> : <Avatar src={author.profile} alt={author.name} />}
       <Typography>{author.name}</Typography>
     </Container>
     <Container>
       <DateRange />
-      <Typography>{formatDateTime(post.postDate.lastUpdateOn)}</Typography>
+      <Typography>{formatDateTime(post.lastUpdateOn)}</Typography>
     </Container>
     {post.commentsAllowed && <Container component={Link} href={'#comment'}>
       <Comment />
       <Typography>{comments.length} {comments.length > 1 ? 'comments' : 'comment'}</Typography>
     </Container>}
-  </FlexContainer>
+  </Stack>
 }
 
 export default PostAuthor

@@ -31,6 +31,9 @@ const posts = (host = '') => {
       return axios.fetch(`${host}/api/posts/${postId}`, options)
     },
     
+    getPosts(page) {
+      return axios.fetch(`${host}/api/posts/page/${page}`)
+    }
   }
 }
 

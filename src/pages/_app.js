@@ -10,7 +10,6 @@ import { Provider, useDispatch } from 'react-redux'
 import store from '../store'
 import { setUser } from '../modules/user/action'
 import { ThemeProvider } from '@mui/styles'
-// import '../common/components/styles.css'
 
 const MyApp = ({ Component, pageProps, ...rest }) => {
   useEffect(() => {

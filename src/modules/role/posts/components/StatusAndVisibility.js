@@ -27,7 +27,7 @@ const StatusAndVisibility = () => {
       </Stack>
       <Stack direction={'row'} alignItems={'center'} spacing={2}>
         <Typography>Created At : </Typography>
-        <Typography>{formatDateTime(post.postDate.createdAt)}</Typography>
+        <Typography>{formatDateTime(post.createdAt)}</Typography>
       </Stack>
     </Stack>
     

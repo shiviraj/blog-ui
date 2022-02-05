@@ -7,6 +7,7 @@ import Tags from './Tags'
 import Discussion from './Discussion'
 import { styled } from '@mui/styles'
 import { Box } from '@mui/material'
+import FeaturedImage from './FeaturedImage'
 
 const Container = styled(Box)(({ theme }) => ({
   right: 0,
@@ -23,6 +24,7 @@ const RightSideBar = () => <Container>
     <Categories />
     <Tags />
     <Discussion />
+    <FeaturedImage />
   </Box>
 </Container>
 

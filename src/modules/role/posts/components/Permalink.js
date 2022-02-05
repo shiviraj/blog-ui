@@ -4,7 +4,7 @@ import { styled } from '@mui/styles'
 import { Box, Link, TextField } from '@mui/material'
 import API from '../../../../API'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPost } from '../../../posts/action'
+import { setPost } from '../../../post/action'
 
 const PostLink = styled(Link)(({ theme }) => ({
   padding: theme.spacing(3, 0),

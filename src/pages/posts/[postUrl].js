@@ -2,10 +2,10 @@ import { useRouter } from 'next/router'
 import Loader from '../../common/components/Loader'
 import { useEffect } from 'react'
 import { Stack } from '@mui/material'
-import SideBar from '../../modules/posts/components/SideBar'
+import SideBar from '../../modules/post/components/SideBar'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPost, setLoader } from '../../modules/posts/action'
-import PostDetails from '../../modules/posts/components/PostDetails'
+import { fetchPost, setLoader } from '../../modules/post/action'
+import PostDetails from '../../modules/post/components/PostDetails'
 
 const Post = () => {
   const dispatch = useDispatch()

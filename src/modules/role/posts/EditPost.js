@@ -6,7 +6,7 @@ import { Box, Divider, Input, Stack } from '@mui/material'
 import { styled } from '@mui/styles'
 import RightSideBar from './components/RightSideBar'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPost } from '../../posts/action'
+import { setPost } from '../../post/action'
 import { getEditPost, updatePost } from './action'
 
 const CustomEditor = dynamic(() => import( '../../../common/components/CustomEditor'), { ssr: false })
