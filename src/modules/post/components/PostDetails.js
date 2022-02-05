@@ -13,13 +13,14 @@ const Container = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignSelf: 'center',
-  width: theme.spacing(120)
+  width: theme.spacing(108),
+  marginTop: theme.spacing(2)
 }))
 
 const PostDetails = () => {
   const { post, author, categories, tags, comments } = useSelector((state) => state.post)
   
-  return <Stack width={'100%'} justifyContent={'center'} flexDirection={'column'}>
+  return <Stack justifyContent={'center'} flexDirection={'column'}>
     <Container>
       <Typography variant={'h4'}>{post.title}</Typography>
       <PostCategories categories={categories} />

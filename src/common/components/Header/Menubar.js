@@ -37,7 +37,7 @@ const NavLink = ({ path, text }) => {
 const Menubar = () => {
   return <Container id='back-to-top-anchor'>
     <NavLink path='/' text='HOME' />
-    <NavLink path='/posts' text='POSTS' />
+    <NavLink path='/posts/page/1' text='POSTS' />
   </Container>
 }
 

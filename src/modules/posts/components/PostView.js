@@ -5,7 +5,7 @@ import { styled } from '@mui/styles'
 const Container = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[500]}`,
   borderRadius: theme.spacing(1),
-  margin: theme.spacing(2),
+  margin: theme.spacing(2, 0),
   padding: theme.spacing(1.5),
   '&:hover': {
     boxShadow: theme.shadows[4]

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import SideBar from './components/SideBar'
+import SideBar from '../posts/components/SideBar'
 import PostDetails from './components/PostDetails'
 import Loader from '../../common/components/Loader'
 import { useEffect } from 'react'

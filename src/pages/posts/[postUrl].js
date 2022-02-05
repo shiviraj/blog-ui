@@ -2,10 +2,15 @@ import { useRouter } from 'next/router'
 import Loader from '../../common/components/Loader'
 import { useEffect } from 'react'
 import { Stack } from '@mui/material'
-import SideBar from '../../modules/post/components/SideBar'
+import SideBar from '../../modules/posts/components/SideBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPost, setLoader } from '../../modules/post/action'
 import PostDetails from '../../modules/post/components/PostDetails'
+import { styled } from '@mui/styles'
+
+const Container = styled(Stack)(({ theme }) => ({
+  background: theme.palette.grey[100]
+}))
 
 const Post = () => {
   const dispatch = useDispatch()
@@ -22,10 +27,10 @@ const Post = () => {
     return <Loader />
   }
   
-  return <Stack direction={'row'} justifyContent={'space-between'}>
+  return <Container direction={'row'} spacing={8} justifyContent={'center'}>
     <PostDetails />
     <SideBar />
-  </Stack>
+  </Container>
 }
 
 export default Post

@@ -30,9 +30,11 @@ const posts = (host = '') => {
       const options = { method: METHODS.PUT, data: likeOrDislike }
       return axios.fetch(`${host}/api/posts/${postId}`, options)
     },
-    
     getPosts(page) {
       return axios.fetch(`${host}/api/posts/page/${page}`)
+    },
+    getPostsCount() {
+      return axios.fetch(`${host}/api/posts/count`)
     }
   }
 }
