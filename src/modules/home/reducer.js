@@ -1,8 +1,8 @@
 const { SET_SITE_DETAILS } = require('./action')
 
 const initialState = {
-  title: 'DevsBone',
-  tagLine: 'Learn Software From Scratch',
+  title: '$hiviPoetry',
+  tagLine: '',
   developer: 'Shiviraj'
 }
 
