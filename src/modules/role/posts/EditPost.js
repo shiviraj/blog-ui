@@ -28,7 +28,7 @@ const Content = styled(Box)(({ theme }) => ({
       textAlign: 'justify'
     },
     '& .ce-block__content .ce-paragraph': {
-      textIndent: theme.spacing(4)
+      // textIndent: theme.spacing(4)
     }
   }
 }))
