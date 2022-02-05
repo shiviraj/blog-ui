@@ -38,7 +38,7 @@ const Permalink = () => {
   
   return <Accordion title={'Permalink'}>
     <TextField
-      defaultValue={url}
+      defaultValue={`post ${url}`}
       label={'Url slug'}
       onChange={(event) => setUrl(event.target.value)}
       variant={'outlined'}
