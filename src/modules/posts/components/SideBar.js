@@ -19,7 +19,7 @@ const Sidebar = () => {
       })
     API.categories.getAllCategories()
       .then((categories) => {
-        const links = categories.map(({ name, url }) => ({ name, url: `/categories/${url}` }))
+        const links = categories.map(({ name, url }) => ({ name, url: `/categories/${url}/page/1` }))
         setCategories(links)
       })
   }, [])

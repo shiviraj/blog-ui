@@ -7,7 +7,6 @@ const Container = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(1)
 }))
 
-
 const LinksView = ({ links, title }) => {
   return <Container>
     <Stack m={1.5}>
