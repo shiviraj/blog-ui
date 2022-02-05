@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import { styled } from '@mui/styles'
 import { Box, Link, TextField } from '@mui/material'
 import API from '../../../../API'
+import { useDispatch, useSelector } from 'react-redux'
+import { setPost } from '../../../posts/action'
 
 const PostLink = styled(Link)(({ theme }) => ({
   padding: theme.spacing(3, 0),
@@ -11,12 +13,17 @@ const PostLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none'
 }))
 
-const Permalink = ({ post, setPost }) => {
+const Permalink = () => {
+  const dispatch = useDispatch()
+  const { post } = useSelector((state) => state.editPost)
+  
   const [url, setUrl] = useState(post.url)
   const [error, setError] = useState('')
   const baseUrl = window ? window.location.toString().split('/').slice(0, 3).join('/') : ''
   
-  useEffect(() => setPost({ url }), [url])
+  useEffect(() => {
+    dispatch(setPost({ ...post, url }))
+  }, [url])
   
   useEffect(() => {
     // eslint-disable-next-line require-unicode-regexp,prefer-named-capture-group

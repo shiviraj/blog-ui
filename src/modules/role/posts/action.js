@@ -13,7 +13,7 @@ export const setLoader = (loader) => ({ type: SET_LOADER, loader })
 export const setCategories = (categories) => ({ type: SET_EDIT_POST_CATEGORIES, categories })
 export const setTags = (tags) => ({ type: SET_EDIT_POST_TAGS, tags })
 
-export const saveEditPost = (dispatch, post, postStatus = 'DRAFT') => {
+export const updatePost = (dispatch, post, postStatus = 'DRAFT') => {
   dispatch(setLoader(true))
   return API.posts.updatePost({ ...post, postStatus })
     .then((editPost) => setEditPost(editPost))

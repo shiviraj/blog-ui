@@ -3,6 +3,9 @@ import { Button, Divider, FormControl, InputLabel, MenuItem, Select, TextField }
 import API from '../../../../API'
 import { sort } from '../utils/utils'
 import { styled } from '@mui/styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCategories } from '../action'
+import lodash from 'lodash'
 
 const Form = styled('form')(({ theme }) => ({
   '&>*': {
@@ -18,15 +21,18 @@ const CategoryButton = styled(Button)(({ theme }) => ({
   padding: theme.spacing(0.5, 2)
 }))
 
-const AddNewCategoryForm = ({ post, setPost, allCategories, setAllCategories }) => {
+const AddNewCategoryForm = ({ allCategories, setAllCategories }) => {
+  const dispatch = useDispatch()
+  const { categories } = useSelector((state) => state.editPost)
+  
   const [name, setName] = useState('')
-  const [parentCategory, setParentCategory] = useState('000')
+  const [parentCategory, setParentCategory] = useState('')
   
   const handleSubmit = (event) => {
     event.preventDefault()
-    API.categories.addNewCategory({})
+    API.categories.addNewCategory({ name, parentCategory: parentCategory || null })
       .then((category) => {
-        setPost({ category: post.categories.concat(category) })
+        dispatch(setCategories(lodash.uniqWith(categories.concat(category), lodash.isEqual)))
         return setAllCategories(sort([...allCategories, category]))
       })
   }
@@ -47,14 +53,14 @@ const AddNewCategoryForm = ({ post, setPost, allCategories, setAllCategories }) 
         value={parentCategory}
         onChange={(event) => setParentCategory(event.target.value)}
         label={'Parent Category'}>
-        <MenuItem value={'000'}>--Parent Category--</MenuItem>
+        <MenuItem value={''}>--Parent Category--</MenuItem>
         {allCategories.map(({ level, categoryId, name: categoryName }) => <Item value={categoryId} level={level}
                                                                                 key={categoryId}>
           {categoryName}
         </Item>)}
       </Select>
     </FormControl>
-    <CategoryButton variant={'outlined'} color={'primary'} size={'small'}>
+    <CategoryButton type={'submit'} variant={'outlined'} color={'primary'} size={'small'}>
       Add New Category
     </CategoryButton>
     <Divider />

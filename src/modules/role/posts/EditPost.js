@@ -5,6 +5,9 @@ import dynamic from 'next/dynamic'
 import { Box, Divider, Input, Stack } from '@mui/material'
 import { styled } from '@mui/styles'
 import RightSideBar from './components/RightSideBar'
+import { useDispatch, useSelector } from 'react-redux'
+import { setPost } from '../../posts/action'
+import { getEditPost, updatePost } from './action'
 
 const CustomEditor = dynamic(() => import( '../../../common/components/CustomEditor'), { ssr: false })
 
@@ -31,21 +34,23 @@ const Content = styled(Box)(({ theme }) => ({
   }
 }))
 
-const EditPost = ({ loader, post, fetchPost, savePost, setPost }) => {
+const EditPost = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
+  const { post } = useSelector((state) => state.editPost)
   
   const handleTitleUpdate = (event) => {
-    setPost({ title: event.target.value })
+    dispatch(setPost({ ...post, title: event.target.value }))
   }
   
   const handleUpdateContent = async (instance) => {
     const data = await instance.saver.save()
-    savePost({ ...post, content: data })
+    await updatePost(dispatch, { ...post, content: data })
   }
   
   useEffect(() => {
     if (router.query && router.query.postId) {
-      fetchPost(router.query.postId)
+      getEditPost(dispatch, router.query.postId).then()
     }
   }, [router.query])
   
@@ -62,7 +67,7 @@ const EditPost = ({ loader, post, fetchPost, savePost, setPost }) => {
       </Content>
     </Stack>
     <Divider orientation={'vertical'} flexItem />
-    <RightSideBar post={post} loader={loader} savePost={savePost} setPost={setPost} />
+    <RightSideBar />
   </Stack>
 }
 

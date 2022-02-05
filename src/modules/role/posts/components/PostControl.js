@@ -2,6 +2,8 @@ import { Box, Button, Link, Typography } from '@mui/material'
 import { useToast } from '../../../../common/components/ToastWrapper'
 import { LoadingButton } from '@mui/lab'
 import { styled } from '@mui/styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { updatePost } from '../action'
 
 const Container = styled(Box)(({ theme }) => ({
   position: 'fixed',
@@ -15,11 +17,14 @@ const Container = styled(Box)(({ theme }) => ({
   background: theme.palette.common.white
 }))
 
-const PostControl = ({ loader, savePost, post }) => {
+const PostControl = () => {
   const toast = useToast()
+  const dispatch = useDispatch()
+  const { post, loader } = useSelector((state) => state.editPost)
+  
   
   const handlePublishOrUpdate = () => {
-    savePost(post, 'PUBLISH')
+    updatePost(dispatch, post, 'PUBLISH')
       .then((data) => toast.success(data.message))
       .catch((data) => toast.error(data.message))
   }

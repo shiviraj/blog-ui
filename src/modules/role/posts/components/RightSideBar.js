@@ -15,14 +15,14 @@ const Container = styled(Box)(({ theme }) => ({
   height: '100vh'
 }))
 
-const RightSideBar = ({ loader, post, savePost, setPost }) => <Container>
-  <PostControl loader={loader} savePost={savePost} post={post} />
+const RightSideBar = () => <Container>
+  <PostControl />
   <Box mt={6}>
-    <StatusAndVisibility post={post} />
-    <Permalink post={post} setPost={setPost} />
-    <Categories post={post} setPost={setPost} />
+    <StatusAndVisibility />
+    <Permalink />
+    <Categories />
     <Tags />
-    <Discussion post={post} setPost={setPost} />
+    <Discussion />
   </Box>
 </Container>
 
