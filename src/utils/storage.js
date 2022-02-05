@@ -1,6 +1,6 @@
 const UNDEFINED = 'undefined'
 
-const storageLocation = () => 'sessionStorage'
+const storageLocation = () => 'localStorage'
 
 const setStorage = (key, value) => {
   if (typeof window === UNDEFINED) {
@@ -37,4 +37,4 @@ const removeFromStorage = (key) => {
   window[storageLocation()].removeItem(key)
 }
 
-export {setStorage, getStorage, clearStorage, removeFromStorage}
+export { setStorage, getStorage, clearStorage, removeFromStorage }
