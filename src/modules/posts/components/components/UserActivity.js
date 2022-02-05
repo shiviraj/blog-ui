@@ -14,8 +14,10 @@ const Container = styled(Box)(({ theme }) => ({
   }
 }))
 
-const UserActivity = ({ likes, dislikes, handleLikeOrDislike, list, handleClick, viewReply, ...rest }) => {
-  const user = useSelector(state => state.user)
+const UserActivity = (props) => {
+  const { likes, dislikes, handleLikeOrDislike, list, handleClick, viewReply, visible = true, ...rest } = props
+  
+  const user = useSelector((state) => state.user)
   return <Stack direction={'row'} mt={1} mb={1} {...rest}>
     <Container onClick={handleLikeOrDislike('like')}>
       {likes.includes(user.userId) ? <ThumbUp /> : <ThumbUpOutlined />}
@@ -25,7 +27,7 @@ const UserActivity = ({ likes, dislikes, handleLikeOrDislike, list, handleClick,
       {dislikes.includes(user.userId) ? <ThumbDown /> : <ThumbDownOutlined />}
       <Typography variant={'body1'}>{dislikes.length}</Typography>
     </Container>
-    {list && <Container onClick={handleClick}>
+    {list && visible && <Container onClick={handleClick}>
       <Comment />
       <Typography variant={'body1'}>
         {viewReply ? 'Hide' : list.length} {handleClick && (list.length > 1 ? 'replies' : 'reply')}

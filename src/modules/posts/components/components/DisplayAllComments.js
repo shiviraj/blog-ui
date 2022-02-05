@@ -25,14 +25,16 @@ const DisplayAllComments = ({ postId, comments, visible = true, level = 0 }) => 
   const handleViewMore = () => setVisibleCommentCount(visibleCommentCount + commentCount)
   const visibleComments = comments.slice(0, visibleCommentCount)
   
-  if (!visible) return <></>
+  if (!visible) {
+    return <></>
+  }
   
   return <Box>
     {visibleComments.map((comment, index) =>
-      <React.Fragment key={comment.commentId + index}>
+      <div key={comment.commentId + index}>
         <DisplayComment comment={comment} postId={postId} level={level} />
         {(index < visibleComments.length - 1) && <Divider style={{ margin: '0 16px' }} />}
-      </React.Fragment>)}
+      </div>)}
     {visibleCommentCount < comments.length && <Stack direction={'row'} justifyContent={'center'}>
       <ViewMoreChip label={'View More'} onClick={handleViewMore} />
     </Stack>}

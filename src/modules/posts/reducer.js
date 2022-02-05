@@ -21,15 +21,13 @@ const initialState = {
 const postReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_POST:
-      const post = { ...state.post, ...action.post }
-      return { ...state, post }
+      return { ...state, post: { ...state.post, ...action.post } }
     case SET_LOADER:
       return { ...state, loader: action.loader }
     case SET_POST_COMMENTS:
       return { ...state, comments: createNestedList(action.comments) }
     case UPDATE_POST_COMMENT:
-      const comments = updateComment(state.comments, action.comment)
-      return { ...state, comments: [...comments] }
+      return { ...state, comments: [...updateComment(state.comments, action.comment)] }
     case SET_POST_TAGS:
       return { ...state, tags: action.tags }
     case SET_POST_CATEGORIES:

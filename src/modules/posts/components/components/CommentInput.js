@@ -57,14 +57,16 @@ const CommentInput = (props) => {
       .then(() => setLoading(false))
   }
   
-  return <Container>
+  const notVisible = placeholderDisable && !expand
+  
+  return <Container className={notVisible ? 'disable' : ''}>
     <Collapse in={expand}>
       <Stack direction={'row'} spacing={1} alignItems={'center'} mb={2}>
         <Avatar src={user.profile} alt={user.username} />
         <Typography>{user.name}</Typography>
       </Stack>
     </Collapse>
-    {(placeholderDisable && !expand) || <Summary onClick={() => setExpand(true)}>{message ? '' : placeholder}</Summary>}
+    {!(notVisible) && <Summary onClick={() => setExpand(true)}>{message ? '' : placeholder}</Summary>}
     <EditableComment in={expand}>
       <Input value={message} onChange={e => setMessage(e.target.value)} disableUnderline fullWidth multiline />
     </EditableComment>

@@ -21,6 +21,8 @@ const UserResponseOnComment = ({ comment, setExpand, setViewReply, viewReply, le
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
   
+  const visible = level < 3
+  
   const handleLikeOrDislike = (type) => () => {
     const key = `${type}s`
     const action = comment[key].includes(user.userId) ? 'REMOVE' : 'ADD'
@@ -29,9 +31,10 @@ const UserResponseOnComment = ({ comment, setExpand, setViewReply, viewReply, le
   }
   
   return <Stack direction={'row'} justifyContent={'space-between'}>
-    <UserActivity likes={comment.likes} dislikes={comment.dislikes} handleLikeOrDislike={handleLikeOrDislike}
+    <UserActivity visible={visible} likes={comment.likes} dislikes={comment.dislikes}
+                  handleLikeOrDislike={handleLikeOrDislike}
                   list={comment.child} handleClick={() => setViewReply(!viewReply)} viewReply={viewReply} />
-    {level < 3 && <Container onClick={() => setExpand()}>
+    {visible && <Container onClick={() => setExpand()}>
       <Reply />
       <Typography variant={'body1'}>Reply</Typography>
     </Container>}

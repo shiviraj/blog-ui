@@ -1,7 +1,7 @@
 import { Box, Divider, Typography } from '@mui/material'
 import CommentInput from './components/CommentInput'
-import DisplayAllComments from './components/DisplayAllComments'
 import { styled } from '@mui/styles'
+import DisplayAllComments from './components/DisplayAllComments'
 
 const Container = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,

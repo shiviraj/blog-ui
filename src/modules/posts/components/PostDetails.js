@@ -1,11 +1,12 @@
+import { Box, Divider, Stack, Typography } from '@mui/material'
+import { styled } from '@mui/styles'
+import { useSelector } from 'react-redux'
+import PostCategories from './PostCategories'
 import PostAuthor from './PostAuthor'
 import PostContent from './PostContent'
 import PostTags from './PostTags'
-import PostCategories from './PostCategories'
 import UserResponse from './UserResponse'
 import AboutAuthor from './AboutAuthor'
-import { Box, Divider, Stack, Typography } from '@mui/material'
-import { styled } from '@mui/styles'
 import PostComments from './PostComments'
 
 const Container = styled(Box)(({ theme }) => ({
@@ -15,7 +16,9 @@ const Container = styled(Box)(({ theme }) => ({
   width: theme.spacing(120)
 }))
 
-const PostDetails = ({ post, author, categories, tags, comments }) => {
+const PostDetails = () => {
+  const { post, author, categories, tags, comments } = useSelector((state) => state.post)
+  
   return <Stack width={'100%'} justifyContent={'center'} flexDirection={'column'}>
     <Container>
       <Typography variant={'h4'}>{post.title}</Typography>

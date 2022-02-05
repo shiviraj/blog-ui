@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { styled } from '@mui/styles'
 import moment from 'moment'
 import UserResponseOnComment from './UserResponseOnComment'
-import CommentInput from './CommentInput'
 import DisplayAllComments from './DisplayAllComments'
+import CommentInput from './CommentInput'
 
 const Container = styled(Box)(({ theme }) => ({
   '& .time': {
