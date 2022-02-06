@@ -1,6 +1,7 @@
 import { Box, Link, Stack, Typography } from '@mui/material'
 import PostAuthor from '../../post/components/PostAuthor'
 import { styled } from '@mui/styles'
+import RawHTML from '../../../common/components/RawHTML'
 
 const Container = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[500]}`,
@@ -18,6 +19,11 @@ const Image = styled('img')(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`
 }))
 
+const PostContent = styled('div')(({ theme }) => ({
+  height: theme.spacing(24),
+  overflow: 'hidden'
+}))
+
 const PostView = ({ post }) => <Container>
   <Link href={`/posts/${post.url}`} color={'inherit'} underline={'none'}>
     <Typography variant={'h4'}>{post.title}</Typography>
@@ -27,7 +33,10 @@ const PostView = ({ post }) => <Container>
   </Stack>
   <Stack direction={'row'} spacing={2}>
     {post.featuredImage && <Image src={post.featuredImage} />}
-    <Typography>{post.content} <Link href={`/posts/${post.url}`} underline={'none'}>Read More...</Link></Typography>
+    <PostContent>
+      <RawHTML n2br>{post.content}</RawHTML>
+      <Link href={`/posts/${post.url}`} underline={'none'}>Read More...</Link>
+    </PostContent>
   </Stack>
 </Container>
 
