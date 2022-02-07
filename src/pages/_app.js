@@ -10,6 +10,8 @@ import { Provider, useDispatch } from 'react-redux'
 import store from '../store'
 import { setUser } from '../modules/user/action'
 import { ThemeProvider } from '@mui/styles'
+import { setStorage } from '../utils/storage'
+import { StorageKeys } from '../constants/storage'
 
 const MyApp = ({ Component, pageProps, ...rest }) => {
   useEffect(() => {
@@ -37,6 +39,11 @@ const WithValidatedProfile = ({ children }) => {
     if (!router.pathname.startsWith('/login')) {
       API.users.validateUser()
         .then((user) => dispatch(setUser(user)))
+        .catch((error) => {
+          if (typeof error === 'object') {
+            setStorage(StorageKeys.AUTH, error)
+          }
+        })
     }
   }, [])
   
