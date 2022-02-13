@@ -5,6 +5,8 @@ import Loader from '../../common/components/Loader'
 import { Box, Button, Link, Typography } from '@mui/material'
 import { styled } from '@mui/styles'
 import PageError from '../../common/components/PageError'
+import { setStorage } from '../../utils/storage'
+import { StorageKeys } from '../../constants/storage'
 
 const Container = styled(Box)(() => ({
   height: '100vh',
@@ -23,6 +25,9 @@ const Login = () => {
   const site = useSelector((state) => state.site)
   
   useEffect(() => {
+    const url = window ? window.location.toString().split('url=')[1] : ''
+    setStorage(StorageKeys.LOGIN_REDIRECT_URL, url)
+    setError(false)
     API.oauth.getClientId()
       .then(setClientId)
       .catch(() => setError(true))

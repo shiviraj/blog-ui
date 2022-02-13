@@ -20,7 +20,7 @@ const useToast = () => {
   }
   
   const error = (err) => {
-    const message = err.code ? `${err.errorCode}: ${err.errorMessage}` : err
+    const message = typeof err === 'object' ? `${err.message}` : err
     enqueueSnackbar(message, { variant: 'error' })
   }
   

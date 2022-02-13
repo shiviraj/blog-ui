@@ -12,6 +12,7 @@ import { setUser } from '../modules/user/action'
 import { ThemeProvider } from '@mui/styles'
 import { setStorage } from '../utils/storage'
 import { StorageKeys } from '../constants/storage'
+import PopUpWrapper from '../common/components/PopUp'
 
 const MyApp = ({ Component, pageProps, ...rest }) => {
   useEffect(() => {
@@ -21,13 +22,15 @@ const MyApp = ({ Component, pageProps, ...rest }) => {
   return <Provider store={store}>
     <ThemeProvider theme={theme}>
       <HeadTag />
-      <ToastWrapper>
-        <WithValidatedProfile {...rest}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </WithValidatedProfile>
-      </ToastWrapper>
+      <PopUpWrapper>
+        <ToastWrapper>
+          <WithValidatedProfile {...rest}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </WithValidatedProfile>
+        </ToastWrapper>
+      </PopUpWrapper>
     </ThemeProvider>
   </Provider>
 }
@@ -37,9 +40,9 @@ const WithValidatedProfile = ({ children }) => {
   useEffect(() => {
     API.users.validateUser()
       .then((user) => dispatch(setUser(user)))
-      .catch((error) => {
+      .catch((error = {}) => {
         if (error.token) {
-          setStorage(StorageKeys.AUTH, error)
+          setStorage(StorageKeys.DUMMY, error)
         }
       })
   }, [])
