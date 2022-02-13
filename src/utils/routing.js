@@ -5,7 +5,10 @@ const onRouteChange = () => {
 }
 
 const redirectTo = (path, router) => {
-  if (router) return router.push(path)
+  if (router) {
+    router.push(path)
+    return
+  }
   if (window.location.pathname !== path) {
     window.location.assign(path)
   }

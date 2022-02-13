@@ -1,11 +1,10 @@
 import Loader from '../../../../common/components/Loader'
 import { useEffect, useState } from 'react'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Pagination, Stack, Typography } from '@mui/material'
 import PageError from '../../../../common/components/PageError'
 import { useRouter } from 'next/router'
 import API from '../../../../API'
 import PostView from '../../../../modules/posts/components/PostView'
-import { Pagination } from '@mui/lab'
 import SideBar from '../../../../modules/posts/components/SideBar'
 import { styled } from '@mui/styles'
 

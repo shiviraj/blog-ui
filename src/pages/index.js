@@ -1,3 +1,3 @@
-import Home from '../modules/home'
+import Posts from './posts'
 
-export default Home
+export default Posts

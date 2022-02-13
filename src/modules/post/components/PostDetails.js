@@ -14,7 +14,10 @@ const Container = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   alignSelf: 'center',
   width: theme.spacing(108),
-  marginTop: theme.spacing(2)
+  marginTop: theme.spacing(2),
+  padding: theme.spacing(2),
+  borderRadius: theme.spacing(2),
+  border: `1px solid ${theme.palette.grey[500]}`
 }))
 
 const PostDetails = () => {

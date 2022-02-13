@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import theme from '../theme/theme'
 import HeadTag from '../common/components/HeadTag'
 import Layout from '../common/components/Layout'
-import { Router, useRouter } from 'next/router'
+import { Router } from 'next/router'
 import { onRouteChange } from '../utils/routing'
 import ToastWrapper from '../common/components/ToastWrapper'
 import API from '../API'
@@ -34,17 +34,14 @@ const MyApp = ({ Component, pageProps, ...rest }) => {
 
 const WithValidatedProfile = ({ children }) => {
   const dispatch = useDispatch()
-  const router = useRouter()
   useEffect(() => {
-    if (!router.pathname.startsWith('/login')) {
-      API.users.validateUser()
-        .then((user) => dispatch(setUser(user)))
-        .catch((error) => {
-          if (typeof error === 'object') {
-            setStorage(StorageKeys.AUTH, error)
-          }
-        })
-    }
+    API.users.validateUser()
+      .then((user) => dispatch(setUser(user)))
+      .catch((error) => {
+        if (error.token) {
+          setStorage(StorageKeys.AUTH, error)
+        }
+      })
   }, [])
   
   return <>{children}</>

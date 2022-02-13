@@ -22,7 +22,7 @@ const PostAuthor = ({ post, author, comments, icon }) => {
     </Container>
     <Container>
       <DateRange />
-      <Typography>{formatDateTime(post.lastUpdateOn)}</Typography>
+      <Typography>{formatDateTime(post.lastUpdatedAt)}</Typography>
     </Container>
     {post.commentsAllowed && <Container component={Link} href={'#comment'}>
       <Comment />
