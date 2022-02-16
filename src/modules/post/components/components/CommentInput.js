@@ -6,6 +6,7 @@ import { styled } from '@mui/styles'
 import { Save } from '@mui/icons-material'
 import API from '../../../../API'
 import { useToast } from '../../../../common/components/ToastWrapper'
+import { usePopUp } from '../../../../common/components/PopUp'
 
 const Container = styled(Box)(({ theme }) => ({
   minHeight: theme.spacing(3),
@@ -36,9 +37,12 @@ const CommentInput = (props) => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const toast = useToast()
+  const popup = usePopUp()
   const user = useSelector(state => state.user)
   
   useEffect(() => setExpand(defaultExpand), [defaultExpand])
+  
+  const handleCommentSummary = () => user.userId ? setExpand(true) : popup.onOpen('comment on this post')
   
   const handleCancel = () => {
     setExpand(false)
@@ -66,7 +70,7 @@ const CommentInput = (props) => {
         <Typography>{user.name}</Typography>
       </Stack>
     </Collapse>
-    {!(notVisible) && <Summary onClick={() => setExpand(true)}>{message ? '' : placeholder}</Summary>}
+    {!(notVisible) && <Summary onClick={handleCommentSummary}>{message ? '' : placeholder}</Summary>}
     <EditableComment in={expand}>
       <Input value={message} onChange={e => setMessage(e.target.value)} disableUnderline fullWidth multiline />
     </EditableComment>

@@ -17,7 +17,17 @@ const Container = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
   padding: theme.spacing(2),
   borderRadius: theme.spacing(2),
-  border: `1px solid ${theme.palette.grey[500]}`
+  border: `1px solid ${theme.palette.grey[500]}`,
+  [theme.breakpoints.down('lg')]: {
+    borderRadius: theme.spacing(1),
+    width: '94%'
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '96%',
+    borderRadius: theme.spacing(1),
+    margin: theme.spacing(0.5),
+    padding: theme.spacing(0.5)
+  }
 }))
 
 const PostDetails = () => {

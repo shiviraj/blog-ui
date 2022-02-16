@@ -8,7 +8,12 @@ const Profile = styled(Box)(({ theme }) => ({
   '&>*': {
     margin: theme.spacing(0.1, 0.15),
     height: theme.spacing(16),
-    width: theme.spacing(16)
+    width: theme.spacing(16),
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(0.1, 0.15),
+      height: theme.spacing(8),
+      width: theme.spacing(8)
+    }
   }
 }))
 

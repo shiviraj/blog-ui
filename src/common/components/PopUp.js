@@ -26,7 +26,13 @@ const BasicModal = styled(Box)(({ theme }) => ({
 const Icon = styled(IconButton)(({ theme }) => ({
   position: 'absolute',
   top: 0,
-  right: 0
+  right: 0,
+  margin: theme.spacing(-2.4),
+  background: theme.palette.common.white,
+  border: `2px solid ${theme.palette.common.black}`,
+  '&:hover': {
+    background: theme.palette.grey[100]
+  }
 }))
 
 const usePopUp = () => {

@@ -5,7 +5,12 @@ import { styled } from '@mui/styles'
 import { Box } from '@mui/material'
 
 const Container = styled(Box)(({ theme }) => ({
-  minWidth: theme.spacing(40)
+  width: theme.spacing(40),
+  [theme.breakpoints.down('lg')]: {
+    width: '98%',
+    maxWidth: theme.spacing(105),
+    alignSelf: 'center'
+  }
 }))
 
 const Sidebar = () => {

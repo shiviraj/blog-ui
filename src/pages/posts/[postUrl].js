@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
 import Loader from '../../common/components/Loader'
 import { useEffect } from 'react'
-import { Stack } from '@mui/material'
+import { Divider, Stack } from '@mui/material'
 import SideBar from '../../modules/posts/components/SideBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPost, setLoader } from '../../modules/post/action'
 import PostDetails from '../../modules/post/components/PostDetails'
 import { styled } from '@mui/styles'
+import useMedia from '../../hooks/useMedia'
 
 const Container = styled(Stack)(({ theme }) => ({
   background: theme.palette.grey[100]
@@ -16,6 +17,7 @@ const Post = () => {
   const dispatch = useDispatch()
   const { loader, post } = useSelector((state) => state.post)
   const router = useRouter()
+  const media = useMedia()
   
   useEffect(() => {
     if (router.query && router.query.postUrl) {
@@ -27,8 +29,9 @@ const Post = () => {
     return <Loader />
   }
   
-  return <Container direction={'row'} spacing={8} justifyContent={'center'}>
+  return <Container direction={media.lg ? 'column' : 'row'} spacing={2} justifyContent={'center'}>
     <PostDetails />
+    <Divider />
     <SideBar />
   </Container>
 }
