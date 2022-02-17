@@ -13,11 +13,16 @@ export const initHeaders = () => {
 }
 
 const utils = {
-  fetch(url, { data, ...options } = {}) {
+  fetch(url, { data, ...options } = {}, retry = 1) {
     return new Promise((resolve, reject) => {
       axios({ url, ...options, headers: { ...initHeaders(), ...options.headers }, data })
         .then((res) => resolve(res.data))
-        .catch((error) => reject(error.response && error.response.data))
+        .catch((error) => {
+          if (error.response.status === 403 && retry > 0) {
+            return this.fetch(url, { data, ...options }, retry - 1)
+          }
+          reject(error.response && error.response.data)
+        })
     })
   }
 }
