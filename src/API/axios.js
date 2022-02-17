@@ -18,10 +18,11 @@ const utils = {
       axios({ url, ...options, headers: { ...initHeaders(), ...options.headers }, data })
         .then((res) => resolve(res.data))
         .catch((error) => {
-          if (error.response.status === 403 && retry > 0) {
-            return this.fetch(url, { data, ...options }, retry - 1)
+          if (retry > 0 && !url.includes('/api/users/validate')) {
+            this.fetch(url, { data, ...options }, retry - 1).then(resolve)
+          } else {
+            reject(error.response && error.response.data)
           }
-          reject(error.response && error.response.data)
         })
     })
   }
