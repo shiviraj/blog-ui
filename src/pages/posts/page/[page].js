@@ -32,13 +32,13 @@ const AllPosts = () => {
   const media = useMedia()
   
   useEffect(() => {
-    if (router.query && router.query.page) {
+    if (router.query.page) {
       const page = +router.query.page
       setPage(page)
       API.posts.getPostsCount().then((count) => setCount(Math.ceil(count / 10)))
       API.posts.getPosts(page).then(setPosts).catch().then(setLoader)
     }
-  }, [router.query])
+  }, [router.query.page])
   
   const handleChange = (_, page) => router.push(`/posts/page/${page}`).then()
   

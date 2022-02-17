@@ -21,10 +21,12 @@ const Container = styled(Box)(({ theme }) => ({
 const PostAuthor = ({ post, author, comments, icon }) => {
   const media = useMedia()
   return <Stack direction={'row'} spacing={1} alignItems={'center'}>
-    <Container>
-      {icon ? <Person /> : <Avatar src={author.profile} alt={author.name} />}
-      <Typography>{author.name}</Typography>
-    </Container>
+    <Link href={`/users/${author.userId}`} underline={'none'} color={'inherit'}>
+      <Container>
+        {icon ? <Person /> : <Avatar src={author.profile} alt={author.name} />}
+        <Typography>{author.username}</Typography>
+      </Container>
+    </Link>
     <Container>
       <DateRange />
       <Typography>{formatDateTime(post.lastUpdatedAt)}</Typography>

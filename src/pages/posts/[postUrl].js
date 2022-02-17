@@ -20,10 +20,10 @@ const Post = () => {
   const media = useMedia()
   
   useEffect(() => {
-    if (router.query && router.query.postUrl) {
+    if (router.query.postUrl) {
       fetchPost(dispatch, router.query.postUrl).then(() => dispatch(setLoader(false)))
     }
-  }, [router.query])
+  }, [router.query.postUrl])
   
   if (loader || !post.postId) {
     return <Loader />

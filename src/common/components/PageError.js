@@ -8,6 +8,7 @@ const Error = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   height: '70vh',
+  textAlign: 'center',
   color: theme.palette.error.main,
   fontSize: theme.spacing(4)
 }))

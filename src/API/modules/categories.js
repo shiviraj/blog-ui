@@ -14,7 +14,7 @@ const categories = (host = '') => {
       const options = { method: METHODS.POST, data: categories }
       return axios.fetch(`${host}/api/categories/categories`, options)
     },
-    getPosts({ page, categoryUrl }) {
+    getPosts(categoryUrl, page) {
       return axios.fetch(`${host}/api/categories/${categoryUrl}/page/${page}`)
     },
     getPostsCount(categoryUrl) {

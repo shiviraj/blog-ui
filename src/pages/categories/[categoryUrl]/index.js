@@ -5,10 +5,10 @@ import { useEffect } from 'react'
 const Category = () => {
   const router = useRouter()
   useEffect(() => {
-    if (router.query && router.query.categoryUrl) {
+    if (router.query.categoryUrl) {
       router.push(`/categories/${router.query.categoryUrl}/page/1`).then()
     }
-  }, [router.query])
+  }, [router.query.categoryUrl])
   return <Loader />
 }
 

@@ -25,11 +25,13 @@ const AllPosts = () => {
   const [count, setCount] = useState(0)
   
   useEffect(() => {
-    if (router.query && router.query.page) {
+    if (router.query.page) {
       API.categories.getPostsCount(router.query.categoryUrl).then((count) => setCount(Math.ceil(count / 10)))
-      API.categories.getPosts(router.query).then(setPosts).catch().then(setLoader)
+      API.categories.getPosts(router.query.categoryUrl, router.query.page).catch()
+        .then(setPosts)
+        .then(() => setLoader(false))
     }
-  }, [router.query])
+  }, [router.query.page, router.query.categoryUrl])
   
   const handleChange = (_, page) => router.push(`/categories/${router.query.categoryUrl}/page/${page}`).then()
   

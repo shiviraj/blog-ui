@@ -52,12 +52,12 @@ const CommentInput = (props) => {
   
   const handleAddComment = () => {
     setLoading(true)
-    API.comments.addComment(postId, { message, userId: user.userId, parentComment })
+    API.comments.addComment(postId, { message, parentComment })
       .then(() => {
         setMessage('')
         toast.success('You have made a successful comment, It will be visible on this post once it approved by Author!!')
       })
-      .catch(() => toast.error('Something went wrong, Please try again!!'))
+      .catch((error) => toast.error(error.message))
       .then(() => setLoading(false))
   }
   
@@ -78,7 +78,7 @@ const CommentInput = (props) => {
       <Stack direction={'row'} spacing={1}>
         <Button onClick={handleCancel} size={'small'}>Cancel</Button>
         <LoadingButton color='primary' onClick={handleAddComment} loading={loading} loadingPosition='end'
-                       endIcon={<Save />} size={'small'} variant='contained' disabled={!message}>
+                       endIcon={<Save />} size={'small'} variant='contained' disabled={!message.trim()}>
           Comment
         </LoadingButton>
       </Stack>

@@ -20,6 +20,9 @@ const BasicModal = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(1),
   '&>*': {
     margin: theme.spacing(0.5)
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '85%'
   }
 }))
 
@@ -32,6 +35,9 @@ const Icon = styled(IconButton)(({ theme }) => ({
   border: `2px solid ${theme.palette.common.black}`,
   '&:hover': {
     background: theme.palette.grey[100]
+  },
+  [theme.breakpoints.down('sm')]: {
+    margin: theme.spacing(-2.4)
   }
 }))
 

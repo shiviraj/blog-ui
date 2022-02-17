@@ -28,7 +28,7 @@ const PostView = ({ post }) => <Container>
   <Link href={`/posts/${post.url}`} color={'inherit'} underline={'none'}>
     <Typography variant={'h4'}>{post.title}</Typography>
   </Link>
-  <Stack m={1}>
+  <Stack mt={1} mb={1}>
     <PostAuthor post={post} author={post.author} comments={post.comments} icon />
   </Stack>
   <Stack direction={'row'} spacing={2}>

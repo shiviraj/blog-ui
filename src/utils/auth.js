@@ -5,7 +5,7 @@ import { StorageKeys } from '../constants/storage'
 
 const logout = () => {
   setStorage(StorageKeys.AUTH, null)
-  return redirectTo(ROUTES.LOGIN)
+  // return redirectTo(ROUTES.LOGIN)
 }
 
 const getPath = (data) => {
