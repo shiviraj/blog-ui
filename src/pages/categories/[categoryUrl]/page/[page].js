@@ -7,6 +7,7 @@ import API from '../../../../API'
 import PostView from '../../../../modules/posts/components/PostView'
 import SideBar from '../../../../modules/posts/components/SideBar'
 import { styled } from '@mui/styles'
+import useMedia from '../../../../hooks/useMedia'
 
 const PostDivider = styled('div')(({ theme }) => ({
   border: `1px dashed ${theme.palette.grey[500]}`
@@ -15,7 +16,11 @@ const PostDivider = styled('div')(({ theme }) => ({
 const Container = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  width: theme.spacing(108)
+  alignSelf: 'center',
+  width: theme.spacing(104),
+  [theme.breakpoints.down('md')]: {
+    width: '98%'
+  }
 }))
 
 const AllPosts = () => {
@@ -23,6 +28,7 @@ const AllPosts = () => {
   const [posts, setPosts] = useState([])
   const [loader, setLoader] = useState(true)
   const [count, setCount] = useState(0)
+  const media = useMedia()
   
   useEffect(() => {
     if (router.query.page) {
@@ -45,7 +51,7 @@ const AllPosts = () => {
   
   const category = posts[0].categories.find(({ url }) => url === router.query.categoryUrl)
   
-  return <Stack direction={'row'} spacing={4} justifyContent={'center'}>
+  return <Stack direction={media.lg ? 'column' : 'row'} spacing={2} justifyContent={'center'}>
     <Container>
       <Stack mt={2}>
         <Typography variant={'h4'}>Category: {category.name}</Typography>
