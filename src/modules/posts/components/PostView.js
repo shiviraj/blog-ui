@@ -19,11 +19,6 @@ const Image = styled('img')(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`
 }))
 
-const PostContent = styled('div')(({ theme }) => ({
-  height: theme.spacing(24),
-  overflow: 'hidden'
-}))
-
 const PostView = ({ post }) => <Container>
   <Link href={`/posts/${post.url}`} color={'inherit'} underline={'none'}>
     <Typography variant={'h4'}>{post.title}</Typography>
@@ -33,10 +28,10 @@ const PostView = ({ post }) => <Container>
   </Stack>
   <Stack direction={'row'} spacing={2}>
     {post.featuredImage && <Image src={post.featuredImage} />}
-    <PostContent>
+    <div>
       <RawHTML n2br>{post.content}</RawHTML>
-      <Link href={`/posts/${post.url}`} underline={'none'}>Read More...</Link>
-    </PostContent>
+      <Link href={`/posts/${post.url}`} underline={'none'}> Read More...</Link>
+    </div>
   </Stack>
 </Container>
 
