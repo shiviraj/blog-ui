@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
@@ -31,6 +31,7 @@ const Item = styled(Typography)(({ theme }) => ({
 
 const Header = () => {
   const router = useRouter()
+  const [open, setOpen] = useState(false)
   const user = useSelector((state) => state.user)
   
   if (isSuperUserPath(router.query.role)) {
@@ -44,8 +45,8 @@ const Header = () => {
   }
   
   return <React.Fragment>
-    <Appbar style={{ position: 'fixed' }} />
-    <Menubar />
+    <Appbar style={{ position: 'fixed' }} setOpen={() => setOpen(!open)} />
+    <Menubar open={open} setOpen={setOpen} />
   </React.Fragment>
 }
 

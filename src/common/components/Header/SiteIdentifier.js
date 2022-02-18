@@ -4,15 +4,17 @@ import { styled } from '@mui/styles'
 import { Box, Typography } from '@mui/material'
 
 const Container = styled(Box)(({ theme }) => ({
-  paddingBottom: theme.spacing(1),
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
   lineHeight: theme.spacing(0.1)
 }))
 
 const SiteIdentifier = () => {
   const site = useSelector((state) => state.site)
   return <Container>
-    <Box><Typography variant={'h5'}>{site.title}</Typography></Box>
-    <Box><span>{site.tagLine}</span></Box>
+    <Typography variant={'h5'}>{site.title}</Typography>
+    {Boolean(site.tagLine) && <Box mb={1.4}>{site.tagLine}</Box>}
   </Container>
 }
 

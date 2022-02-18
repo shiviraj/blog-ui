@@ -3,6 +3,7 @@ import { Avatar, Box, Link, Stack, Typography } from '@mui/material'
 import { Comment, DateRange, Person } from '@mui/icons-material'
 import { styled } from '@mui/styles'
 import useMedia from '../../../hooks/useMedia'
+import useScroll from '../../../hooks/useScroll'
 
 const Container = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -20,6 +21,7 @@ const Container = styled(Box)(({ theme }) => ({
 
 const PostAuthor = ({ post, author, comments, icon }) => {
   const media = useMedia()
+  const { scroll } = useScroll('#comment')
   return <Stack direction={'row'} spacing={1} alignItems={'center'}>
     <Link href={`/users/${author.userId}`} underline={'none'} color={'inherit'}>
       <Container>
@@ -31,7 +33,8 @@ const PostAuthor = ({ post, author, comments, icon }) => {
       <DateRange />
       <Typography>{formatDateTime(post.lastUpdatedAt)}</Typography>
     </Container>
-    {post.commentsAllowed && !media.sm && <Container component={Link} href={'#comment'}>
+    {post.commentsAllowed && !media.sm &&
+    <Container onClick={scroll} style={{ cursor: 'pointer' }}>
       <Comment />
       <Typography>{comments.length} {comments.length > 1 ? 'comments' : 'comment'}</Typography>
     </Container>}

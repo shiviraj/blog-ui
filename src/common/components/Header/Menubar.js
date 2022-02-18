@@ -1,8 +1,8 @@
 import React from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { styled } from '@mui/styles'
-import { Button } from '@mui/material'
+import { Drawer, Link, MenuItem, Stack } from '@mui/material'
+import useMedia from '../../../hooks/useMedia'
 
 const Container = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(6),
@@ -16,10 +16,6 @@ const Container = styled('div')(({ theme }) => ({
     textAlign: 'center',
     borderRadius: 0
   },
-  '& > *:hover': {
-    backgroundColor: theme.palette.primary.extraLight,
-    color: theme.palette.common.black
-  },
   '& .active': {
     backgroundColor: theme.palette.primary.light,
     color: theme.palette.common.black,
@@ -29,13 +25,24 @@ const Container = styled('div')(({ theme }) => ({
 
 const NavLink = ({ path, text }) => {
   const pathName = useRouter().pathname
-  return <Link href={path}>
-    <Button className={path === pathName ? 'active' : ''}>{text}</Button>
+  return <Link href={path} underline={'none'} textAlign={'center'}>
+    <MenuItem>{text}</MenuItem>
   </Link>
 }
 
-const Menubar = () => {
-  return <Container id='back-to-top-anchor'>
+const Menubar = ({ open, setOpen }) => {
+  const media = useMedia()
+  
+  if (media.sm) {
+    return <Drawer anchor={'left'} open={open} onClose={() => setOpen(close)}>
+      <Stack minWidth={'70vw'}>
+        <NavLink path='/' text='HOME' />
+        <NavLink path='/posts/page/1' text='POSTS' />
+      </Stack>
+    </Drawer>
+  }
+  
+  return <Container>
     <NavLink path='/' text='HOME' />
     <NavLink path='/posts/page/1' text='POSTS' />
   </Container>
