@@ -8,11 +8,11 @@ const posts = (host = '') => {
       return axios.fetch(`${host}/api/posts/author`, options)
     },
     getPost(postId) {
-      return axios.fetch(`${host}/api/posts/author/${postId}`)
+      return axios.fetch(`${host}/api/posts/${postId}/author`)
     },
     updatePost(post) {
       const options = { method: METHODS.PUT, data: post }
-      return axios.fetch(`${host}/api/posts/author/${post.postId}`, options)
+      return axios.fetch(`${host}/api/posts/${post.postId}/author`, options)
     },
     getAllMyPosts(page, limit) {
       return axios.fetch(`${host}/api/posts/author/my-posts/page/${page}/limit/${limit}`)
@@ -21,7 +21,7 @@ const posts = (host = '') => {
       return axios.fetch(`${host}/api/posts/author/my-posts/count`)
     },
     isUrlAvailable(postId, url) {
-      return axios.fetch(`${host}/api/posts/author/${postId}/url-available/${url}`)
+      return axios.fetch(`${host}/api/posts/${postId}/author/url-available/${url}`)
     },
     getPostByUrl(postUrl) {
       return axios.fetch(`${host}/api/posts/${postUrl}`)
@@ -35,6 +35,9 @@ const posts = (host = '') => {
     },
     getPostsCount() {
       return axios.fetch(`${host}/api/posts/count`)
+    },
+    getPostsByAuthor(userId) {
+      return axios.fetch(`${host}/api/posts/author/${userId}`)
     }
   }
 }

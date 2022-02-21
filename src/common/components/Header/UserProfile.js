@@ -51,8 +51,9 @@ const UserProfile = () => {
   return <Box sx={{ flexGrow: 0 }}>
     <UserIcon handleOpenUserMenu={handleOpenUserMenu} />
     <Menu anchorEl={anchorElUser} open={Boolean(anchorElUser)} onClose={handleCloseUserMenu}>
-      {user && <Link href={`/${user.role && user.role.toLowerCase()}`}><MenuItem>Dashboard</MenuItem></Link>}
-      <Link href={'/profile'}><MenuItem>Profile</MenuItem></Link>
+      {user.role !== 'USER' &&
+      <Link href={`/${user.role && user.role.toLowerCase()}`}><MenuItem>Dashboard</MenuItem></Link>}
+      <Link href={`/users/${user.userId}`}><MenuItem>Profile</MenuItem></Link>
       <MenuItem onClick={handleLogout}><Typography textAlign='center'>Logout</Typography></MenuItem>
     </Menu>
   </Box>

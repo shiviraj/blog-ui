@@ -1,27 +1,13 @@
 import Loader from '../../../common/components/Loader'
 import { useEffect, useState } from 'react'
-import { Box, Divider, Pagination, Stack } from '@mui/material'
+import { Divider, Stack } from '@mui/material'
 import PageError from '../../../common/components/PageError'
 import { useRouter } from 'next/router'
 import API from '../../../API'
-import PostView from '../../../modules/posts/components/PostView'
 import SideBar from '../../../modules/posts/components/SideBar'
-import { styled } from '@mui/styles'
 import useMedia from '../../../hooks/useMedia'
+import Posts from '../../../modules/posts/components/Posts'
 
-const PostDivider = styled('div')(({ theme }) => ({
-  border: `1px dashed ${theme.palette.grey[500]}`
-}))
-
-const Container = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignSelf: 'center',
-  width: theme.spacing(104),
-  [theme.breakpoints.down('md')]: {
-    width: '98%'
-  }
-}))
 
 const AllPosts = () => {
   const router = useRouter()
@@ -33,14 +19,12 @@ const AllPosts = () => {
   
   useEffect(() => {
     if (router.query.page) {
-      const page = +router.query.page
-      setPage(page)
-      API.posts.getPostsCount().then((count) => setCount(Math.ceil(count / 10)))
-      API.posts.getPosts(page).then(setPosts).catch().then(setLoader)
+      const currentPage = Number(router.query.page)
+      setPage(currentPage)
+      API.posts.getPostsCount().then((postCount) => setCount(Math.ceil(postCount / 10)))
+      API.posts.getPosts(currentPage).then(setPosts).catch().then(() => setLoader(false))
     }
   }, [router.query.page])
-  
-  const handleChange = (_, page) => router.push(`/posts/page/${page}`).then()
   
   if (loader) {
     return <Loader />
@@ -51,17 +35,7 @@ const AllPosts = () => {
   }
   
   return <Stack direction={media.lg ? 'column' : 'row'} spacing={2} justifyContent={'center'}>
-    <Container>
-      {posts.map((post, index) => <div key={post.postId}>
-        <PostView post={post} />
-        {index !== posts.length - 1 && <PostDivider />}
-      </div>)}
-      <Stack alignSelf={'center'} mb={2}>
-        {count > 1 &&
-        <Pagination color={'primary'} page={page || 0} onChange={handleChange} count={count} showFirstButton
-                    showLastButton />}
-      </Stack>
-    </Container>
+    <Posts posts={posts} page={page} count={count} />
     <Divider />
     <Stack mt={1}>
       <SideBar />

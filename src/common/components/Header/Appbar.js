@@ -23,7 +23,7 @@ const Grow = styled(Box)(() => ({
 const Appbar = ({ setOpen }) => {
   const media = useMedia()
   return <AppbarContainer position='fixed'>
-    <Container id='back-to-top-anchor'>
+    <Container>
       <Toolbar>
         {media.sm && <IconButton onClick={setOpen} color={'inherit'}><Menu /></IconButton>}
         <SiteIdentifier />

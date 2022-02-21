@@ -2,15 +2,17 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import API from '../../API'
 import Loader from '../../common/components/Loader'
-import AboutAuthor from '../../modules/post/components/AboutAuthor'
+import Users from '../../modules/user/User'
 
 const User = () => {
   const router = useRouter()
   const [user, setUser] = useState(null)
+  // const [posts, setPosts] = useState([])
   
   useEffect(() => {
     if (router.query.userId) {
       API.users.getAuthor(router.query.userId).then(setUser)
+      // API.posts.getPostsByAuthor(router.query.userId).then(setPosts)
     }
   }, [router.query.userId])
   
@@ -18,7 +20,9 @@ const User = () => {
     return <Loader />
   }
   
-  return <div><AboutAuthor author={user} /></div>
+  return <div>
+    <Users user={user} />
+  </div>
 }
 
 export default User
