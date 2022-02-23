@@ -4,8 +4,9 @@ import API from '../../../API'
 import { useToast } from '../ToastWrapper'
 import { logout } from '../../../utils/auth'
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { styled } from '@mui/styles'
+import { unsetUser } from '../../../modules/user/action'
 
 const Login = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.white,
@@ -35,6 +36,7 @@ const UserIcon = ({ handleOpenUserMenu }) => {
 const UserProfile = () => {
   const [anchorElUser, setAnchorElUser] = useState(null)
   const user = useSelector((state) => state.user)
+  const dispatch = useDispatch()
   const toast = useToast()
   
   const handleOpenUserMenu = (event) => {
@@ -44,7 +46,10 @@ const UserProfile = () => {
   const handleLogout = () => {
     handleCloseUserMenu()
     API.users.logout()
-      .then(logout)
+      .then(() => {
+        dispatch(unsetUser())
+        logout()
+      })
       .catch(() => toast.error('Failed to logout'))
   }
   
