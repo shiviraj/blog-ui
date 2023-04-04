@@ -1,6 +1,5 @@
 import React from 'react'
-import { styled } from '@mui/styles'
-import { Box } from '@mui/material'
+import { Box, styled } from '@mui/material'
 
 const Error = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -13,6 +12,10 @@ const Error = styled(Box)(({ theme }) => ({
   fontSize: theme.spacing(4)
 }))
 
-const PageError = ({ message }) => <Error>{message || 'Something went wrong!!'}</Error>
+type PageErrorProps = { message?: string }
+
+const PageError = ({ message }: PageErrorProps): JSX.Element => {
+  return <Error>{message ?? 'Something went wrong!!'}</Error>
+}
 
 export default PageError

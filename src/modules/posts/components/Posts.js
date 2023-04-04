@@ -1,6 +1,5 @@
 import PostView from './PostView'
-import { Box, Pagination, Stack } from '@mui/material'
-import { styled } from '@mui/styles'
+import {Box, Pagination, Stack, styled} from '@mui/material'
 import { useRouter } from 'next/router'
 
 const PostDivider = styled('div')(({ theme }) => ({
@@ -17,7 +16,7 @@ const Container = styled(Box)(({ theme }) => ({
   }
 }))
 
-const Posts = ({ posts, page, count }) => {
+const Posts = ({ posts, page, count: totalPosts }) => {
   const router = useRouter()
   const handleChange = (_, page) => router.push(`/posts/page/${page}`).then()
   return <Container>
@@ -26,8 +25,8 @@ const Posts = ({ posts, page, count }) => {
       {index !== posts.length - 1 && <PostDivider />}
     </div>)}
     <Stack alignSelf={'center'} mb={2}>
-      {count > 1 &&
-      <Pagination color={'primary'} page={page || 0} onChange={handleChange} count={count} showFirstButton
+      {totalPosts > 1 &&
+      <Pagination color={'primary'} page={page || 0} onChange={handleChange} count={totalPosts} showFirstButton
                   showLastButton />}
     </Stack>
   </Container>

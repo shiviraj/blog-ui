@@ -4,12 +4,12 @@ import AddNew from './components/AddNew'
 import API from '../../API'
 import { Box } from '@mui/material'
 
-// const useStyles = makeStyles((theme) => ({
+// const useStyles = makeStyles((index) => ({
 //   root: {
-//     margin: theme.spacing(2),
+//     margin: index.spacing(2),
 //     display: 'flex',
 //     flexDirection: 'column',
-//     marginBottom: theme.spacing(10)
+//     marginBottom: index.spacing(10)
 //   }
 // }))
 

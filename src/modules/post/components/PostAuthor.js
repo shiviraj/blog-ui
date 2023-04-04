@@ -1,7 +1,6 @@
 import { formatDateTime } from '../../../utils/utils'
-import { Avatar, Box, Link, Stack, Typography } from '@mui/material'
+import {Avatar, Box, Link, Stack, styled, Typography} from '@mui/material'
 import { Comment, DateRange, Person } from '@mui/icons-material'
-import { styled } from '@mui/styles'
 import useMedia from '../../../hooks/useMedia'
 import useScroll from '../../../hooks/useScroll'
 

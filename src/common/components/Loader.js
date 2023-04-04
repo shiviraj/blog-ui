@@ -1,5 +1,4 @@
-import { Box, CircularProgress } from '@mui/material'
-import { styled } from '@mui/styles'
+import {Box, CircularProgress, styled} from '@mui/material'
 
 const Container = styled(Box)(() => ({
   height: '80vh',

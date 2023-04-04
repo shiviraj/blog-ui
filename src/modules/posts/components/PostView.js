@@ -1,6 +1,5 @@
-import { Box, Link, Stack, Typography } from '@mui/material'
+import {Box, Link, Stack, styled, Typography} from '@mui/material'
 import PostAuthor from '../../post/components/PostAuthor'
-import { styled } from '@mui/styles'
 import RawHTML from '../../../common/components/RawHTML'
 
 const Container = styled(Box)(({ theme }) => ({

@@ -14,7 +14,7 @@ const Root = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
   '&>p': {
     paddingBottom: theme.spacing(1),
-    // textIndent: theme.spacing(4)
+    // textIndent: index.spacing(4)
   }
 }))
 

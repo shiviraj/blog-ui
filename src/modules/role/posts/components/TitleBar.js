@@ -1,5 +1,4 @@
-import { styled } from '@mui/styles'
-import { Box, Typography } from '@mui/material'
+import {Box, styled, Typography} from '@mui/material'
 
 const Container = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.grey[300],

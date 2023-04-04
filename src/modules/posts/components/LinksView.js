@@ -1,5 +1,4 @@
-import { Box, Link, MenuItem, Stack, Typography } from '@mui/material'
-import { styled } from '@mui/styles'
+import {Box, Link, MenuItem, Stack, styled, Typography} from '@mui/material'
 import useMedia from '../../../hooks/useMedia'
 
 const Container = styled(Box)(({ theme }) => ({

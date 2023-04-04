@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { Avatar, Box, IconButton, Menu, MenuItem, Typography } from '@mui/material'
+import {Avatar, Box, IconButton, Menu, MenuItem, styled, Typography} from '@mui/material'
 import API from '../../../API'
 import { useToast } from '../ToastWrapper'
 import { logout } from '../../../utils/auth'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
-import { styled } from '@mui/styles'
 import { unsetUser } from '../../../modules/user/action'
 
 const Login = styled(Typography)(({ theme }) => ({

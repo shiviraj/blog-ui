@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Box, Collapse, IconButton, Typography } from '@mui/material'
+import {Box, Collapse, IconButton, styled, Typography} from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
-import { styled } from '@mui/styles'
 
 const Container = styled(Box)(({ theme }) => ({
   padding: theme.spacing(0.5, 1),

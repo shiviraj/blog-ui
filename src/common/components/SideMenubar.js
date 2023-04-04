@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux'
 import API from '../../API'
 import { logout } from '../../utils/auth'
 import { useToast } from './ToastWrapper'
-import { styled } from '@mui/styles'
-import { Link, Typography } from '@mui/material'
+import {Link, styled, Typography} from '@mui/material'
 import { useRouter } from 'next/router'
 
 const Container = styled('div')(({ theme }) => ({

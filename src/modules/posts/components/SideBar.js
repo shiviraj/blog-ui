@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import API from '../../../API'
 import LinksView from './LinksView'
-import { styled } from '@mui/styles'
-import { Box } from '@mui/material'
+import {Box, styled} from '@mui/material'
 
 const Container = styled(Box)(({ theme }) => ({
   width: theme.spacing(40),

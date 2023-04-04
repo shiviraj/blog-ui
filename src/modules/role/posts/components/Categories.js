@@ -5,7 +5,7 @@ import Accordion from '../../../../common/components/Accordion'
 import { sort } from '../utils/utils'
 import AddNewCategoryForm from './AddNewCategoryForm'
 import { styled } from '@mui/styles'
-import theme from '../../../../theme/theme'
+import index from '../../../../theme'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCategories } from '../action'
 
@@ -43,7 +43,7 @@ const Categories = () => {
         {allCategories.map(({ name, level, categoryId }) => <FormControlLabel
           key={categoryId}
           label={name}
-          style={{ marginLeft: theme.spacing(level * 2) }}
+          style={{ marginLeft: index.spacing(level * 2) }}
           control={
             <CheckboxOption
               size={'small'}
