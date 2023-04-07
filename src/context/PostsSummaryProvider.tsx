@@ -10,6 +10,7 @@ export type PostsSummaryContextType = {
   page: number
   totalPage: number
   sideBarLinks: SideBarLinksWithTitle[]
+  title?: string
 }
 export const PostsSummaryContext = createContext<PostsSummaryContextType>({
   page: 1,
@@ -19,9 +20,9 @@ export const PostsSummaryContext = createContext<PostsSummaryContextType>({
 })
 
 const PostsSummaryProvider = (props: PropsWithChildren<PostsSummaryContextType>): JSX.Element => {
-  const { children, sideBarLinks, posts, page, totalPage } = props
+  const { children, sideBarLinks, posts, page, totalPage, title } = props
   return (
-    <PostsSummaryContext.Provider value={{ sideBarLinks, posts, page, totalPage }}>
+    <PostsSummaryContext.Provider value={{ sideBarLinks, posts, page, totalPage, title }}>
       {children}
     </PostsSummaryContext.Provider>
   )

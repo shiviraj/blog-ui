@@ -37,7 +37,7 @@ const PostView = ({ post }: PostViewProps): JSX.Element => (
       {post.featuredImage && <Image src={post.featuredImage} />}
       <div>
         <RawHTML n2br>{post.summary}</RawHTML>
-        <Link href={`/posts/${post.url}`} underlineonhover color={'primary'}>
+        <Link href={`/posts/${post.url}`} underlineonhover={'true'} color={'primary'}>
           {'  '}
           Read More
         </Link>

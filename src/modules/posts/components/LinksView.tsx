@@ -21,7 +21,7 @@ const LinksView = ({ links, title }: LinksViewProps): JSX.Element => {
       </Stack>
       <Stack spacing={1} p={1}>
         {links.map(({ name, url }) => (
-          <Link key={url} href={url} underlineonhover color={'primary'}>
+          <Link key={url} href={url} underlineonhover={'true'} color={'primary'}>
             {name}
           </Link>
         ))}

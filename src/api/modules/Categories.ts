@@ -1,5 +1,5 @@
 import fetch from '../adapter'
-import type { CategoryType } from '../dto'
+import type { CategoryType, PostCount, PostSummaryType } from '../dto'
 
 class Categories {
   private readonly url: string
@@ -22,13 +22,17 @@ class Categories {
   //   return fetch(`${this.url}/categories`, options)
   // }
   //
-  // getPosts(categoryUrl, page) {
-  //   return fetch(`${this.url}/${categoryUrl}/page/${page}`)
-  // }
-  //
-  // getPostsCount(categoryUrl) {
-  //   return fetch(`${this.url}/${categoryUrl}/count`)
-  // }
+  getPosts(categoryUrl: string, page: number): Promise<PostSummaryType[]> {
+    return fetch<PostSummaryType[]>(`${this.url}/${categoryUrl}/page/${page}`)
+  }
+
+  getPostsCount(categoryUrl: string): Promise<PostCount> {
+    return fetch<PostCount>(`${this.url}/${categoryUrl}/count`)
+  }
+
+  getCategory(categoryUrl: string): Promise<CategoryType> {
+    return fetch<CategoryType>(`${this.url}/${categoryUrl}`)
+  }
 }
 
 export default Categories

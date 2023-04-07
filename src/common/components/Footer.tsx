@@ -43,7 +43,7 @@ const Footer = (): JSX.Element => {
     <FooterContainer>
       <Typography variant={'subtitle1'}>
         © {moment().format('YYYY')} {site.title} • Developed by{' '}
-        <Link href={site.developer.url} target={'_blank'} color={'primary'} underlineonhover>
+        <Link href={site.developer.url} target={'_blank'} color={'primary'} underlineonhover={'true'}>
           {site.developer.name}
         </Link>
       </Typography>

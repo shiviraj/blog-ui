@@ -5,6 +5,7 @@ import { Integer } from '../../../utils/extensions'
 import { usePostsSummary } from '../../../context'
 import { useRouter } from 'next/router'
 import { useMedia } from '../../../hooks'
+import PostsTitle from './PostsTitle'
 
 const Container = styled(Stack)(({ theme }) => ({
   display: 'flex',
@@ -22,19 +23,25 @@ const PaginationContainer = styled(Box)(({ theme }) => ({
 }))
 
 const Posts = (): JSX.Element => {
-  const { posts, totalPage, page } = usePostsSummary()
+  const { posts, totalPage, page, title } = usePostsSummary()
   const router = useRouter()
   const media = useMedia()
-  const handleChange = (event: unknown, page: number) => router.push(`/posts/page/${page}`)
+
+  const handleChange = function (event: unknown, page: number) {
+    const path = router.pathname
+    const pathname = path.endsWith('[page]') ? path : path.concat('/page/[page]')
+    return router.push({ pathname, query: { ...router.query, page } })
+  }
 
   return (
     <Container spacing={media.md ? 3 : 1.5}>
+      {title && <PostsTitle title={title} />}
       {posts.map(post => (
         <PostView post={post} key={post.postId} />
       ))}
-      <PaginationContainer>
-        <Stack alignSelf={'center'} mb={2}>
-          {totalPage.isGreaterThan(Integer.ONE) && (
+      {totalPage.isGreaterThan(Integer.ONE) && (
+        <PaginationContainer>
+          <Stack alignSelf={'center'} mb={2}>
             <Pagination
               color={'primary'}
               page={page}
@@ -45,9 +52,9 @@ const Posts = (): JSX.Element => {
               showFirstButton
               showLastButton
             />
-          )}
-        </Stack>
-      </PaginationContainer>
+          </Stack>
+        </PaginationContainer>
+      )}
     </Container>
   )
 }

@@ -1,16 +1,10 @@
 import React from 'react'
 import type { InferGetStaticPropsType, NextPage } from 'next'
-import { getStaticProps as staticPropsFn } from './page/[page]'
-import { PostsSummaryProvider } from '../../context'
-import PostsSummary from '../../modules/posts'
+import PostsSummaryPage, { getStaticProps as staticPropsFn } from './page/[page]'
 
 const PostsFirstPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
   const { pageCount, posts, sideBarLinks } = props
-  return (
-    <PostsSummaryProvider sideBarLinks={sideBarLinks} posts={posts} page={1} totalPage={pageCount}>
-      <PostsSummary />
-    </PostsSummaryProvider>
-  )
+  return <PostsSummaryPage posts={posts} pageCount={pageCount} sideBarLinks={sideBarLinks} page={1} />
 }
 
 export const getStaticProps = staticPropsFn

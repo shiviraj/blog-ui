@@ -1,4 +1,4 @@
-import { Avatar, Box, Chip, Stack, styled, Typography } from '@mui/material'
+import { Avatar, Box, Stack, styled, Typography } from '@mui/material'
 import type { AuthorType } from '../../../api/dto'
 
 const Profile = styled(Box)(({ theme }) => ({
@@ -28,13 +28,11 @@ const AboutAuthor = ({ author }: { author: AuthorType }): JSX.Element => {
       </Profile>
       <Stack>
         <Typography variant={'button'}>Written By</Typography>
-        <Stack direction={'row'} spacing={4}>
-          <Typography variant={'h5'}>{author.name}</Typography>
-          <Stack direction={'row'} spacing={1}>
-            <Chip label={'Follow'} color={'success'} />
-            <Chip label={'Subscribe'} color={'success'} />
-          </Stack>
-        </Stack>
+        <Typography variant={'h5'}>{author.name}</Typography>
+        {/*<Stack direction={'row'} spacing={4}>*/}
+        {/*  <Chip label={'Follow'} color={'success'} />*/}
+        {/*  <Chip label={'Subscribe'} color={'success'} />*/}
+        {/*</Stack>*/}
         {author.bio && <Bio>{author.bio}</Bio>}
       </Stack>
     </Stack>

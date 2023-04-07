@@ -1,37 +1,31 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import { Loader } from '../../../common/components'
 import PostsSummary from '../../../modules/posts'
-import type { PostCount, PostSummaryType } from '../../../api/dto'
+import type { CategoryType, PostCount, PostSummaryType } from '../../../api/dto'
 import api from '../../../api'
 import { Integer } from '../../../utils/extensions'
 import type { SideBarLinksWithTitle } from '../../../context'
 import { PostsSummaryProvider } from '../../../context'
-import type { CategoryType } from '../../../api/dto'
+import { getNumbersFrom1 } from '../../../utils/utils'
 
-type PostsSummaryPageProps = { pageCount: number; posts: PostSummaryType[]; sideBarLinks: SideBarLinksWithTitle[] }
+type PostsSummaryPageProps = {
+  page: number
+  pageCount: number
+  posts: PostSummaryType[]
+  sideBarLinks: SideBarLinksWithTitle[]
+}
 const PostsSummaryPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
-  const { pageCount, posts, sideBarLinks } = props
+  const { pageCount, page, posts, sideBarLinks } = props
   const router = useRouter()
-
-  useEffect(() => {
-    if (Number(router.query.page).isNotBetween(Integer.ONE, pageCount)) {
-      router.push('/posts/page/1')
-    }
-  }, [router.query.page])
 
   if (router.isFallback) {
     return <Loader />
   }
 
   return (
-    <PostsSummaryProvider
-      sideBarLinks={sideBarLinks}
-      posts={posts}
-      page={Number(router.query.page)}
-      totalPage={pageCount}
-    >
+    <PostsSummaryProvider sideBarLinks={sideBarLinks} posts={posts} page={page} totalPage={pageCount}>
       <PostsSummary />
     </PostsSummaryProvider>
   )
@@ -42,7 +36,7 @@ export const fetchSidebarLinks = async (): Promise<SideBarLinksWithTitle[]> => {
     return posts.map(({ title, url }) => ({ name: title, url: `/posts/${url}` }))
   })
   const categories = await api.categories.getAllCategories().then((categories: CategoryType[]) => {
-    return categories.map(({ name, url }) => ({ name, url: `/categories/${url}/page/1` }))
+    return categories.map(({ name, url }) => ({ name, url: `/categories/${url}` }))
   })
 
   return [
@@ -53,19 +47,19 @@ export const fetchSidebarLinks = async (): Promise<SideBarLinksWithTitle[]> => {
 
 export const getStaticProps: GetStaticProps<PostsSummaryPageProps> = async ({ params }) => {
   const { pageCount }: PostCount = await api.posts.getPostsCount()
-  const posts: PostSummaryType[] = await api.posts.getPosts(Number(params?.page ?? Integer.ONE))
+  const page = Number(params?.page ?? Integer.ONE)
+  const posts: PostSummaryType[] = await api.posts.getPosts(page)
 
   const sideBarLinks = await fetchSidebarLinks()
 
-  return { props: { pageCount, posts, sideBarLinks }, revalidate: 8640 }
+  return { props: { pageCount, posts, sideBarLinks, page }, revalidate: 8640 }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const response: PostCount = await api.posts.getPostsCount()
-  const paths: Array<{ params: { page: string } }> = new Array(response.pageCount)
-    .fill('')
-    .map((_str, index) => index + Integer.ONE)
-    .map(page => ({ params: { page: page.toString() } }))
+  const paths: Array<{ params: { page: string } }> = getNumbersFrom1(response.pageCount).map(page => ({
+    params: { page: page.toString() }
+  }))
 
   return { paths, fallback: true }
 }

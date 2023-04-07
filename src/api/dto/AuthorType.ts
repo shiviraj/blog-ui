@@ -1,4 +1,4 @@
-export interface AuthorType {
+export interface AuthorType extends Record<string, unknown> {
   bio: string
   profile: string
   displayName: string

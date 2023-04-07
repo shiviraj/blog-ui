@@ -21,9 +21,10 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ si
   if (router.isFallback) {
     return <Loader />
   }
+
   return (
     <PostDetailsProvider post={post} sideBarLinks={sideBarLinks}>
-      <Stack direction={media.md ? 'row' : 'column'} spacing={3}>
+      <Stack direction={media.lg ? 'row' : 'column'} spacing={media.md ? 3 : 1.5}>
         <PostDetails />
         <SideBar sideBarLinks={sideBarLinks} />
       </Stack>
