@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import Appbar from './Header/Appbar'
 
 const Header = (): JSX.Element => {
@@ -23,13 +23,11 @@ const Header = (): JSX.Element => {
   // }
 
   return (
-    <header>
-      <Appbar
-        setOpen={() => {
-          setOpen(!open)
-        }}
-      />
-    </header>
+    <Appbar
+      setOpen={() => {
+        setOpen(!open)
+      }}
+    />
   )
 }
 

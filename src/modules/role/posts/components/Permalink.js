@@ -1,8 +1,8 @@
 import Accordion from '../../../../common/components/Accordion'
 import { useEffect, useState } from 'react'
-import { styled } from '@mui/styles'
+import { styled } from '@mui/material'
 import { Box, Link, TextField } from '@mui/material'
-import API from '../../../../API'
+import API from '../../../../api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setEditPost } from '../action'
 

@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Divider, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
-import API from '../../../../API'
+import { Button, Divider, FormControl, InputLabel, MenuItem, Select, styled, TextField } from '@mui/material'
+import API from '../../../../api'
 import { sort } from '../utils/utils'
-import { styled } from '@mui/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCategories } from '../action'
 import lodash from 'lodash'
@@ -42,7 +41,7 @@ const AddNewCategoryForm = ({ allCategories, setAllCategories }) => {
     <TextField
       value={name}
       onChange={(event) => setName(event.target.value)}
-      label={'Add New Category'}
+      label={'Add New CategoryType'}
       variant={'outlined'}
       size={'small'}
       required
@@ -52,7 +51,7 @@ const AddNewCategoryForm = ({ allCategories, setAllCategories }) => {
       <Select
         value={parentCategory}
         onChange={(event) => setParentCategory(event.target.value)}
-        label={'Parent Category'}>
+        label={'Parent CategoryType'}>
         <MenuItem value={''}>--Parent Category--</MenuItem>
         {allCategories.map(({ level, categoryId, name: categoryName }) => <Item value={categoryId} level={level}
                                                                                 key={categoryId}>

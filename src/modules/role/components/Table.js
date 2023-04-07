@@ -10,7 +10,7 @@ import {
   TablePagination,
   TableRow
 } from '@mui/material'
-import { styled } from '@mui/styles'
+import { styled } from '@mui/material'
 
 const TableHeadRow = styled(TableRow)(({ theme }) => ({
   '&>*': {

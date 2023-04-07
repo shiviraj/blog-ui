@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Accordion from '../../../../common/components/Accordion'
-import API from '../../../../API'
+import API from '../../../../api'
 import lodash from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
 import { setTags } from '../action'
 import { Box, Chip, MenuItem, Stack, TextField } from '@mui/material'
-import { styled } from '@mui/styles'
+import { styled } from '@mui/material'
 
 const Container = styled(Box)(({ theme }) => ({
   background: theme.palette.common.white,
@@ -84,7 +84,7 @@ const Tags = () => {
     <TextField
       value={tagName} disabled={tags.length >= 5}
       onChange={handleChange} onKeyDown={handleKeyDown}
-      label={'Add New Tag'} variant={'outlined'} size={'small'}
+      label={'Add New TagType'} variant={'outlined'} size={'small'}
       helperText={Boolean(suggestions.length) ? '' : 'Press Enter to add new tag'}
       required fullWidth />
     {Boolean(tags.length < 5 && suggestions.length) && <Container>

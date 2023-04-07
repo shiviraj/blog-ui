@@ -1,7 +1,7 @@
 import React from 'react'
 import TableData from './components/Table'
 import AddNew from './components/AddNew'
-import API from '../../API'
+import API from '../../api'
 import { Box } from '@mui/material'
 
 // const useStyles = makeStyles((index) => ({

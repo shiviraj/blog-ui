@@ -1,21 +1,19 @@
-import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
-export type SiteType = { popUp: { message: string; open: boolean }; tagLine: string; developer: string; title: string }
+export type SiteType = { tagLine: string; developer: { name: string; url: string }; title: string }
 const initialState: SiteType = {
   title: 'Shivi Poetry',
   tagLine: '',
-  developer: 'Shiviraj',
-  popUp: { open: false, message: '' }
+  developer: { name: 'Shiviraj', url: 'https://www.shiviraj.com/about-me' }
 }
 
 const siteReducer = createSlice({
   initialState,
   name: 'siteReducer',
   reducers: {
-    SET_POPUP: (state, { payload }: PayloadAction<{ value: boolean; message: string }>) => {
-      state.popUp = { open: payload.value, message: payload.message }
-    }
+    // SET_POPUP: (state, { payload }: PayloadAction<{ value: boolean; message: string }>) => {
+    //   state.popUp = { open: payload.value, message: payload.message }
+    // }
   }
 })
 

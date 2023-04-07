@@ -1,9 +1,18 @@
-import Posts from '../../modules/posts'
 import React from 'react'
-import type { NextPage } from 'next'
+import type { InferGetStaticPropsType, NextPage } from 'next'
+import { getStaticProps as staticPropsFn } from './page/[page]'
+import { PostsSummaryProvider } from '../../context'
+import PostsSummary from '../../modules/posts'
 
-const PostsPage: NextPage = (): JSX.Element => {
-  return <Posts page={1} totalPosts={10} />
+const PostsFirstPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
+  const { pageCount, posts, sideBarLinks } = props
+  return (
+    <PostsSummaryProvider sideBarLinks={sideBarLinks} posts={posts} page={1} totalPage={pageCount}>
+      <PostsSummary />
+    </PostsSummaryProvider>
+  )
 }
 
-export default PostsPage
+export const getStaticProps = staticPropsFn
+
+export default PostsFirstPage

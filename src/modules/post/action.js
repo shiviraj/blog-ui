@@ -1,4 +1,4 @@
-import API from '../../API'
+import API from '../../api'
 
 export const POST = 'POST'
 export const SET_POST = `SET_${POST}`

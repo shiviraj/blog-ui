@@ -1,45 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import { Divider, Stack } from '@mui/material'
-import useMedia from '../../hooks/useMedia'
+import React from 'react'
+import { Stack } from '@mui/material'
 import { Posts, SideBar } from './components'
-import API from '../../API'
-import { Loader, PageError } from '../../common/components'
+import { PageError } from '../../common/components'
+import '../../utils/extensions'
+import { useMedia } from '../../hooks'
+import { usePostsSummary } from '../../context'
 
-type AllPostsProps = { page: number; totalPosts: number }
-
-const AllPosts = ({ page, totalPosts }: AllPostsProps): JSX.Element => {
+const PostsSummary = (): JSX.Element => {
   const media = useMedia()
-
-  const [posts, setPosts] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    API.posts
-      .getPosts(page)
-      .then(setPosts)
-      .catch()
-      .then(() => {
-        setIsLoading(false)
-      })
-  }, [])
-
-  if (isLoading) {
-    return <Loader />
-  }
+  const { posts, sideBarLinks } = usePostsSummary()
 
   if (posts.isEmpty()) {
-    return <PageError message={'No Post Found!!'} />
+    return <PageError message={'No Posts Found!!'} />
   }
 
   return (
-    <Stack direction={media.lg ? 'column' : 'row'} spacing={2} justifyContent={'center'}>
-      <Posts posts={posts} page={page} count={totalPosts} />
-      <Divider />
-      <Stack mt={1}>
-        <SideBar />
-      </Stack>
+    <Stack direction={media.lg ? 'row' : 'column'} spacing={media.md ? 3 : 1.5}>
+      <Posts />
+      <SideBar sideBarLinks={sideBarLinks} />
     </Stack>
   )
 }
 
-export default AllPosts
+export default PostsSummary

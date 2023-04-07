@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import API from '../../API'
+import API from '../../api'
 import Loader from '../../common/components/Loader'
 import Users from '../../modules/user/User'
 

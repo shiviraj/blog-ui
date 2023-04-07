@@ -1,8 +1,7 @@
 export { default as Accordion } from './Accordion'
 export * from './Accordion'
 
-// export { default as CustomEditor } from './CustomEditor'
-// export * from './CustomEditor'
+export * from './atom'
 
 export { default as Footer } from './Footer'
 export * from './Footer'

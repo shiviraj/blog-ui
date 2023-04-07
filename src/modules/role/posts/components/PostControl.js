@@ -1,7 +1,7 @@
 import { Box, Button, Link, Typography } from '@mui/material'
-import { useToast } from '../../../../common/components/ToastWrapper'
+import { useToast } from '../../../../common/components'
 import { LoadingButton } from '@mui/lab'
-import { styled } from '@mui/styles'
+import { styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { updatePost } from '../action'
 

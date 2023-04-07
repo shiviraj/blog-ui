@@ -3,7 +3,7 @@ import Accordion from '../../../../common/components/Accordion'
 import { Box, Dialog, DialogTitle, Grid, Stack, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { setEditPost } from '../action'
-import { styled } from '@mui/styles'
+import { styled } from '@mui/material'
 
 const ImageInput = styled(Box)(({ theme }) => ({
   background: theme.palette.divider,

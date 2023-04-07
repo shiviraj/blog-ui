@@ -1,5 +1,4 @@
-import { styled } from '@mui/styles'
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 
 const TableBodyRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {

@@ -5,7 +5,7 @@ import StatusAndVisibility from './StatusAndVisibility'
 import Permalink from './Permalink'
 import Tags from './Tags'
 import Discussion from './Discussion'
-import { styled } from '@mui/styles'
+import { styled } from '@mui/material'
 import { Box } from '@mui/material'
 import FeaturedImage from './FeaturedImage'
 

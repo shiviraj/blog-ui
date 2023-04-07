@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from './components/Table'
-import API from '../../API'
+import API from '../../api'
 import AddNew from './components/AddNew'
 import usePagination from '../../hooks/usePagination'
 import { formatDate } from '../../utils/utils'

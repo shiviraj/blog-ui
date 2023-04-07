@@ -1,12 +1,11 @@
-import { Avatar, Box, Button, Collapse, Input, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Button, Collapse, Input, Stack, styled, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { styled } from '@mui/styles'
 import { Save } from '@mui/icons-material'
-import API from '../../../../API'
-import { useToast } from '../../../../common/components/ToastWrapper'
-import { usePopUp } from '../../../../common/components/PopUp'
+import API from '../../../../api'
+import { useToast } from '../../../../common/components'
+import { usePopUp } from '../../../../common/components'
 
 const Container = styled(Box)(({ theme }) => ({
   minHeight: theme.spacing(3),
@@ -55,7 +54,7 @@ const CommentInput = (props) => {
     API.comments.addComment(postId, { message, parentComment })
       .then(() => {
         setMessage('')
-        toast.success('You have made a successful comment, It will be visible on this post once it approved by Author!!')
+        toast.success('You have made a successful comment, It will be visible on this post once it approved by AuthorType!!')
       })
       .catch((error) => toast.error(error.message))
       .then(() => setLoading(false))

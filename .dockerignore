@@ -2,7 +2,7 @@
 .dockerignore
 .gitignore
 .talismanrc
-.prettierrc
+.prettierrc.json
 .env.local
 
 babel.config.js

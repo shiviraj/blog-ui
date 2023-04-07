@@ -1,33 +1,34 @@
 import type { PropsWithChildren } from 'react'
 import React from 'react'
-import { useRouter } from 'next/router'
 import Header from './Header'
-import { ROUTES } from '../../config/routes'
 import Footer from './Footer'
-import useMedia from '../../hooks/useMedia'
-import { styled } from '@mui/material'
+import { Stack, styled } from '@mui/material'
 
-const Body = styled('div')<{ mt: number }>(({ theme, mt }) => ({
-  marginTop: theme.spacing(mt),
-  flexGrow: 1,
-  minHeight: '100vh',
-  width: '100vw',
-  margin: 0,
-  padding: 0,
-  zIndex: -1,
-  background: theme.palette.grey[100]
+const Container = styled(Stack)(({ theme }) => ({
+  background: theme.palette.grey[100],
+  minWidth: '100vw',
+  minHeight: '100vh'
 }))
 
-const Layout = ({ children }: PropsWithChildren) => {
-  const media = useMedia()
-  const router = useRouter()
-  const { pathname } = router
+const Body = styled('main')(({ theme }) => ({
+  margin: theme.spacing(9.5, 'auto', 1.5),
+  padding: 0,
+  width: '94%',
+  [theme.breakpoints.up('sm')]: {
+    margin: theme.spacing(11, 'auto', 3)
+  },
+  [theme.breakpoints.up('md')]: {
+    width: '80%'
+  }
+}))
+
+const Layout = ({ children }: PropsWithChildren): JSX.Element => {
   return (
-    <>
-      {pathname !== ROUTES.LOGIN && <Header />}
-      <Body mt={media.sm ? 5.5 : 0}>{children}</Body>
+    <Container justifyContent={'space-between'}>
+      <Header />
+      <Body>{children}</Body>
       <Footer />
-    </>
+    </Container>
   )
 }
 

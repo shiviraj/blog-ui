@@ -1,6 +1,12 @@
 import { useState } from 'react'
 
-const useForm = <T extends Record<string, unknown>>(initialValues: T) => {
+const useForm = <T extends Record<string, unknown>>(
+  initialValues: T
+): {
+  handleSubmit: (onSubmit: (values: T) => void) => (event: Event) => void
+  onChange: <K extends keyof T>(name: K, value: T[K]) => void
+  values: T
+} => {
   const [values, setValues] = useState<T>({ ...initialValues })
 
   const onChange = <K extends keyof T>(name: K, value: T[K]) => {

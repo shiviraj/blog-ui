@@ -1,6 +1,5 @@
-import { Box, Chip, Divider, Stack } from '@mui/material'
+import { Box, Chip, Divider, Stack, styled } from '@mui/material'
 import React, { useState } from 'react'
-import { styled } from '@mui/styles'
 import DisplayComment from './DisplayComment'
 
 const ViewMoreChip = styled(Chip)(({ theme }) => ({

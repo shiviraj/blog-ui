@@ -1,6 +1,6 @@
 import React from 'react'
 import { Avatar, Stack, Typography } from '@mui/material'
-import { styled } from '@mui/styles'
+import { styled } from '@mui/material'
 import useMedia from '../../hooks/useMedia'
 import { useSelector } from 'react-redux'
 import { formatDate } from '../../utils/utils'

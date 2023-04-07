@@ -19,7 +19,7 @@ module.exports = {
     browser: true
   },
   rules: {
-    '@typescript-eslint/array-type': ['warn', {default: 'array-simple'}],
+    '@typescript-eslint/array-type': ['warn', { default: 'array-simple' }],
     '@typescript-eslint/consistent-indexed-object-style': ['error', 'record'],
     '@typescript-eslint/consistent-type-exports': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'error',
@@ -62,11 +62,9 @@ module.exports = {
     '@typescript-eslint/prefer-readonly': 'error',
     '@typescript-eslint/prefer-reduce-type-parameter': 'error',
     '@typescript-eslint/unified-signatures': 'error',
-    'no-magic-numbers': 'off',
-    '@typescript-eslint/no-magic-numbers': 'warn',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
-    indent: ['warn', 2, {SwitchCase: 1, ignoredNodes: ['JSXAttribute', 'JSXSpreadAttribute']}],
+    indent: ['warn', 2, { SwitchCase: 1, ignoredNodes: ['JSXAttribute', 'JSXSpreadAttribute'] }],
     quotes: ['error', 'single'],
     'linebreak-style': ['error', 'unix'],
     semi: ['error', 'never'],
@@ -85,7 +83,7 @@ module.exports = {
     'handle-callback-err': 'error',
     'id-length': 'error',
     'key-spacing': 'error',
-    'max-len': ['error', {code: 120}],
+    'max-len': ['error', { code: 120 }],
     'max-params': [
       'error',
       {
@@ -99,7 +97,7 @@ module.exports = {
     'no-implicit-globals': 'error',
     'prefer-const': 'error',
     'no-process-exit': 'error',
-    'no-process-env': 'warn',
+    'no-process-env': 'error',
     'no-return-assign': 'error',
     'no-useless-return': 'error',
     'max-depth': 'error',
@@ -144,9 +142,9 @@ module.exports = {
       }
     },
     {
-      files: ['./src/types/index.ts'],
+      files: ['./src/config/config.ts'],
       rules: {
-        '@typescript-eslint/no-explicit-any': 'off'
+        'no-process-env': 'off'
       }
     }
   ]
