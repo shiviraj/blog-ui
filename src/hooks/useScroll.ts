@@ -1,11 +1,12 @@
-const useScroll = (): { scroll: () => void } => {
-  const scroll = () => {
-    // if (currentSelector ?? selector) {
-    //   const anchor = document.querySelector((currentSelector ?? selector)!)
-    //   anchor?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    // } else {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    // }
+const useScroll = (selector?: string): { scroll: (currentSelector?: string) => void } => {
+  const scroll = (currentSelector?: string) => {
+    const querySelector = currentSelector ?? selector
+    if (querySelector) {
+      const anchor = document.querySelector(querySelector)
+      anchor?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
   return { scroll }
 }

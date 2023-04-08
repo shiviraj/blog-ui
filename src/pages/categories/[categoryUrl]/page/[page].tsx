@@ -1,6 +1,4 @@
 import React from 'react'
-import { useRouter } from 'next/router'
-import { Loader } from '../../../../common/components'
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import api from '../../../../api'
 import type { CategoryType, PostSummaryType } from '../../../../api/dto'
@@ -20,11 +18,6 @@ type CategoriesPageProps = {
 }
 const CategoriesPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
   const { posts, sideBarLinks, pageCount, page, category } = props
-  const router = useRouter()
-
-  if (router.isFallback) {
-    return <Loader />
-  }
 
   return (
     <PostsSummaryProvider
@@ -62,7 +55,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       })
     })
   )
-  return { paths: urls.map(url => ({ params: url })), fallback: true }
+  return { paths: urls.map(url => ({ params: url })), fallback: false }
 }
 
 export default CategoriesPage

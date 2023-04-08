@@ -1,7 +1,5 @@
 import React from 'react'
-import { useRouter } from 'next/router'
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
-import { Loader } from '../../../common/components'
 import PostsSummary from '../../../modules/posts'
 import type { CategoryType, PostCount, PostSummaryType } from '../../../api/dto'
 import api from '../../../api'
@@ -18,11 +16,6 @@ type PostsSummaryPageProps = {
 }
 const PostsSummaryPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
   const { pageCount, page, posts, sideBarLinks } = props
-  const router = useRouter()
-
-  if (router.isFallback) {
-    return <Loader />
-  }
 
   return (
     <PostsSummaryProvider sideBarLinks={sideBarLinks} posts={posts} page={page} totalPage={pageCount}>
@@ -61,7 +54,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { page: page.toString() }
   }))
 
-  return { paths, fallback: true }
+  return { paths, fallback: false }
 }
 
 export default PostsSummaryPage

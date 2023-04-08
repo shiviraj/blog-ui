@@ -11,7 +11,7 @@ export const getStaticProps = getStaticPropsFn
 export const getStaticPaths: GetStaticPaths = async () => {
   const categories: CategoryType[] = await api.categories.getAllCategories()
   const urls = categories.map(category => category.url)
-  return { paths: urls.map(url => ({ params: { categoryUrl: url } })), fallback: true }
+  return { paths: urls.map(url => ({ params: { categoryUrl: url } })), fallback: false }
 }
 
 export default Category

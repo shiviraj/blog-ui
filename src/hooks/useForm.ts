@@ -1,24 +1,30 @@
+import type { FormEvent, FormEventHandler } from 'react'
 import { useState } from 'react'
 
-const useForm = <T extends Record<string, unknown>>(
-  initialValues: T
-): {
-  handleSubmit: (onSubmit: (values: T) => void) => (event: Event) => void
+type UserFormReturnType<T> = {
+  handleSubmit: (onSubmit: (values: T) => void) => FormEventHandler<HTMLFormElement>
   onChange: <K extends keyof T>(name: K, value: T[K]) => void
   values: T
-} => {
+  onClear: () => void
+}
+
+const useForm = <T extends Record<string, unknown>>(initialValues: T): UserFormReturnType<T> => {
   const [values, setValues] = useState<T>({ ...initialValues })
 
-  const onChange = <K extends keyof T>(name: K, value: T[K]) => {
+  const onChange = <K extends keyof T>(name: K, value: T[K]): void => {
     setValues({ ...values, [name]: value })
   }
 
-  const handleSubmit = (onSubmit: (values: T) => void) => (event: Event) => {
+  const onClear = () => {
+    setValues(initialValues)
+  }
+
+  const handleSubmit = (onSubmit: (values: T) => void) => (event: FormEvent) => {
     event.preventDefault()
     onSubmit(values)
   }
 
-  return { onChange, values, handleSubmit }
+  return { onChange, values, handleSubmit, onClear }
 }
 
 export default useForm

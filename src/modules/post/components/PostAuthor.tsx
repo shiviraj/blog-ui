@@ -25,15 +25,20 @@ type PostAuthorProps = {
   lastUpdateOn: string
   commentsAllowed: boolean
   commentsCount: number
+  visibleIfZeroComment?: boolean
 }
 
 const PostAuthor = (props: PostAuthorProps): JSX.Element => {
-  const { author, lastUpdateOn, commentsCount, commentsAllowed, icon = false } = props
+  const { author, lastUpdateOn, commentsCount, commentsAllowed, icon = false, visibleIfZeroComment = false } = props
   const media = useMedia()
-  // const { scroll } = useScroll('#comment')
-  const { scroll } = useScroll()
+  const { scroll } = useScroll('#comment')
+  const handleScroll = () => {
+    scroll()
+  }
+
   return (
     <Stack
+      spacing={0.5}
       direction={media.md ? 'row' : 'column'}
       flexWrap={'wrap'}
       justifyContent={media.md ? 'start' : 'space-between'}
@@ -51,8 +56,8 @@ const PostAuthor = (props: PostAuthorProps): JSX.Element => {
         <DateRange />
         <Typography>{formatDateTime(lastUpdateOn)}</Typography>
       </Container>
-      {commentsAllowed && media.md && commentsCount.isGreaterThanZero() && (
-        <Container onClick={scroll} style={{ cursor: 'pointer' }}>
+      {commentsAllowed && (commentsCount.isGreaterThanZero() || visibleIfZeroComment) && (
+        <Container onClick={handleScroll} style={{ cursor: icon ? 'default' : 'pointer' }}>
           <Comment />
           <Typography>
             {commentsCount} {commentsCount.isGreaterThan(Integer.ONE) ? 'comments' : 'comment'}

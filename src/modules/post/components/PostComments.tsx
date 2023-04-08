@@ -1,25 +1,36 @@
-import { Box, Divider, styled, Typography } from '@mui/material'
+import { Divider, Stack, styled, Typography } from '@mui/material'
+import { usePostDetails } from '../../../context'
+import React from 'react'
+import CommentInput from './components/CommentInput'
+import DisplayAllComments from './components/DisplayAllComments'
 
-const Container = styled(Box)(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  margin: theme.spacing(1, 0),
-  borderRadius: theme.spacing(1),
-  '&:hover': {
-    boxShadow: theme.shadows[2]
+const Container = styled(Stack)(({ theme }) => ({
+  background: theme.palette.common.white,
+  padding: theme.spacing(2),
+  [theme.breakpoints.up('sm')]: {
+    padding: theme.spacing(4)
   }
 }))
 
-type PostCommentsType = { comments: unknown[]; postId: string }
-const PostComments = ({ comments }: PostCommentsType): JSX.Element => {
+const PostComments = (): JSX.Element => {
+  const { post } = usePostDetails()
   return (
-    <Container id={'comment'}>
-      <Typography variant={'h5'} pl={2} pt={1}>
-        {comments.length > 1 ? 'Comments' : 'Comment'} ({comments.length})
-      </Typography>
-      {/*<CommentInput postId={postId} placeholder={'What are your thoughts?'} />*/}
-      <Divider />
-      {/*<DisplayAllComments postId={postId} comments={comments} />*/}
-    </Container>
+    <Stack id={'comment'}>
+      <Container>
+        <Typography variant={'h5'}>
+          {post.comments.length > 1 ? 'Comments' : 'Comment'} ({post.comments.length})
+        </Typography>
+        <CommentInput postId={post.postId} placeholder={'What are your thoughts?'} />
+      </Container>
+      {post.comments.isNotEmpty() && (
+        <>
+          <Divider />
+          <Container>
+            <DisplayAllComments postId={post.postId} comments={post.comments} />
+          </Container>
+        </>
+      )}
+    </Stack>
   )
 }
 

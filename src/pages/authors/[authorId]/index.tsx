@@ -1,7 +1,6 @@
 import React from 'react'
 import type { GetStaticPaths, InferGetStaticPropsType, NextPage } from 'next'
-import AuthorPage from './page/[page]'
-import { getStaticProps as getStaticPropsFn } from './page/[page]'
+import AuthorPage, { getStaticProps as getStaticPropsFn } from './page/[page]'
 import type { AuthorType } from '../../../api/dto'
 import api from '../../../api'
 
@@ -13,7 +12,7 @@ export const getStaticProps = getStaticPropsFn
 export const getStaticPaths: GetStaticPaths = async () => {
   const authors: AuthorType[] = await api.authors.getAllAuthors()
   const urls = authors.map(author => author.authorId)
-  return { paths: urls.map(url => ({ params: { authorId: url } })), fallback: true }
+  return { paths: urls.map(url => ({ params: { authorId: url } })), fallback: false }
 }
 
 export default Author
