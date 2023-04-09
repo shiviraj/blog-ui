@@ -31,6 +31,10 @@ class Authors {
   getAllAuthors(): Promise<AuthorType[]> {
     return fetch<AuthorType[]>(this.url)
   }
+
+  getVisitorId(): Promise<{ visitorId: string }> {
+    return fetch<{ visitorId: string }>(`${this.url}/visitor`)
+  }
 }
 
 export default Authors

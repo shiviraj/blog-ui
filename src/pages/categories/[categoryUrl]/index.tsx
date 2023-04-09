@@ -9,9 +9,13 @@ const Category: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props
 
 export const getStaticProps = getStaticPropsFn
 export const getStaticPaths: GetStaticPaths = async () => {
-  const categories: CategoryType[] = await api.categories.getAllCategories()
-  const urls = categories.map(category => category.url)
-  return { paths: urls.map(url => ({ params: { categoryUrl: url } })), fallback: false }
+  try {
+    const categories: CategoryType[] = await api.categories.getAllCategories()
+    const urls = categories.map(category => category.url)
+    return { paths: urls.map(url => ({ params: { categoryUrl: url } })), fallback: false }
+  } catch (error: unknown) {
+    return { paths: [], fallback: false }
+  }
 }
 
 export default Category

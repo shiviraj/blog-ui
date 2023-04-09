@@ -2,7 +2,7 @@ import { Avatar, Box, Stack, styled, Typography } from '@mui/material'
 import { Comment, DateRange, Person } from '@mui/icons-material'
 import { Link } from '../../../common/components'
 import type { AuthorType } from '../../../api/dto'
-import { formatDateTime } from '../../../utils/utils'
+import { formatDateTime } from '../../../utils'
 import { useMedia, useScroll } from '../../../hooks'
 import { Integer } from '../../../utils/extensions'
 
@@ -38,7 +38,6 @@ const PostAuthor = (props: PostAuthorProps): JSX.Element => {
 
   return (
     <Stack
-      spacing={0.5}
       direction={media.md ? 'row' : 'column'}
       flexWrap={'wrap'}
       justifyContent={media.md ? 'start' : 'space-between'}

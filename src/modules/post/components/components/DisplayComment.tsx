@@ -5,34 +5,27 @@ import UserResponseOnComment from './UserResponseOnComment'
 import DisplayAllComments from './DisplayAllComments'
 import CommentInput from './CommentInput'
 import type { CommentType } from '../../../../api/dto'
-
-const Container = styled(Box)(({ theme }) => ({
-  '& .time': {
-    fontSize: theme.spacing(1.6),
-    lineHeight: theme.spacing(1)
-  }
-}))
+import { RawHTML } from '../../../../common/components'
 
 const ReplyContainer = styled(Box)(({ theme }) => ({
   borderLeft: `2px solid ${theme.palette.grey[400]}`,
-  marginLeft: theme.spacing(2)
+  marginLeft: theme.spacing(1.5)
 }))
 
 type DisplayCommentProps = { comment: CommentType; postId: string; level: number }
 const DisplayComment = ({ comment, postId, level }: DisplayCommentProps): JSX.Element => {
   const [expand, setExpand] = useState(false)
-  const [viewReply, setViewReply] = useState(false)
 
   const handleToggleExpand = () => {
     setExpand(!expand)
   }
 
   return (
-    <Container>
-      <Stack pl={2} pr={2} mt={1} mb={1} spacing={1.5}>
+    <Stack pl={level.isGreaterThanZero() ? 1.5 : 0} spacing={1.5}>
+      <Stack spacing={1.5}>
         <Stack direction={'row'} spacing={1.5} alignItems={'center'}>
           <Avatar src={comment.user.profile} alt={comment.user.name} />
-          <Stack spacing={0}>
+          <Stack>
             <Typography variant={'subtitle1'} lineHeight={1}>
               {comment.user.name}
             </Typography>
@@ -41,31 +34,26 @@ const DisplayComment = ({ comment, postId, level }: DisplayCommentProps): JSX.El
             </Typography>
           </Stack>
         </Stack>
-        <Typography>{comment.message}</Typography>
-        <UserResponseOnComment
-          comment={comment}
-          level={level}
-          setExpand={handleToggleExpand}
-          setViewReply={setViewReply}
-          viewReply={viewReply}
-        />
+        <Typography variant={'body1'}>
+          <RawHTML n2br>{comment.message}</RawHTML>
+        </Typography>
+        <UserResponseOnComment comment={comment} level={level} setExpand={handleToggleExpand} />
       </Stack>
       {expand && (
         <CommentInput
           postId={postId}
           parentComment={comment.commentId}
-          expand={expand}
           handleCancel={handleToggleExpand}
-          placeholderDisable
           placeholder={`Replying to ${comment.user.name}`}
+          expand
         />
       )}
       {comment.child && (
         <ReplyContainer>
-          <DisplayAllComments comments={comment.child} postId={postId} visible={viewReply} level={level + 1} />
+          <DisplayAllComments comments={comment.child} postId={postId} level={level + 1} />
         </ReplyContainer>
       )}
-    </Container>
+    </Stack>
   )
 }
 

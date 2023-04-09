@@ -2,10 +2,10 @@ import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { Fab, styled, Typography, useScrollTrigger, Zoom } from '@mui/material'
 import { KeyboardArrowUp } from '@mui/icons-material'
-import useScroll from '../../hooks/useScroll'
 import moment from 'moment'
 import { useSite } from '../../store'
 import { Link } from './atom'
+import { useScroll } from '../../hooks'
 
 const Scroll = styled('div')(({ theme }) => ({
   position: 'fixed',
@@ -26,11 +26,14 @@ const ScrollTop = ({ children }: PropsWithChildren) => {
     threshold: 100,
     target: typeof window !== 'undefined' ? window : undefined
   })
-  const scroller = useScroll()
+  const { scroll } = useScroll()
+  const handleScroll = () => {
+    scroll()
+  }
 
   return (
     <Zoom in={trigger}>
-      <Scroll onClick={scroller.scroll} role="presentation">
+      <Scroll onClick={handleScroll} role="presentation">
         {children}
       </Scroll>
     </Zoom>

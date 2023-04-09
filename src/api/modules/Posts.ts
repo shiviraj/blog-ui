@@ -1,5 +1,6 @@
 import fetch from '../adapter'
 import type { PostCount, PostDetailsType, PostSummaryType } from '../dto'
+import { METHODS } from './constants'
 
 class Posts {
   private readonly url: string
@@ -38,11 +39,6 @@ class Posts {
     return fetch<PostDetailsType>(`${this.url}/${postUrl}`)
   }
 
-  // addLikeOrDislike(postId, likeOrDislike) {
-  //   const options = { method: METHODS.PUT, data: likeOrDislike }
-  //   return fetch(`${this.url}/${postId}`, options)
-  // }
-
   getPosts(page: number): Promise<PostSummaryType[]> {
     return fetch<PostSummaryType[]>(`${this.url}/page/${page}`)
   }
@@ -54,6 +50,10 @@ class Posts {
   // getPostsByAuthor(userId) {
   //   return fetch(`${this.url}/author/${userId}`)
   // }
+  toggleLike(postId: string, visitorId: string): Promise<{ likes: string[] }> {
+    const options = { method: METHODS.PUT }
+    return fetch<{ likes: string[] }>(`${this.url}/${postId}/user-reaction`, { visitorId }, options)
+  }
 }
 
 export default Posts

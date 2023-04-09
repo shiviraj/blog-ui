@@ -3,7 +3,7 @@ const useScroll = (selector?: string): { scroll: (currentSelector?: string) => v
     const querySelector = currentSelector ?? selector
     if (querySelector) {
       const anchor = document.querySelector(querySelector)
-      anchor?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      anchor?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }

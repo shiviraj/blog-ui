@@ -12,7 +12,7 @@ const useForm = <T extends Record<string, unknown>>(initialValues: T): UserFormR
   const [values, setValues] = useState<T>({ ...initialValues })
 
   const onChange = <K extends keyof T>(name: K, value: T[K]): void => {
-    setValues({ ...values, [name]: value })
+    setValues(prevValues => ({ ...prevValues, [name]: value }))
   }
 
   const onClear = () => {

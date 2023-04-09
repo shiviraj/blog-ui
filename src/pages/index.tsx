@@ -1,25 +1,16 @@
 import React, { useEffect } from 'react'
-import type { InferGetStaticPropsType, NextPage } from 'next'
-import PostsSummary from '../modules/posts'
-import { getStaticProps as staticPropsFn } from './posts/page/[page]'
-import { PostsSummaryProvider } from '../context'
+import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { Loader } from '../common/components'
 
-const HomePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
-  const { pageCount, posts, sideBarLinks } = props
+const HomePage: NextPage = () => {
   const router = useRouter()
 
   useEffect(() => {
     router.push('/posts')
   }, [])
 
-  return (
-    <PostsSummaryProvider sideBarLinks={sideBarLinks} posts={posts} page={1} totalPage={pageCount}>
-      <PostsSummary />
-    </PostsSummaryProvider>
-  )
+  return <Loader />
 }
-
-export const getStaticProps = staticPropsFn
 
 export default HomePage

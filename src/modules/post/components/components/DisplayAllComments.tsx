@@ -18,10 +18,10 @@ const ViewMoreChip = styled(Chip)(({ theme }) => ({
 }))
 
 const commentCount = 5
-type DisplayAllCommentsPropsType = { postId: string; comments: CommentType[]; visible?: boolean; level?: number }
+type DisplayAllCommentsPropsType = { postId: string; comments: CommentType[]; level?: number }
 
 const DisplayAllComments = (props: DisplayAllCommentsPropsType): JSX.Element => {
-  const { postId, comments, visible = true, level = 0 } = props
+  const { postId, comments, level = 0 } = props
   const [visibleCommentCount, setVisibleCommentCount] = useState(commentCount)
 
   const handleViewMore = () => {
@@ -29,10 +29,6 @@ const DisplayAllComments = (props: DisplayAllCommentsPropsType): JSX.Element => 
   }
 
   const visibleComments = comments.slice(0, visibleCommentCount)
-
-  if (!visible) {
-    return <></>
-  }
 
   return (
     <Stack spacing={2}>

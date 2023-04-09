@@ -1,8 +1,9 @@
 import { Box, Stack, styled, Typography } from '@mui/material'
-import { Comment, ThumbDown, ThumbDownOutlined, ThumbUp, ThumbUpOutlined } from '@mui/icons-material'
-import React from 'react'
+import { Comment, ThumbUp, ThumbUpOutlined } from '@mui/icons-material'
+import React, { useEffect, useState } from 'react'
 import { Integer } from '../../../../utils/extensions'
 import { useScroll } from '../../../../hooks'
+import { getVisitorId } from '../../../../utils'
 
 const Container = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -17,17 +18,22 @@ const Container = styled(Box)(({ theme }) => ({
 
 type UserActivityProps = {
   likes: string[]
-  dislikes: string[]
-  handleLikeOrDislike: (action: 'like' | 'dislike') => () => void
+  handleLike: () => void
   commentsCount: number
-  viewReply?: boolean
+  visible: boolean
   handleClick?: () => void
 }
 
 const UserActivity = (props: UserActivityProps): JSX.Element => {
-  const { likes, dislikes, handleLikeOrDislike, commentsCount, viewReply, handleClick } = props
-  const visitorId = ''
+  const { likes, handleLike, commentsCount, visible, handleClick } = props
+  const [visitorId, setVisitorId] = useState('')
   const { scroll } = useScroll('#comment')
+
+  useEffect(() => {
+    getVisitorId().then((visitorId: string) => {
+      setVisitorId(visitorId)
+    })
+  }, [])
 
   const handleScroll = () => {
     scroll()
@@ -35,20 +41,15 @@ const UserActivity = (props: UserActivityProps): JSX.Element => {
 
   return (
     <Stack direction={'row'}>
-      <Container onClick={handleLikeOrDislike('like')}>
+      <Container onClick={handleLike}>
         {likes.includes(visitorId) ? <ThumbUp /> : <ThumbUpOutlined />}
         <Typography variant={'body1'}>{likes.length}</Typography>
       </Container>
-      <Container onClick={handleLikeOrDislike('dislike')}>
-        {dislikes.includes(visitorId) ? <ThumbDown /> : <ThumbDownOutlined />}
-        <Typography variant={'body1'}>{dislikes.length}</Typography>
-      </Container>
-      {commentsCount.isGreaterThanZero() && (
-        <Container onClick={handleScroll}>
+      {visible && (
+        <Container onClick={handleClick ?? handleScroll}>
           <Comment />
           <Typography variant={'body1'}>
-            {commentsCount}
-            {viewReply ? 'Hide' : ''} {handleClick && (commentsCount.isGreaterThan(Integer.ONE) ? 'replies' : 'reply')}
+            {commentsCount} {handleClick && (commentsCount.isGreaterThan(Integer.ONE) ? 'replies' : 'reply')}
           </Typography>
         </Container>
       )}

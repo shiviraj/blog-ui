@@ -1,7 +1,7 @@
 import { METHODS } from './constants'
 import fetch from '../adapter'
 
-type InputCommentType = { user: { name: string; email: string; userId?: string }; message: string }
+type InputCommentType = { user: { name: string; email: string; userId: string }; message: string; parentId?: string }
 
 class Comments {
   private readonly url: string
@@ -18,11 +18,11 @@ class Comments {
   // getComments(postId) {
   //   return axios.fetch(`${host}/api/comments/${postId}`)
   // }
-  //
-  // addLikeOrDislike(commentId, likeOrDislike) {
-  //   const options = { method: METHODS.PUT, data: likeOrDislike }
-  //   return axios.fetch(`${host}/api/comments/${commentId}`, options)
-  // }
+
+  toggleLike(commentId: string, visitorId: string): Promise<{ likes: string[] }> {
+    const options = { method: METHODS.PUT }
+    return fetch<{ likes: string[] }>(`${this.url}/${commentId}`, { visitorId }, options)
+  }
 }
 
 export default Comments

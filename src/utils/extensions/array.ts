@@ -13,6 +13,8 @@ declare global {
     last(): T | null
 
     lastIndex(): number
+
+    unique(): T[]
   }
 }
 
@@ -34,4 +36,18 @@ Array.prototype.last = function <T>(this: T[]): T | null {
 
 Array.prototype.lastIndex = function <T>(this: T[]): number {
   return this.length - Integer.ONE
+}
+
+Array.prototype.unique = function <T>(this: T[]): T[] {
+  return unique(this)
+}
+
+function unique<T>(array: T[]) {
+  const arr: T[] = []
+  for (const item of array) {
+    if (!arr.some(arrayItem => arrayItem === item)) {
+      arr.push(item)
+    }
+  }
+  return arr
 }

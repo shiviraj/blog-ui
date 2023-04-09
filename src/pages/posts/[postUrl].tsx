@@ -1,7 +1,13 @@
 import React from 'react'
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import api from '../../api'
-import type { PostCount, PostDetailsType as PostDetailsType, PostSummaryType } from '../../api/dto'
+import type {
+  AuthorType,
+  PostContentType,
+  PostCount,
+  PostDetailsType as PostDetailsType,
+  PostSummaryType
+} from '../../api/dto'
 import { fetchSidebarLinks } from './page/[page]'
 import { Integer } from '../../utils/extensions'
 import type { SideBarLinksWithTitle } from '../../context'
@@ -26,29 +32,49 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ si
 }
 
 export const getStaticProps: GetStaticProps<PostsDetailsPageProps> = async ({ params }) => {
-  const post: PostDetailsType = await api.posts.getPostByUrl(params?.postUrl as string)
-
-  const sideBarLinks = await fetchSidebarLinks()
-
-  return { props: { post, sideBarLinks }, revalidate: 8640 }
+  try {
+    const post: PostDetailsType = await api.posts.getPostByUrl(params?.postUrl as string)
+    const sideBarLinks = await fetchSidebarLinks()
+    return { props: { post, sideBarLinks }, revalidate: 8640 }
+  } catch (error: unknown) {
+    const author: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '' }
+    const content: PostContentType = { blocks: [], time: '' }
+    const post: PostDetailsType = {
+      author,
+      categories: [],
+      comments: [],
+      commentsAllowed: false,
+      content,
+      lastUpdateOn: '',
+      likes: [],
+      postId: '',
+      publishedOn: '',
+      tags: [],
+      title: '',
+      url: ''
+    }
+    return { props: { post, sideBarLinks: [] }, revalidate: 8640 }
+  }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response: PostCount = await api.posts.getPostsCount()
-  const pages: number[] = new Array(response.pageCount).fill('').map((_str, index) => index + Integer.ONE)
-
-  const urls: string[] = []
-  await Promise.all(
-    pages.map((page: number) => {
-      return api.posts.getPosts(page).then((posts: PostSummaryType[]) => {
-        return posts.map((post: PostSummaryType) => {
-          urls.push(post.url)
-          return post.url
+  try {
+    const response: PostCount = await api.posts.getPostsCount()
+    const pages: number[] = new Array(response.pageCount).fill('').map((_str, index) => index + Integer.ONE)
+    const urls: string[] = []
+    await Promise.all(
+      pages.map((page: number) => {
+        return api.posts.getPosts(page).then((posts: PostSummaryType[]) => {
+          return posts.map((post: PostSummaryType) => {
+            urls.push(post.url)
+            return post.url
+          })
         })
       })
-    })
-  )
-
-  return { paths: urls.map(url => ({ params: { postUrl: url } })), fallback: false }
+    )
+    return { paths: urls.map(url => ({ params: { postUrl: url } })), fallback: false }
+  } catch (error: unknown) {
+    return { paths: [], fallback: false }
+  }
 }
 
 export default PostPage

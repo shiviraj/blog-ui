@@ -80,8 +80,8 @@ const PostContent = ({ content }: { content: PostContentType }): JSX.Element => 
             return <Delimiter key={block.id}>***</Delimiter>
           case 'image':
             return (
-              <Image stretched={block.data.stretched}>
-                <img src={block.data.file.url} alt={block.data.caption} loading="lazy" key={block.id} />
+              <Image stretched={block.data.stretched} key={block.id}>
+                <img src={block.data.file.url} alt={block.data.caption} loading="lazy" />
                 {block.data.caption && <Caption>{block.data.caption}</Caption>}
               </Image>
             )
@@ -109,13 +109,14 @@ const PostContent = ({ content }: { content: PostContentType }): JSX.Element => 
                 ))}
               </List>
             )
-          // case 'table':
-          //   return <TableDetails data={block.data} key={block.id} />
+          case 'table':
+            return <div key={block.id} />
+          // return <TableDetails data={block.data} key={block.id} />
           case 'checklist':
             return (
               <Stack key={block.id}>
                 {block.data.items.map((item, id) => (
-                  <FormControlLabel key={id} control={<Checkbox />} label={item.text} />
+                  <FormControlLabel key={`list${id}`} control={<Checkbox />} label={item.text} />
                 ))}
               </Stack>
             )
@@ -126,7 +127,7 @@ const PostContent = ({ content }: { content: PostContentType }): JSX.Element => 
               </RawHTML>
             )
         }
-        return <></>
+        return <div key={block.id} />
       })}
     </Root>
   )

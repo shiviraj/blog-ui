@@ -1,65 +1,60 @@
-import { Stack } from '@mui/material'
+import { Stack, styled, Typography } from '@mui/material'
 import UserActivity from './UserActivity'
+import { getVisitorId } from '../../../../utils'
+import api from '../../../../api'
+import type { CommentType } from '../../../../api/dto'
+import { usePostDetails } from '../../../../context'
+import { Reply } from '@mui/icons-material'
+import React from 'react'
 
-// const Container = styled(Box)(({ theme }) => ({
-//   display: 'flex',
-//   alignItems: 'center',
-//   marginRight: theme.spacing(4),
-//   cursor: 'pointer',
-//   '&>*': {
-//     display: 'flex',
-//     marginRight: theme.spacing(1)
-//   }
-// }))
+const Container = styled(Stack)(({ theme }) => ({
+  alignItems: 'center',
+  marginRight: theme.spacing(4),
+  cursor: 'pointer',
+  '&>*': {
+    display: 'flex',
+    marginRight: theme.spacing(1)
+  }
+}))
 
-type UserResponseOnCommentProps = {
-  comment: Comment[]
-  setExpand: () => void
-  setViewReply: (viewReply: boolean) => void
-  viewReply: boolean
-  level: number
-}
-const UserResponseOnComment = ({ setViewReply, viewReply }: UserResponseOnCommentProps): JSX.Element => {
-  // const visible = level < 3
+type UserResponseOnCommentProps = { level: number; comment: CommentType; setExpand: () => void }
+const UserResponseOnComment = (props: UserResponseOnCommentProps): JSX.Element => {
+  const { comment, level, setExpand } = props
+  const { post, updatePost } = usePostDetails()
+  const visible = level < 3
 
-  const handleLikeOrDislike = (_type: 'like' | 'dislike') => () => {
-    // eslint-disable-next-line no-console
-    console.log(_type)
-    // if (user.userId) {
-    //   const action = comment[`${type}s`].includes(user.userId) ? 'REMOVE' : 'ADD'
-    //   API.comments
-    //     .addLikeOrDislike(comment.commentId, { action: `${action}_${type}`.toUpperCase() })
-    //     .then(comment => dispatch(updatePostComment(comment)))
-    // } else {
-    //   popup.onOpen(`${type} on ${comment.user.name}'s comment`)
-    // }
+  const handleLike = () => {
+    getVisitorId().then((visitorId: string) => {
+      api.comments.toggleLike(comment.commentId, visitorId).then(({ likes }) => {
+        comment.likes = likes
+        updatePost('comments', [...post.comments])
+      })
+    })
   }
 
-  // const handleReply = () => {
-  //   setExpand()
-  // }
+  const handleReply = () => {
+    setExpand()
+  }
 
   const handleToggleReply = () => {
-    setViewReply(!viewReply)
+    setExpand()
   }
 
   return (
     <Stack direction={'row'} justifyContent={'space-between'}>
       <UserActivity
-        // visible={visible}
-        likes={[]}
-        dislikes={[]}
-        handleLikeOrDislike={handleLikeOrDislike}
-        commentsCount={0}
+        visible={visible}
+        likes={comment.likes}
+        handleLike={handleLike}
+        commentsCount={comment.child?.length ?? 0}
         handleClick={handleToggleReply}
-        viewReply={viewReply}
       />
-      {/*{visible && (*/}
-      {/*  <Container onClick={handleReply}>*/}
-      {/*    <Reply />*/}
-      {/*    <Typography variant={'body1'}>Reply</Typography>*/}
-      {/*  </Container>*/}
-      {/*)}*/}
+      {visible && (
+        <Container direction={'row'} onClick={handleReply}>
+          <Reply />
+          <Typography variant={'body1'}>Reply</Typography>
+        </Container>
+      )}
     </Stack>
   )
 }

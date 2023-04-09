@@ -8,8 +8,7 @@ FROM node:19.8.1-alpine3.17 AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-RUN npm run build
-RUN npm install --production --ignore-scripts --prefer-offline
+RUN npm run build && npm install --production --ignore-scripts --prefer-offline
 
 FROM node:19.8.1-alpine3.17
 WORKDIR /app

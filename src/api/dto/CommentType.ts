@@ -1,4 +1,5 @@
 export interface CommentType extends Record<string, unknown> {
+  postId: string
   child?: CommentType[]
   message: string
   commentedOn: string
@@ -10,4 +11,5 @@ export interface CommentType extends Record<string, unknown> {
   commentId: string
   likes: string[]
   dislikes: string[]
+  parentId?: string
 }

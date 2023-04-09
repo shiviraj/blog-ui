@@ -1,21 +1,20 @@
 import React from 'react'
 import UserActivity from './components/UserActivity'
 import { usePostDetails } from '../../../context'
+import api from '../../../api'
+import { getVisitorId } from '../../../utils'
 
 const UserResponse = (): JSX.Element => {
-  const { post } = usePostDetails()
-  const handleLikeOrDislike = (action: 'like' | 'dislike') => () => {
-    // eslint-disable-next-line no-console
-    console.log(action)
+  const { post, updatePost } = usePostDetails()
+
+  const handleLike = () => {
+    getVisitorId().then((visitorId: string) => {
+      api.posts.toggleLike(post.postId, visitorId).then(({ likes }) => {
+        updatePost('likes', likes)
+      })
+    })
   }
-  return (
-    <UserActivity
-      likes={post.likes}
-      dislikes={post.dislikes}
-      handleLikeOrDislike={handleLikeOrDislike}
-      commentsCount={post.comments.length}
-    />
-  )
+  return <UserActivity visible likes={post.likes} handleLike={handleLike} commentsCount={post.comments.length} />
 }
 
 export default UserResponse
