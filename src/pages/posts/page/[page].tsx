@@ -43,30 +43,22 @@ export const fetchSidebarLinks = async (): Promise<SideBarLinksWithTitle[]> => {
 }
 
 export const getStaticProps: GetStaticProps<PostsSummaryPageProps> = async ({ params }) => {
-  try {
-    const { pageCount }: PostCount = await api.posts.getPostsCount()
-    const page = Number(params?.page ?? Integer.ONE)
-    const posts: PostSummaryType[] = await api.posts.getPosts(page)
+  const { pageCount }: PostCount = await api.posts.getPostsCount()
+  const page = Number(params?.page ?? Integer.ONE)
+  const posts: PostSummaryType[] = await api.posts.getPosts(page)
 
-    const sideBarLinks = await fetchSidebarLinks()
+  const sideBarLinks = await fetchSidebarLinks()
 
-    return { props: { pageCount, posts, sideBarLinks, page }, revalidate: 8640 }
-  } catch (error: unknown) {
-    return { props: { pageCount: 0, posts: [], sideBarLinks: [], page: 1 }, revalidate: 8640 }
-  }
+  return { props: { pageCount, posts, sideBarLinks, page }, revalidate: 21600 }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    const response: PostCount = await api.posts.getPostsCount().catch(() => ({ postCount: 0, pageCount: 0 }))
-    const paths: Array<{ params: { page: string } }> = getNumbersFrom1(response.pageCount).map(page => ({
-      params: { page: page.toString() }
-    }))
+  const response: PostCount = await api.posts.getPostsCount().catch(() => ({ postCount: 0, pageCount: 0 }))
+  const paths: Array<{ params: { page: string } }> = getNumbersFrom1(response.pageCount).map(page => ({
+    params: { page: page.toString() }
+  }))
 
-    return { paths, fallback: false }
-  } catch (error: unknown) {
-    return { paths: [], fallback: false }
-  }
+  return { paths, fallback: false }
 }
 
 export default PostsSummaryPage

@@ -15,7 +15,7 @@ export interface PostDetailsType extends Record<string, unknown> {
   url: string
   title: string
   publishedOn: string
-  lastUpdateOn: string
+  lastUpdateOn: Date
   commentsAllowed: boolean
   author: AuthorType
 }

@@ -33,19 +33,14 @@ const AuthorPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = pro
 }
 
 export const getStaticProps: GetStaticProps<AuthorPageProps> = async ({ params }) => {
-  try {
-    const authorId: string = params?.authorId as string
-    const page = Number(params?.page ?? Integer.ONE)
-    const { pageCount } = await api.authors.getPostsCount(authorId)
-    const author: AuthorType = await api.authors.getAuthor(authorId)
-    const posts: PostSummaryType[] = await api.authors.getPosts(authorId, page)
-    const sideBarLinks = await fetchSidebarLinks()
+  const authorId: string = params?.authorId as string
+  const page = Number(params?.page ?? Integer.ONE)
+  const { pageCount } = await api.authors.getPostsCount(authorId)
+  const author: AuthorType = await api.authors.getAuthor(authorId)
+  const posts: PostSummaryType[] = await api.authors.getPosts(authorId, page)
+  const sideBarLinks = await fetchSidebarLinks()
 
-    return { props: { posts, sideBarLinks, page, pageCount, author }, revalidate: 8640 }
-  } catch (error: unknown) {
-    const author: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '' }
-    return { props: { posts: [], sideBarLinks: [], page: 0, pageCount: 0, author }, revalidate: 8640 }
-  }
+  return { props: { posts, sideBarLinks, page, pageCount, author }, revalidate: 21600 }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
   try {

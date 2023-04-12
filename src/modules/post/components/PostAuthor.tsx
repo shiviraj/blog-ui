@@ -22,7 +22,7 @@ const Container = styled(Box)(({ theme }) => ({
 type PostAuthorProps = {
   author: AuthorType
   icon?: boolean
-  lastUpdateOn: string
+  lastUpdateOn: Date
   commentsAllowed: boolean
   commentsCount: number
   visibleIfZeroComment?: boolean

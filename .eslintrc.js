@@ -142,7 +142,7 @@ module.exports = {
       }
     },
     {
-      files: ['./src/config/config.ts'],
+      files: ['./src/config/index.ts'],
       rules: {
         'no-process-env': 'off'
       }

@@ -1,15 +1,17 @@
 import React from 'react'
-import Head from 'next/head'
-import { useSite } from '../../store'
-import type { SiteType } from '../../modules/home/reducer'
+import useSite from '../../hooks/useSite'
 
 const HeadTag = (): JSX.Element => {
-  const site: SiteType = useSite()
+  const site = useSite()
   return (
-    <Head>
+    <>
+      <meta charSet="UTF-8" />
+      <meta
+        httpEquiv="Content-Security-Policy"
+        content="default-src 'self' 'unsafe-eval' 'unsafe-inline' * blob: data: filesystem:; object-src 'none';"
+      />
       <title>{site.title}</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" />
-    </Head>
+    </>
   )
 }
 

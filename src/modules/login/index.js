@@ -4,7 +4,7 @@ import API from '../../api'
 import Loader from '../../common/components/Loader'
 import { Box, Button, Link, styled, Typography } from '@mui/material'
 import PageError from '../../common/components/PageError'
-import { setStorage } from '../../utils/storage'
+import { setStorage } from '../../utils'
 import { StorageKeys } from '../../constants/storage'
 
 const Container = styled(Box)(() => ({

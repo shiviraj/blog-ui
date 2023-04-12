@@ -33,19 +33,14 @@ const CategoriesPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
 }
 
 export const getStaticProps: GetStaticProps<CategoriesPageProps> = async ({ params }) => {
-  try {
-    const categoryUrl: string = params?.categoryUrl as string
-    const page = Number(params?.page ?? Integer.ONE)
-    const { pageCount } = await api.categories.getPostsCount(categoryUrl)
-    const category: CategoryType = await api.categories.getCategory(categoryUrl)
-    const posts: PostSummaryType[] = await api.categories.getPosts(categoryUrl, page)
-    const sideBarLinks = await fetchSidebarLinks()
+  const categoryUrl: string = params?.categoryUrl as string
+  const page = Number(params?.page ?? Integer.ONE)
+  const { pageCount } = await api.categories.getPostsCount(categoryUrl)
+  const category: CategoryType = await api.categories.getCategory(categoryUrl)
+  const posts: PostSummaryType[] = await api.categories.getPosts(categoryUrl, page)
+  const sideBarLinks = await fetchSidebarLinks()
 
-    return { props: { posts, sideBarLinks, page, pageCount, category }, revalidate: 8640 }
-  } catch (error: unknown) {
-    const category = { categoryId: '', name: '', url: '', authorId: '', createdAt: '' }
-    return { props: { posts: [], sideBarLinks: [], page: 0, pageCount: 0, category }, revalidate: 8640 }
-  }
+  return { props: { posts, sideBarLinks, page, pageCount, category }, revalidate: 21600 }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
   try {

@@ -3,9 +3,9 @@ import React from 'react'
 import { Fab, styled, Typography, useScrollTrigger, Zoom } from '@mui/material'
 import { KeyboardArrowUp } from '@mui/icons-material'
 import moment from 'moment'
-import { useSite } from '../../store'
 import { Link } from './atom'
 import { useScroll } from '../../hooks'
+import useSite from '../../hooks/useSite'
 
 const Scroll = styled('div')(({ theme }) => ({
   position: 'fixed',

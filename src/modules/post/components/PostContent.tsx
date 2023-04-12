@@ -110,7 +110,7 @@ const PostContent = ({ content }: { content: PostContentType }): JSX.Element => 
               </List>
             )
           case 'table':
-            return <div key={block.id} />
+            return <div key={block.id}></div>
           // return <TableDetails data={block.data} key={block.id} />
           case 'checklist':
             return (
@@ -127,7 +127,7 @@ const PostContent = ({ content }: { content: PostContentType }): JSX.Element => 
               </RawHTML>
             )
         }
-        return <div key={block.id} />
+        return <div key={block.id}></div>
       })}
     </Root>
   )

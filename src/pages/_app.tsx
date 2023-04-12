@@ -2,10 +2,8 @@ import type { PropsWithChildren } from 'react'
 import React, { useEffect } from 'react'
 import theme from '../theme'
 import type { AppProps } from 'next/app'
-import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
 import { HeadTag, Layout, PopUpWrapper, ToastWrapper } from '../common/components'
-import store from '../store'
 import { Router } from 'next/router'
 import { onRouteChange } from '../utils/routing'
 import '../../styles/index.css'
@@ -16,20 +14,18 @@ const MyApp = ({ Component, pageProps, ...rest }: AppProps): JSX.Element => {
   }, [])
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <HeadTag />
-        <PopUpWrapper>
-          <ToastWrapper>
-            <WithValidatedProfile {...rest}>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </WithValidatedProfile>
-          </ToastWrapper>
-        </PopUpWrapper>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <HeadTag />
+      <PopUpWrapper>
+        <ToastWrapper>
+          <WithValidatedProfile {...rest}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </WithValidatedProfile>
+        </ToastWrapper>
+      </PopUpWrapper>
+    </ThemeProvider>
   )
 }
 

@@ -8,7 +8,7 @@
     "start": "next start",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint . --fix",
-    "docker:push": "docker buildx build --platform=linux/amd64,linux/arm64 -t shiviraj/blog-ui:latest --push ."
+    "docker:push": "docker buildx build --platform=linux/arm64,linux/amd64 -t shiviraj/blog-ui:latest --push ."
   },
   "dependencies": {
     "@editorjs/checklist": "^1.4.0",
@@ -46,7 +46,7 @@
     "@types/node": "18.15.11",
     "@types/react": "18.0.32",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "eslint": "^8.37.0",
+    "eslint": "^8.38.0",
     "typescript": "5.0.3"
   }
 }
