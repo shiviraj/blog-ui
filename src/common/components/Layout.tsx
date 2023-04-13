@@ -3,6 +3,7 @@ import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import { Stack, styled } from '@mui/material'
+import { useRouter } from 'next/router'
 
 const Container = styled(Stack)(({ theme }) => ({
   background: theme.palette.grey[100],
@@ -10,24 +11,28 @@ const Container = styled(Stack)(({ theme }) => ({
   minHeight: '100vh'
 }))
 
-const Body = styled('main')(({ theme }) => ({
+const Body = styled('main')<{ full: 'true' | 'false' }>(({ theme, full }) => ({
   margin: theme.spacing(9.5, 'auto', 1.5),
   padding: 0,
   width: '94%',
   [theme.breakpoints.up('sm')]: {
-    margin: theme.spacing(11, 'auto', 3)
+    margin: full === 'true' ? theme.spacing(0) : theme.spacing(11, 'auto', 3)
   },
   [theme.breakpoints.up('md')]: {
-    width: '80%'
+    width: full === 'true' ? '100%' : '80%'
   }
 }))
 
 const Layout = ({ children }: PropsWithChildren): JSX.Element => {
+  const router = useRouter()
+  const isAuthor = router.pathname.startsWith('/author')
+  const full = isAuthor.toString() as 'true' | 'false'
+
   return (
     <Container justifyContent={'space-between'}>
-      <Header />
-      <Body>{children}</Body>
-      <Footer />
+      {!isAuthor && <Header />}
+      <Body full={full}>{children}</Body>
+      {!isAuthor && <Footer />}
     </Container>
   )
 }

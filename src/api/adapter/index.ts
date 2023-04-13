@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios'
 import axios from 'axios'
 
 const initHeaders = () => {
@@ -13,21 +14,22 @@ const initHeaders = () => {
 const fetch = <ResultType extends Record<string, unknown> | Array<Record<string, unknown>>>(
   url: string,
   data?: Record<string, unknown>,
-  options?: Record<string, unknown>,
+  options?: Record<string, unknown>
   // retry = Integer.ONE
 ): Promise<ResultType> => {
   return new Promise((resolve, reject) => {
-    axios({url, ...options, headers: initHeaders(), data})
-      .then(({data}: { data: ResultType }) => {
+    axios({ url, ...options, headers: initHeaders(), data })
+      .then(({ data }: { data: ResultType }) => {
         resolve(data)
       })
-      .catch((error: Error) => {
+      .catch((error: AxiosError) => {
         // if (retry.isGreaterThanZero() && !url.includes('/api/users/validate')) {
         //   this.fetch(url, data, options, retry.add(Integer.NEGATIVE_ONE)).then((data: ResultType) => {
         //     resolve(data)
         //   })
         // } else {
-        reject(error)
+        // eslint-disable-next-line no-console
+        reject(error.response?.data)
         // }
       })
   })

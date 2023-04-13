@@ -4,17 +4,24 @@ const UNDEFINED = 'undefined'
 
 export enum StorageKeys {
   VISITOR_ID = 'VISITOR_ID',
-  VISITOR = 'VISITOR'
+  VISITOR = 'VISITOR',
+  AUTH = 'AUTH'
 }
 
-export const setStorage = <T extends Record<string, unknown>>(key: string, value: T): T => {
+export const setStorage = <T extends Record<string, unknown>>(key: StorageKeys, value: T): T => {
   if (typeof window !== UNDEFINED) {
     window.localStorage.setItem(key, JSON.stringify(value))
   }
   return value
 }
 
-export const getStorage = <T extends Record<string, unknown>>(key: string): T | null => {
+export const clearStorage = (key: StorageKeys): void => {
+  if (typeof window !== UNDEFINED) {
+    window.localStorage.removeItem(key)
+  }
+}
+
+export const getStorage = <T extends Record<string, unknown>>(key: StorageKeys): T | null => {
   try {
     if (typeof window !== UNDEFINED) {
       return JSON.parse(window.localStorage.getItem(key) ?? '') as T

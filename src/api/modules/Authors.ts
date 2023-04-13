@@ -1,5 +1,6 @@
 import fetch from '../adapter'
 import type { AuthorType, PostCount, PostSummaryType } from '../dto'
+import { METHODS } from './constants'
 
 class Authors {
   private readonly url: string
@@ -34,6 +35,14 @@ class Authors {
 
   getVisitorId(): Promise<{ visitorId: string }> {
     return fetch<{ visitorId: string }>(`${this.url}/visitor`)
+  }
+
+  login(values: { password: string; email: string }): Promise<{ token: string }> {
+    return fetch<{ token: string }>(`${this.url}/login`, values, { method: METHODS.POST })
+  }
+
+  logout(): Promise<{ status: boolean }> {
+    return fetch<{ status: boolean }>(`${this.url}/logout`)
   }
 }
 
