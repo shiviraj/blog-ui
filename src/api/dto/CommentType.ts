@@ -10,6 +10,9 @@ export interface CommentType extends Record<string, unknown> {
   }
   commentId: string
   likes: string[]
-  dislikes: string[]
   parentId?: string
+}
+
+export interface AuthorCommentType extends CommentType {
+  status: 'UNAPPROVED' | 'APPROVED'
 }

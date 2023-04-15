@@ -1,5 +1,6 @@
 import { METHODS } from './constants'
 import fetch from '../adapter'
+import type { AuthorCommentType } from '../dto'
 
 type InputCommentType = { user: { name: string; email: string; userId: string }; message: string; parentId?: string }
 
@@ -15,13 +16,17 @@ class Comments {
     return fetch<{ status: boolean }>(`${this.url}/${postId}`, comment, options)
   }
 
-  // getComments(postId) {
-  //   return axios.fetch(`${host}/api/comments/${postId}`)
-  // }
-
   toggleLike(commentId: string, visitorId: string): Promise<{ likes: string[] }> {
     const options = { method: METHODS.PUT }
     return fetch<{ likes: string[] }>(`${this.url}/${commentId}`, { visitorId }, options)
+  }
+
+  getAllAuthorPostsComments(): Promise<AuthorCommentType[]> {
+    return fetch<AuthorCommentType[]>(this.url)
+  }
+
+  updateStatus(commentId: string, status: string): Promise<{ status: boolean }> {
+    return fetch<{ status: boolean }>(`${this.url}/${commentId}/update-status`, { status }, { method: METHODS.PUT })
   }
 }
 

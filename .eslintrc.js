@@ -135,9 +135,11 @@ module.exports = {
       }
     },
     {
-      files: ['*/*.tools.ts'],
+      files: ['./src/common/components/Editor/tools.ts'],
       rules: {
-        '@typescript-eslint/no-explicit-any': 'off'
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off'
       }
     },
     {

@@ -1,5 +1,5 @@
 import React from 'react'
-import TableData from './components/TableData'
+import TableData from './posts/components/TableData'
 import AddNew from './components/AddNew'
 import API from '../../api'
 import { Box } from '@mui/material'

@@ -1,3 +1,6 @@
+export { default as ActionBar } from './ActionBar'
+export * from './ActionBar'
+
 export { default as PostControl } from './PostControl'
 export * from './PostControl'
 

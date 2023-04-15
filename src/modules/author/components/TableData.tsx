@@ -11,10 +11,9 @@ import {
   TableRow
 } from '@mui/material'
 import type { ChangeEvent } from 'react'
-import { useEffect, useState } from 'react'
-import type { AuthorPostType } from '../../../api/dto'
-import type { PaginationType } from '../../../hooks'
-import ActionBar from './ActionBar'
+import React, { useEffect, useState } from 'react'
+import { getById } from './utils'
+import { usePagination } from '../../../hooks'
 
 const TableHeadRow = styled(TableRow)(({ theme }) => ({
   '&>*': {
@@ -35,18 +34,21 @@ const TableBodyRow = styled(TableRow)(({ theme }) => ({
 
 type TableDataProps = {
   columns: Array<{ id: string; label: string }>
-  rows: AuthorPostType[]
-  pagination: PaginationType
-  setPagination: (pagination: PaginationType) => void
+  rows: Array<Record<string, unknown>>
+  Action?: { id: string; Component: (props: { id: string }) => JSX.Element }
 }
-const TableData = ({ columns, rows, pagination, setPagination }: TableDataProps): JSX.Element => {
-  const [visiblePosts, setVisiblePosts] = useState(rows)
+const TableData = ({ columns, rows, Action }: TableDataProps): JSX.Element => {
+  const { pagination, setTotalCount, setPagination } = usePagination(1)
+  const [visibleRows, setVisibleRows] = useState<Array<Record<string, unknown>>>([])
 
   useEffect(() => {
-    setVisiblePosts(
-      rows.slice(pagination.page * pagination.rowsPerPage, (pagination.page + 1) * pagination.rowsPerPage)
-    )
+    setTotalCount(rows.length)
+  }, [])
+
+  useEffect(() => {
+    setVisibleRows(rows.slice(pagination.page * pagination.rowsPerPage, (pagination.page + 1) * pagination.rowsPerPage))
   }, [pagination])
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPagination({ ...pagination, page: newPage })
   }
@@ -65,19 +67,21 @@ const TableData = ({ columns, rows, pagination, setPagination }: TableDataProps)
               {columns.map((column, index) => (
                 <TableCell key={`${column.id}_${index}`}>{column.label}</TableCell>
               ))}
-              <TableCell>Action</TableCell>
+              {Action && <TableCell>Action</TableCell>}
             </TableHeadRow>
           </TableHead>
           <TableBody>
-            {visiblePosts.map((row, index) => (
+            {visibleRows.map((row, index) => (
               <TableBodyRow hover key={`row-no-${index + 1}`}>
                 <TableCell>{index + 1}</TableCell>
                 {columns.map((column, id) => {
-                  return <TableCell key={`${column.id}_${id}`}>{row[column.id] as string}</TableCell>
+                  return <TableCell key={`${column.id}_${id}`}>{getById(row, column.id)}</TableCell>
                 })}
-                <TableCell>
-                  <ActionBar id={row.postId} />
-                </TableCell>
+                {Action && (
+                  <TableCell>
+                    <Action.Component id={getById(row, Action.id)} />
+                  </TableCell>
+                )}
               </TableBodyRow>
             ))}
           </TableBody>

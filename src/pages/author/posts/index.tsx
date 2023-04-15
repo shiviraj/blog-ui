@@ -4,9 +4,8 @@ import { Stack } from '@mui/material'
 import api from '../../../api'
 import type { AuthorPostType } from '../../../api/dto'
 import { Loader } from '../../../common/components'
-import { usePagination } from '../../../hooks'
-import TableData from '../../../modules/author/components/TableData'
-import AddNew from '../../../modules/author/components/AddNew'
+import { AddNew, TableData } from '../../../modules/author/components'
+import { ActionBar } from '../../../modules/author/posts/components'
 
 const columns: Array<{ id: string; label: string }> = [
   { id: 'postId', label: 'PostId' },
@@ -17,7 +16,6 @@ const columns: Array<{ id: string; label: string }> = [
 ]
 
 const Post: NextPage = () => {
-  const { pagination, setPagination, setTotalCount } = usePagination(1)
   const [loading, setLoading] = useState(true)
   const [posts, setPosts] = useState<AuthorPostType[]>([])
 
@@ -26,7 +24,6 @@ const Post: NextPage = () => {
       .getAllMyPosts()
       .then(posts => {
         setPosts(posts)
-        setTotalCount(posts.length)
       })
       .finally(() => {
         setLoading(false)
@@ -40,7 +37,7 @@ const Post: NextPage = () => {
   return (
     <Stack spacing={2}>
       <AddNew />
-      <TableData columns={columns} rows={posts} pagination={pagination} setPagination={setPagination} />
+      <TableData columns={columns} rows={posts} Action={{ id: 'postId', Component: ActionBar }} />
     </Stack>
   )
 }

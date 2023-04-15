@@ -10,20 +10,20 @@ const ActionBar = ({ id }: { id: string }): JSX.Element => {
   return (
     <Stack spacing={0.5} direction={'row'} color={'primary'}>
       <Link href={`${path}/edit/${id}`}>
-        <Tooltip title="Edit">
-          <IconButton aria-label="edit" size="small">
-            <Edit fontSize="inherit" color={'inherit'} />
+        <Tooltip title="Edit" placement={'top'}>
+          <IconButton aria-label="edit">
+            <Edit />
           </IconButton>
         </Tooltip>
       </Link>
-      <Tooltip title="Publish">
-        <IconButton aria-label="publish" size="small">
-          <Publish fontSize="inherit" />
+      <Tooltip title="Publish" placement={'top'}>
+        <IconButton aria-label="publish">
+          <Publish />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Delete">
-        <IconButton aria-label="delete" size="small">
-          <Delete fontSize="inherit" />
+      <Tooltip title="Delete" placement={'top'}>
+        <IconButton aria-label="delete">
+          <Delete />
         </IconButton>
       </Tooltip>
     </Stack>

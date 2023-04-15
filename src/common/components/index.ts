@@ -21,14 +21,11 @@ export * from './Loader'
 export { default as PageError } from './PageError'
 export * from './PageError'
 
-export { default as PopUpWrapper } from './PopUp'
-export * from './PopUp'
-
 export { default as RawHTML } from './RawHTML'
 export * from './RawHTML'
 
 export { default as SideMenubar } from './SideMenubar'
-export * from './PopUp'
+export * from './SideMenubar'
 
 export { default as ToastWrapper } from './ToastWrapper'
 export * from './ToastWrapper'

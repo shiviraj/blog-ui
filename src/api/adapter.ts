@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import { getStorage, StorageKeys } from '../../utils'
+import { getStorage, StorageKeys } from '../utils'
 
 const initHeaders = (): { authorization: string; 'Content-Type': string } => {
   const { token } = getStorage<{ token: string }>(StorageKeys.AUTH) ?? { token: '' }
