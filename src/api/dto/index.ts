@@ -1,3 +1,4 @@
+export * from './AuthorPostType'
 export * from './AuthorType'
 export * from './CategoryType'
 export * from './CommentType'

@@ -1,5 +1,6 @@
 import fetch from '../adapter'
 import type { CategoryType, PostCount, PostSummaryType } from '../dto'
+import { METHODS } from './constants'
 
 class Categories {
   private readonly url: string
@@ -12,16 +13,6 @@ class Categories {
     return fetch<CategoryType[]>(this.url)
   }
 
-  // addNewCategory(value) {
-  //   const options = { method: METHODS.POST, data: value }
-  //   return fetch(`${this.url}`, options)
-  // }
-  //
-  // getCategories(categories) {
-  //   const options = { method: METHODS.POST, data: categories }
-  //   return fetch(`${this.url}/categories`, options)
-  // }
-  //
   getPosts(categoryUrl: string, page: number): Promise<PostSummaryType[]> {
     return fetch<PostSummaryType[]>(`${this.url}/${categoryUrl}/page/${page}`)
   }
@@ -32,6 +23,10 @@ class Categories {
 
   getCategory(categoryUrl: string): Promise<CategoryType> {
     return fetch<CategoryType>(`${this.url}/${categoryUrl}`)
+  }
+
+  addNewCategory(category: { name: string; parentCategory: string }): Promise<CategoryType> {
+    return fetch<CategoryType>(`${this.url}`, category, { method: METHODS.POST })
   }
 }
 

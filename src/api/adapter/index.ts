@@ -1,13 +1,11 @@
-import type { AxiosError } from 'axios'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+import { getStorage, StorageKeys } from '../../utils'
 
-const initHeaders = () => {
-  // const { token, user = {} } = getStorage(StorageKeys.AUTH) || {}
-  // const { token: dummyToken = '', user: dummyUser = {} } = getStorage(StorageKeys.DUMMY) || {}
+const initHeaders = (): { authorization: string; 'Content-Type': string } => {
+  const { token } = getStorage<{ token: string }>(StorageKeys.AUTH) ?? { token: '' }
   return {
-    'Content-Type': 'application/json'
-    // authorization: `Bearer ${token ?? dummyToken}`,
-    // 'x-reference-id': user.userId ?? dummyUser.userId ?? 'missing-reference-id'
+    'Content-Type': 'application/json',
+    authorization: token
   }
 }
 
@@ -15,22 +13,18 @@ const fetch = <ResultType extends Record<string, unknown> | Array<Record<string,
   url: string,
   data?: Record<string, unknown>,
   options?: Record<string, unknown>
-  // retry = Integer.ONE
 ): Promise<ResultType> => {
   return new Promise((resolve, reject) => {
     axios({ url, ...options, headers: initHeaders(), data })
       .then(({ data }: { data: ResultType }) => {
         resolve(data)
       })
-      .catch((error: AxiosError) => {
-        // if (retry.isGreaterThanZero() && !url.includes('/api/users/validate')) {
-        //   this.fetch(url, data, options, retry.add(Integer.NEGATIVE_ONE)).then((data: ResultType) => {
-        //     resolve(data)
-        //   })
-        // } else {
-        // eslint-disable-next-line no-console
-        reject(error.response?.data)
-        // }
+      .catch((error: Error) => {
+        if (error instanceof AxiosError) {
+          reject(error.response?.data)
+        } else {
+          reject(error.message)
+        }
       })
   })
 }

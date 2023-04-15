@@ -1,7 +1,9 @@
-import Role from '../../modules/role'
-import Dashboard from '../../modules/role/Dashboard'
 import type { NextPage } from 'next'
+import { Box } from '@mui/material'
+import React from 'react'
 
-const Index:NextPage = () => <Role title={'Dashboard'} component={Dashboard} />
+const Dashboard: NextPage = () => {
+  return <Box>Dashboard</Box>
+}
 
-export default Index
+export default Dashboard

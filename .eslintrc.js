@@ -135,10 +135,9 @@ module.exports = {
       }
     },
     {
-      files: ['**/*.{tsx,jsx}'],
+      files: ['*/*.tools.ts'],
       rules: {
-        complexity: ['error', 10],
-        'max-statements': ['error', 60]
+        '@typescript-eslint/no-explicit-any': 'off'
       }
     },
     {

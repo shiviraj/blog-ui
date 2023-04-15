@@ -1,39 +1,15 @@
 import fetch from '../adapter'
-import type { PostCount, PostDetailsType, PostSummaryType } from '../dto'
+import type { AuthorPostType, PostCount, PostDetailsType, PostSummaryType } from '../dto'
 import { METHODS } from './constants'
 
 class Posts {
   private readonly url: string
+  private readonly validateUrl: string
 
   constructor(url: string) {
     this.url = url
+    this.validateUrl = `${url}/validate`
   }
-
-  // addPost(): Promise<unknown> {
-  //   const options = { method: METHODS.POST }
-  //   return fetch(`${this.url}/author`, options)
-  // }
-
-  // getPost(postId) {
-  //   return fetch(`${this.url}/${postId}/author`)
-  // }
-  //
-  // updatePost(post) {
-  //   const options = { method: METHODS.PUT, data: post }
-  //   return fetch(`${this.url}/${post.postId}/author`, options)
-  // }
-  //
-  // getAllMyPosts(page, limit) {
-  //   return fetch(`${this.url}/author/my-posts/page/${page}/limit/${limit}`)
-  // }
-  //
-  // getMyPostsCount() {
-  //   return fetch(`${this.url}/author/my-posts/count`)
-  // }
-  //
-  // isUrlAvailable(postId, url) {
-  //   return fetch(`${this.url}/${postId}/author/url-available/${url}`)
-  // }
 
   getPostByUrl(postUrl: string): Promise<PostDetailsType> {
     return fetch<PostDetailsType>(`${this.url}/${postUrl}`)
@@ -47,12 +23,33 @@ class Posts {
     return fetch<PostCount>(`${this.url}/count`)
   }
 
-  // getPostsByAuthor(userId) {
-  //   return fetch(`${this.url}/author/${userId}`)
-  // }
   toggleLike(postId: string, visitorId: string): Promise<{ likes: string[] }> {
     const options = { method: METHODS.PUT }
     return fetch<{ likes: string[] }>(`${this.url}/${postId}/user-reaction`, { visitorId }, options)
+  }
+
+  getAllMyPosts(): Promise<AuthorPostType[]> {
+    return fetch<AuthorPostType[]>(this.validateUrl)
+  }
+
+  addNew(): Promise<AuthorPostType> {
+    return fetch<AuthorPostType>(this.validateUrl, {}, { method: METHODS.POST })
+  }
+
+  getPostByPostId(postId: string): Promise<AuthorPostType> {
+    return fetch<AuthorPostType>(`${this.validateUrl}/${postId}`)
+  }
+
+  publish(postId: string): Promise<{ status: boolean }> {
+    return fetch<{ status: boolean }>(`${this.validateUrl}/${postId}/publish`, {}, { method: METHODS.PUT })
+  }
+
+  isUrlAvailable(postId: string, url: string): Promise<{ status: boolean }> {
+    return fetch<{ status: boolean }>(`${this.validateUrl}/${postId}/url-available`, { url }, { method: METHODS.POST })
+  }
+
+  updatePost(post: AuthorPostType): Promise<{ status: boolean }> {
+    return fetch<{ status: boolean }>(`${this.validateUrl}/${post.postId}`, { post }, { method: METHODS.PATCH })
   }
 }
 

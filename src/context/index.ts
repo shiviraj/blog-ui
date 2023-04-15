@@ -1,3 +1,9 @@
+export { default as AuthorPostProvider } from './AuthorPostProvider'
+export * from './AuthorPostProvider'
+
+export { default as AuthorProvider } from './AuthorProvider'
+export * from './AuthorProvider'
+
 export { default as PostsSummaryProvider } from './PostsSummaryProvider'
 export * from './PostsSummaryProvider'
 

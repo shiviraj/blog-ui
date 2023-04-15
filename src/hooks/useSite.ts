@@ -1,4 +1,5 @@
 type Site = {
+  shortTitle: string
   tagLine?: string
   developer: {
     name: string
@@ -8,7 +9,11 @@ type Site = {
 }
 
 const useSite = (): Site => {
-  return { developer: { name: 'Shiviraj', url: 'https://shiviraj.com/about-me' }, title: 'Shivi Poetry' }
+  return {
+    developer: { name: 'Shiviraj', url: 'https://shiviraj.com/about-me' },
+    title: 'Shivi Poetry',
+    shortTitle: 'SP'
+  }
 }
 
 export default useSite

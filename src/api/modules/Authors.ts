@@ -44,6 +44,10 @@ class Authors {
   logout(): Promise<{ status: boolean }> {
     return fetch<{ status: boolean }>(`${this.url}/logout`)
   }
+
+  validate(): Promise<AuthorType> {
+    return fetch<AuthorType>(`${this.url}/validate`)
+  }
 }
 
 export default Authors

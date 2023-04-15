@@ -9,3 +9,6 @@ export * from './Comments'
 
 export { default as Posts } from './Posts'
 export * from './Posts'
+
+export { default as Tags } from './Tags'
+export * from './Tags'
