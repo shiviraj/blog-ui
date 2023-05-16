@@ -5,19 +5,22 @@ import { ThemeProvider } from '@mui/material'
 import { HeadTag, Layout, ToastWrapper } from '../common/components'
 import '../../styles/index.css'
 import AuthorProvider from '../context/AuthorProvider'
+import { SiteDetailsProvider } from '../context'
 
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   return (
-    <ThemeProvider theme={theme}>
-      <HeadTag />
-      <ToastWrapper>
-        <AuthorProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </AuthorProvider>
-      </ToastWrapper>
-    </ThemeProvider>
+    <SiteDetailsProvider>
+      <ThemeProvider theme={theme}>
+        <HeadTag />
+        <ToastWrapper>
+          <AuthorProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </AuthorProvider>
+        </ToastWrapper>
+      </ThemeProvider>
+    </SiteDetailsProvider>
   )
 }
 

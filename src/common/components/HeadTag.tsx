@@ -1,5 +1,5 @@
 import React from 'react'
-import useSite from '../../hooks/useSite'
+import { useSite } from '../../context'
 
 const HeadTag = (): JSX.Element => {
   const site = useSite()

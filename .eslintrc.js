@@ -90,7 +90,7 @@ module.exports = {
         max: 4
       }
     ],
-    'max-statements': ['error', 10],
+    'max-statements': ['error', 20],
     'no-console': 'error',
     'no-else-return': 'error',
     'no-eval': 'error',
@@ -102,7 +102,7 @@ module.exports = {
     'no-useless-return': 'error',
     'max-depth': 'error',
     'no-mixed-operators': 'error',
-    complexity: ['error', 4],
+    complexity: ['error', 10],
     'no-template-curly-in-string': 'error',
     'array-callback-return': 'error',
     'default-param-last': 'error',

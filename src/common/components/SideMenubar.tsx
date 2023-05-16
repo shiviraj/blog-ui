@@ -5,8 +5,7 @@ import { useRouter } from 'next/router'
 import api from '../../api'
 import { clearStorage, StorageKeys } from '../../utils'
 import { useToast } from './ToastWrapper'
-import useSite from '../../hooks/useSite'
-import { useAuthor } from '../../context'
+import { useAuthor, useSite } from '../../context'
 
 const Container = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.grey[800],

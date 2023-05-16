@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, styled, Typography } from '@mui/material'
 
 import { Link } from '../atom'
-import useSite from '../../../hooks/useSite'
+import { useSite } from '../../../context'
 
 const Container = styled(Box)(() => ({
   display: 'flex',

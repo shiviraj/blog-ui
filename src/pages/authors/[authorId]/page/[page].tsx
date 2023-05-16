@@ -8,6 +8,8 @@ import { Integer } from '../../../../utils/extensions'
 import api from '../../../../api'
 import { fetchSidebarLinks } from '../../../posts/page/[page]'
 import { getNumbersFrom1 } from '../../../../utils'
+import { useRouter } from 'next/router'
+import { Loader } from '../../../../common/components'
 
 type AuthorPageProps = {
   author: AuthorType
@@ -18,6 +20,11 @@ type AuthorPageProps = {
 }
 const AuthorPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
   const { posts, sideBarLinks, pageCount, page, author } = props
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <Loader />
+  }
 
   return (
     <PostsSummaryProvider
@@ -33,14 +40,19 @@ const AuthorPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = pro
 }
 
 export const getStaticProps: GetStaticProps<AuthorPageProps> = async ({ params }) => {
-  const authorId: string = params?.authorId as string
-  const page = Number(params?.page ?? Integer.ONE)
-  const { pageCount } = await api.authors.getPostsCount(authorId)
-  const author: AuthorType = await api.authors.getAuthor(authorId)
-  const posts: PostSummaryType[] = await api.authors.getPosts(authorId, page)
-  const sideBarLinks = await fetchSidebarLinks()
+  try {
+    const authorId: string = params?.authorId as string
+    const page = Number(params?.page ?? Integer.ONE)
+    const { pageCount } = await api.authors.getPostsCount(authorId)
+    const author: AuthorType = await api.authors.getAuthor(authorId)
+    const posts: PostSummaryType[] = await api.authors.getPosts(authorId, page)
+    const sideBarLinks = await fetchSidebarLinks()
 
-  return { props: { posts, sideBarLinks, page, pageCount, author }, revalidate: 21600 }
+    return { props: { posts, sideBarLinks, page, pageCount, author }, revalidate: 21600 }
+  } catch (error: unknown) {
+    const author: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '' }
+    return { props: { posts: [], sideBarLinks: [], page: 0, pageCount: 0, author }, revalidate: 30 }
+  }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
@@ -56,9 +68,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
         })
       })
     )
-    return { paths: urls.map(url => ({ params: url })), fallback: false }
+    return { paths: urls.map(url => ({ params: url })), fallback: true }
   } catch (error: unknown) {
-    return { paths: [], fallback: false }
+    return { paths: [], fallback: true }
   }
 }
 

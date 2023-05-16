@@ -8,6 +8,8 @@ import type { SideBarLinksWithTitle } from '../../../../context'
 import { PostsSummaryProvider } from '../../../../context'
 import { getNumbersFrom1 } from '../../../../utils'
 import PostsSummary from '../../../../modules/posts'
+import { useRouter } from 'next/router'
+import { Loader } from '../../../../common/components'
 
 type CategoriesPageProps = {
   category: CategoryType
@@ -18,6 +20,11 @@ type CategoriesPageProps = {
 }
 const CategoriesPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
   const { posts, sideBarLinks, pageCount, page, category } = props
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <Loader />
+  }
 
   return (
     <PostsSummaryProvider
@@ -33,14 +40,19 @@ const CategoriesPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
 }
 
 export const getStaticProps: GetStaticProps<CategoriesPageProps> = async ({ params }) => {
-  const categoryUrl: string = params?.categoryUrl as string
-  const page = Number(params?.page ?? Integer.ONE)
-  const { pageCount } = await api.categories.getPostsCount(categoryUrl)
-  const category: CategoryType = await api.categories.getCategory(categoryUrl)
-  const posts: PostSummaryType[] = await api.categories.getPosts(categoryUrl, page)
-  const sideBarLinks = await fetchSidebarLinks()
+  try {
+    const categoryUrl: string = params?.categoryUrl as string
+    const page = Number(params?.page ?? Integer.ONE)
+    const { pageCount } = await api.categories.getPostsCount(categoryUrl)
+    const category: CategoryType = await api.categories.getCategory(categoryUrl)
+    const posts: PostSummaryType[] = await api.categories.getPosts(categoryUrl, page)
+    const sideBarLinks = await fetchSidebarLinks()
 
-  return { props: { posts, sideBarLinks, page, pageCount, category }, revalidate: 21600 }
+    return { props: { posts, sideBarLinks, page, pageCount, category }, revalidate: 21600 }
+  } catch (error: unknown) {
+    const category: CategoryType = { authorId: '', categoryId: '', createdAt: '', name: '', parentId: '', url: '' }
+    return { props: { posts: [], sideBarLinks: [], page: 0, pageCount: 0, category }, revalidate: 30 }
+  }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
@@ -56,9 +68,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
         })
       })
     )
-    return { paths: urls.map(url => ({ params: url })), fallback: false }
+    return { paths: urls.map(url => ({ params: url })), fallback: true }
   } catch (error: unknown) {
-    return { paths: [], fallback: false }
+    return { paths: [], fallback: true }
   }
 }
 

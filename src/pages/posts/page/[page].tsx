@@ -7,6 +7,8 @@ import { Integer } from '../../../utils/extensions'
 import type { SideBarLinksWithTitle } from '../../../context'
 import { PostsSummaryProvider } from '../../../context'
 import { getNumbersFrom1 } from '../../../utils'
+import { useRouter } from 'next/router'
+import { Loader } from '../../../common/components'
 
 type PostsSummaryPageProps = {
   page: number
@@ -16,6 +18,11 @@ type PostsSummaryPageProps = {
 }
 const PostsSummaryPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
   const { pageCount, page, posts, sideBarLinks } = props
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <Loader />
+  }
 
   return (
     <PostsSummaryProvider sideBarLinks={sideBarLinks} posts={posts} page={page} totalPage={pageCount}>
@@ -43,22 +50,28 @@ export const fetchSidebarLinks = async (): Promise<SideBarLinksWithTitle[]> => {
 }
 
 export const getStaticProps: GetStaticProps<PostsSummaryPageProps> = async ({ params }) => {
-  const { pageCount }: PostCount = await api.posts.getPostsCount()
-  const page = Number(params?.page ?? Integer.ONE)
-  const posts: PostSummaryType[] = await api.posts.getPosts(page)
-
-  const sideBarLinks = await fetchSidebarLinks()
-
-  return { props: { pageCount, posts, sideBarLinks, page }, revalidate: 21600 }
+  try {
+    const { pageCount }: PostCount = await api.posts.getPostsCount()
+    const page = Number(params?.page ?? Integer.ONE)
+    const posts: PostSummaryType[] = await api.posts.getPosts(page)
+    const sideBarLinks = await fetchSidebarLinks()
+    return { props: { pageCount, posts, sideBarLinks, page }, revalidate: 21600 }
+  } catch (error: unknown) {
+    return { props: { pageCount: 0, posts: [], sideBarLinks: [], page: 0 }, revalidate: 30 }
+  }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response: PostCount = await api.posts.getPostsCount().catch(() => ({ postCount: 0, pageCount: 0 }))
-  const paths: Array<{ params: { page: string } }> = getNumbersFrom1(response.pageCount).map(page => ({
-    params: { page: page.toString() }
-  }))
+  try {
+    const response: PostCount = await api.posts.getPostsCount().catch(() => ({ postCount: 0, pageCount: 0 }))
+    const paths: Array<{ params: { page: string } }> = getNumbersFrom1(response.pageCount).map(page => ({
+      params: { page: page.toString() }
+    }))
 
-  return { paths, fallback: false }
+    return { paths, fallback: true }
+  } catch (error: unknown) {
+    return { paths: [], fallback: true }
+  }
 }
 
 export default PostsSummaryPage

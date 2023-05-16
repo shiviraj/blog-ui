@@ -5,7 +5,7 @@ import { KeyboardArrowUp } from '@mui/icons-material'
 import moment from 'moment'
 import { Link } from './atom'
 import { useScroll } from '../../hooks'
-import useSite from '../../hooks/useSite'
+import { useSite } from '../../context'
 
 const Scroll = styled('div')(({ theme }) => ({
   position: 'fixed',

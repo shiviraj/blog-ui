@@ -9,3 +9,6 @@ export * from './PostsSummaryProvider'
 
 export { default as PostDetailsProvider } from './PostDetailsProvider'
 export * from './PostDetailsProvider'
+
+export { default as SiteDetailsProvider } from './SiteDetailsProvider'
+export * from './SiteDetailsProvider'

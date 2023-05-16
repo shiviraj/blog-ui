@@ -2,9 +2,9 @@ import React from 'react'
 import { Stack } from '@mui/material'
 import { Posts, SideBar } from './components'
 import { PageError } from '../../common/components'
-import '../../utils/extensions'
 import { useMedia } from '../../hooks'
 import { usePostsSummary } from '../../context'
+import '../../utils/extensions'
 
 const PostsSummary = (): JSX.Element => {
   const media = useMedia()
