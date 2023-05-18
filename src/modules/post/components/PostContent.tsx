@@ -78,11 +78,16 @@ const PostContent = ({ content }: { content: PostContentType }): JSX.Element => 
             )
           case 'delimiter':
             return <Delimiter key={block.id}>***</Delimiter>
-          case 'image':
+          case 'simpleImage':
             return (
               <Image stretched={block.data.stretched} key={block.id}>
-                <img src={block.data.file.url} alt={block.data.caption} loading="lazy" />
-                {block.data.caption && <Caption>{block.data.caption}</Caption>}
+                <img
+                  src={block.data.url}
+                  alt={block.data.caption}
+                  loading="lazy"
+                  width={block.data.stretched ? '100%' : 'auto'}
+                />
+                {block.data.caption && <Caption textAlign={'center'}>{block.data.caption}</Caption>}
               </Image>
             )
           case 'quote':

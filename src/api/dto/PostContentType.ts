@@ -2,7 +2,7 @@ enum BlockType {
   header = 'header',
   paragraph = 'paragraph',
   delimiter = 'delimiter',
-  image = 'image',
+  image = 'simpleImage',
   quote = 'quote',
   list = 'list',
   table = 'table',
@@ -35,9 +35,9 @@ export interface ImageBlock extends BaseBlock {
   data: {
     stretched: boolean
     caption: string
-    file: {
-      url: string
-    }
+    url: string
+    withBorder: boolean
+    withBackground: boolean
   }
 }
 
@@ -81,7 +81,7 @@ export interface BlockMap {
   header: HeaderBlock
   paragraph: ParagraphBlock
   delimiter: DelimiterBlock
-  image: ImageBlock
+  simpleImage: ImageBlock
   quote: QuoteBlock
   list: ListBlock
   table: TableBlock
