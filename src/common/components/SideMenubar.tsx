@@ -47,7 +47,7 @@ const NavLink = ({ path, text }: { path: string; text: string }): JSX.Element =>
 }
 
 const SideMenubar = (): JSX.Element => {
-  const site = useSite()
+  const { site } = useSite()
   const toast = useToast()
   const author = useAuthor()
 

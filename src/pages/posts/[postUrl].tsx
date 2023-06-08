@@ -4,17 +4,24 @@ import api from '../../api'
 import type { AuthorType, PostCount, PostDetailsType as PostDetailsType, PostSummaryType } from '../../api/dto'
 import { fetchSidebarLinks } from './page/[page]'
 import { Integer } from '../../utils/extensions'
-import type { SideBarLinksWithTitle } from '../../context'
-import { PostDetailsProvider } from '../../context'
+import type { SideBarLinksWithTitle, SiteType } from '../../context'
+import { defaultSite, fetchSite, PostDetailsProvider } from '../../context'
 import { useMedia } from '../../hooks'
 import { Stack } from '@mui/material'
 import { SideBar } from '../../modules/posts/components'
 import PostDetails from '../../modules/post'
 import { useRouter } from 'next/router'
-import { Loader } from '../../common/components'
+import type { PageType } from '../../common/components'
+import { defaultPage, Loader, SEODetails } from '../../common/components'
 
-type PostsDetailsPageProps = { sideBarLinks: SideBarLinksWithTitle[]; post: PostDetailsType }
-const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ sideBarLinks, post }) => {
+type PostsDetailsPageProps = {
+  sideBarLinks: SideBarLinksWithTitle[]
+  post: PostDetailsType
+  site: SiteType
+  page: PageType
+}
+
+const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ sideBarLinks, post, site, page }) => {
   const media = useMedia()
   const router = useRouter()
 
@@ -23,12 +30,15 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ si
   }
 
   return (
-    <PostDetailsProvider post={post} sideBarLinks={sideBarLinks}>
-      <Stack direction={media.lg ? 'row' : 'column'} spacing={media.md ? 3 : 1.5}>
-        <PostDetails />
-        <SideBar sideBarLinks={sideBarLinks} />
-      </Stack>
-    </PostDetailsProvider>
+    <>
+      <SEODetails site={site} page={page} />
+      <PostDetailsProvider post={post} sideBarLinks={sideBarLinks}>
+        <Stack direction={media.lg ? 'row' : 'column'} spacing={media.md ? 3 : 1.5}>
+          <PostDetails />
+          <SideBar sideBarLinks={sideBarLinks} />
+        </Stack>
+      </PostDetailsProvider>
+    </>
   )
 }
 
@@ -36,7 +46,9 @@ export const getStaticProps: GetStaticProps<PostsDetailsPageProps> = async ({ pa
   try {
     const post: PostDetailsType = await api.posts.getPostByUrl(params?.postUrl as string)
     const sideBarLinks = await fetchSidebarLinks()
-    return { props: { post, sideBarLinks }, revalidate: 21600 }
+    const site = await fetchSite()
+    const page = { title: post.title }
+    return { props: { post, sideBarLinks, site, page }, revalidate: 21600 }
   } catch (error: unknown) {
     const author: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '' }
     const post: PostDetailsType = {
@@ -53,25 +65,29 @@ export const getStaticProps: GetStaticProps<PostsDetailsPageProps> = async ({ pa
       title: '',
       url: ''
     }
-    return { props: { post, sideBarLinks: [] }, revalidate: 30 }
+    return { props: { post, sideBarLinks: [], site: defaultSite, page: defaultPage }, revalidate: 30 }
   }
 }
+
+export const getAllPosts = async (): Promise<PostSummaryType[]> => {
+  const response: PostCount = await api.posts.getPostsCount()
+  const pages: number[] = new Array(response.pageCount).fill('').map((_str, index) => index + Integer.ONE)
+  const allPosts: PostSummaryType[] = []
+  await Promise.all(
+    pages.map((page: number) => {
+      return api.posts.getPosts(page).then((posts: PostSummaryType[]) => {
+        allPosts.push(...posts)
+      })
+    })
+  )
+  return allPosts
+}
+
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const response: PostCount = await api.posts.getPostsCount()
-    const pages: number[] = new Array(response.pageCount).fill('').map((_str, index) => index + Integer.ONE)
-    const urls: string[] = []
-    await Promise.all(
-      pages.map((page: number) => {
-        return api.posts.getPosts(page).then((posts: PostSummaryType[]) => {
-          return posts.map((post: PostSummaryType) => {
-            urls.push(post.url)
-            return post.url
-          })
-        })
-      })
-    )
-    return { paths: urls.map(url => ({ params: { postUrl: url } })), fallback: true }
+    const allPosts = await getAllPosts()
+    const paths = allPosts.map(postSummary => ({ params: { postUrl: postSummary.url } }))
+    return { paths, fallback: true }
   } catch (error: unknown) {
     return { paths: [], fallback: true }
   }

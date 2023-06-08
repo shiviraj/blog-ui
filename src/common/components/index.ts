@@ -9,8 +9,8 @@ export * from './Footer'
 export { default as Header } from './Header'
 export * from './Header'
 
-export { default as HeadTag } from './HeadTag'
-export * from './HeadTag'
+export { default as SEODetails } from './SEODetails'
+export * from './SEODetails'
 
 export { default as Layout } from './Layout'
 export * from './Layout'

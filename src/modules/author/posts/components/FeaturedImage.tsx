@@ -28,7 +28,7 @@ const FeaturedImage = (): JSX.Element => {
   const { post, updatePost } = useAuthorPost()
   const [open, setOpen] = useState(false)
   const images: string[] =
-    post.content?.blocks.filter(block => block.type === 'image').map(image => (image as ImageBlock).data.file.url) ?? []
+    post.content?.blocks.filter(block => block.type === 'image').map(image => (image as ImageBlock).data.url) ?? []
 
   const handleSelect = (featuredImage: string) => () => {
     updatePost('featuredImage', featuredImage)

@@ -1,5 +1,4 @@
-import type { NextPage } from 'next'
-import type { StackProps} from '@mui/material'
+import type { StackProps } from '@mui/material'
 import { Stack, styled, Typography } from '@mui/material'
 
 const Container = styled(Stack)<StackProps>(({ theme }) => ({
@@ -10,7 +9,7 @@ const Container = styled(Stack)<StackProps>(({ theme }) => ({
   }
 }))
 
-const ErrorPage: NextPage = () => {
+const ErrorPage = (): JSX.Element => {
   return (
     <Container spacing={2}>
       <Typography variant={'h3'}>Oops! That page can’t be found.</Typography>

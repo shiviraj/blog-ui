@@ -11,7 +11,7 @@ const Container = styled(Box)(() => ({
 }))
 
 const SiteIdentifier = (): JSX.Element => {
-  const site = useSite()
+  const { site } = useSite()
   return (
     <Container>
       <Link href={'/'}>

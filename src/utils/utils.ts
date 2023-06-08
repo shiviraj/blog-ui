@@ -1,7 +1,11 @@
 import moment from 'moment'
 import { Integer } from './extensions'
 
-const formatDate = (date: Date): string => moment(date).local().format('MMM DD, YYYY')
+const formatDate = (date: Date, format?: string): string => {
+  return moment(date)
+    .local()
+    .format(format ?? 'MMM DD, YYYY')
+}
 
 const formatDateTime = (date: Date): string => moment(date).local().format('MMM DD, YYYY hh:mm A')
 const getNumbersFrom1 = (length: number): number[] => {

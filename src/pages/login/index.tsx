@@ -21,7 +21,7 @@ const FormContainer = styled('form')(({ theme }) => ({
 }))
 
 const Login: NextPage = () => {
-  const site = useSite()
+  const { site } = useSite()
   const router = useRouter()
   const [error, setError] = useState('')
   const { values, onChange, handleSubmit } = useForm({ email: '', password: '' })

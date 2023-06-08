@@ -41,7 +41,7 @@ const ScrollTop = ({ children }: PropsWithChildren) => {
 }
 
 const Footer = (): JSX.Element => {
-  const site = useSite()
+  const { site } = useSite()
   return (
     <FooterContainer>
       <Typography variant={'subtitle1'}>

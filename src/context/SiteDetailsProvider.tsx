@@ -1,8 +1,9 @@
 import type { PropsWithChildren } from 'react'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import api from '../api'
 
 export type SiteType = {
+  hostname: string
   shortTitle: string
   tagLine?: string
   developer: {
@@ -12,21 +13,24 @@ export type SiteType = {
   title: string
 }
 
-const defaultSite: SiteType = {
+export const defaultSite: SiteType = {
+  hostname: '',
   developer: { name: 'Shiviraj', url: 'https://www.shiviraj.com/about-me' },
-  shortTitle: '',
-  title: ''
+  shortTitle: 'B',
+  title: 'Blog'
 }
-const SiteDetailsContext = createContext<SiteType>(defaultSite)
+
+type SiteDetailsContextType = { site: SiteType; updateSite: (site: SiteType) => void }
+
+const SiteDetailsContext = createContext<SiteDetailsContextType>({ site: defaultSite, updateSite: () => ({}) })
 const SiteDetailsProvider = ({ children }: PropsWithChildren): JSX.Element => {
-  const [site, setSite] = useState(defaultSite)
+  const [site, updateSite] = useState(defaultSite)
 
-  useEffect(() => {
-    api.site.getSiteDetails().then(setSite).catch()
-  }, [])
-
-  return <SiteDetailsContext.Provider value={site}>{children}</SiteDetailsContext.Provider>
+  return <SiteDetailsContext.Provider value={{ site, updateSite }}>{children}</SiteDetailsContext.Provider>
 }
 
-export const useSite = (): SiteType => useContext(SiteDetailsContext)
+export const fetchSite = (): Promise<SiteType> => {
+  return api.site.getSiteDetails()
+}
+export const useSite = (): SiteDetailsContextType => useContext(SiteDetailsContext)
 export default SiteDetailsProvider
