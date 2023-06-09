@@ -4,4 +4,5 @@ export interface AuthorType extends Record<string, unknown> {
   displayName: string
   authorId: string
   name: string
+  username: string
 }

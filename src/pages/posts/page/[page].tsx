@@ -1,7 +1,7 @@
 import React from 'react'
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import PostsSummary from '../../../modules/posts'
-import type { CategoryType, PostCount, PostSummaryType } from '../../../api/dto'
+import type { CategoryType, PostCount, PostSummaryType, TagType } from '../../../api/dto'
 import api from '../../../api'
 import { Integer } from '../../../utils/extensions'
 import type { SideBarLinksWithTitle } from '../../../context'
@@ -39,10 +39,14 @@ export const fetchSidebarLinks = async (): Promise<SideBarLinksWithTitle[]> => {
     const categories = await api.categories.getAllCategories().then((categories: CategoryType[]) => {
       return categories.map(({ name, url }) => ({ name, url: `/categories/${url}` }))
     })
+    const tags = await api.tags.getAllTags().then((tags: TagType[]) => {
+      return tags.map(({ name, url }) => ({ name, url: `/tags/${url}` }))
+    })
 
     return [
       { title: 'Recent Posts', links: recentPosts },
-      { title: 'Categories', links: categories }
+      { title: 'Categories', links: categories },
+      { title: 'Tags', links: tags }
     ]
   } catch (error: unknown) {
     return []

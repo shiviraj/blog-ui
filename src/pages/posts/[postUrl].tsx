@@ -50,7 +50,7 @@ export const getStaticProps: GetStaticProps<PostsDetailsPageProps> = async ({ pa
     const page = { title: post.title }
     return { props: { post, sideBarLinks, site, page }, revalidate: 21600 }
   } catch (error: unknown) {
-    const author: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '' }
+    const author: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '', username: '' }
     const post: PostDetailsType = {
       author,
       categories: [],

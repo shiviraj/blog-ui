@@ -17,16 +17,16 @@ class Authors {
   //   return axios.fetch(`${host}/api/users/logout`)
   // }
 
-  getAuthor(authorId: string): Promise<AuthorType> {
-    return fetch<AuthorType>(`${this.url}/${authorId}`)
+  getAuthor(username: string): Promise<AuthorType> {
+    return fetch<AuthorType>(`${this.url}/${username}`)
   }
 
-  getPostsCount(authorId: string): Promise<PostCount> {
-    return fetch<PostCount>(`${this.url}/${authorId}/count`)
+  getPostsCount(username: string): Promise<PostCount> {
+    return fetch<PostCount>(`${this.url}/${username}/count`)
   }
 
-  getPosts(authorId: string, page: number): Promise<PostSummaryType[]> {
-    return fetch<PostSummaryType[]>(`${this.url}/${authorId}/page/${page}`)
+  getPosts(username: string, page: number): Promise<PostSummaryType[]> {
+    return fetch<PostSummaryType[]>(`${this.url}/${username}/page/${page}`)
   }
 
   getAllAuthors(): Promise<AuthorType[]> {

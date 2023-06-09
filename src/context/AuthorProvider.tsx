@@ -4,16 +4,11 @@ import type { AuthorType } from '../api/dto'
 import api from '../api'
 import { useRouter } from 'next/router'
 
-export const AuthorContext = createContext<AuthorType>({
-  authorId: '',
-  bio: '',
-  displayName: '',
-  name: '',
-  profile: ''
-})
+const defaultAuthor: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '', username: '' }
+export const AuthorContext = createContext<AuthorType>(defaultAuthor)
 
 const AuthorProvider = ({ children }: PropsWithChildren): JSX.Element => {
-  const [author, setAuthor] = useState<AuthorType>({ authorId: '', bio: '', displayName: '', name: '', profile: '' })
+  const [author, setAuthor] = useState<AuthorType>(defaultAuthor)
   const router = useRouter()
   useEffect(() => {
     if (router.pathname.startsWith('/author')) {

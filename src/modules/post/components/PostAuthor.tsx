@@ -43,12 +43,10 @@ const PostAuthor = (props: PostAuthorProps): JSX.Element => {
       justifyContent={media.md ? 'start' : 'space-between'}
       alignItems={media.md ? 'center' : 'start'}
     >
-      <Link href={`/authors/${author.authorId}`} underlineonhover={'true'}>
+      <Link href={`/authors/${author.username}`} underlineonhover={'true'}>
         <Container>
           {icon ? <Person /> : <Avatar src={author.profile} alt={author.name} />}
-          <Typography variant={'subtitle1'} color={'primary'}>
-            {author.displayName}
-          </Typography>
+          <Typography color={'primary'}>{author.displayName}</Typography>
         </Container>
       </Link>
       <Container>

@@ -1,6 +1,7 @@
 import type { TypographyProps } from '@mui/material'
 import { Stack, styled, Typography } from '@mui/material'
 import type { TagType as TagType } from '../../../api/dto'
+import { Link } from '../../../common/components'
 
 const Tag = styled(Typography)<TypographyProps>(({ theme }) => ({
   padding: theme.spacing(0.25, 1),
@@ -15,11 +16,11 @@ const PostTags = ({ tags }: { tags: TagType[] }): JSX.Element => {
 
   return (
     <Stack direction={'row'} spacing={1} mt={1}>
-      <Typography variant={'subtitle1'}>Tags: </Typography>
-      {tags.map(({ tagId, name }, index) => (
-        <Tag variant={'body1'} key={`${tagId}-${index}`}>
-          {name}
-        </Tag>
+      <Typography>Tags: </Typography>
+      {tags.map(({ tagId, name, url }, index) => (
+        <Link key={`${tagId}-${index}`} href={`/tags/${url}`}>
+          <Tag variant={'body1'}>{name}</Tag>
+        </Link>
       ))}
     </Stack>
   )
