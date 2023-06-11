@@ -7,7 +7,7 @@ import type { PostSummaryType } from '../../../../api/dto'
 import { Integer } from '../../../../utils/extensions'
 import { fetchSidebarLinks } from '../../../posts/page/[page]'
 import { useRouter } from 'next/router'
-import type { PageType} from '../../../../common/components'
+import type { PageType } from '../../../../common/components'
 import { defaultPage, Loader, SEODetails } from '../../../../common/components'
 import {
   getAllPosts,
@@ -61,7 +61,7 @@ export const getStaticProps: GetStaticProps<MetaPageProps> = async ({ params }) 
     const title = await getTitle(meta, metaId)
     const sideBarLinks = await fetchSidebarLinks()
     const site = await fetchSite()
-    const pageSEO: PageType = { title }
+    const pageSEO: PageType = { description: '', keywords: [meta, metaId, site.title], title }
 
     return { props: { posts, sideBarLinks, page, pageCount, title, site, pageSEO }, revalidate: 21600 }
   } catch (error: unknown) {

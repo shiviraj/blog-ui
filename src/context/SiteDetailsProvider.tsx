@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from 'react'
 import api from '../api'
 
 export type SiteType = {
+  metaOverviewImage: string
   hostname: string
   shortTitle: string
   tagLine?: string
@@ -14,6 +15,7 @@ export type SiteType = {
 }
 
 export const defaultSite: SiteType = {
+  metaOverviewImage: '',
   hostname: '',
   developer: { name: 'Shiviraj', url: 'https://www.shiviraj.com/about-me' },
   shortTitle: 'B',

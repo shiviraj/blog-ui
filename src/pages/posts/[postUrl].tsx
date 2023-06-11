@@ -47,12 +47,13 @@ export const getStaticProps: GetStaticProps<PostsDetailsPageProps> = async ({ pa
     const post: PostDetailsType = await api.posts.getPostByUrl(params?.postUrl as string)
     const sideBarLinks = await fetchSidebarLinks()
     const site = await fetchSite()
-    const page = { title: post.title }
+    const page: PageType = { description: post.summary, keywords: [], title: post.title }
     return { props: { post, sideBarLinks, site, page }, revalidate: 21600 }
   } catch (error: unknown) {
     const author: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '', username: '' }
     const post: PostDetailsType = {
       author,
+      summary: '',
       categories: [],
       comments: [],
       commentsAllowed: false,

@@ -4,20 +4,23 @@ import PostsSummary from '../../../modules/posts'
 import type { CategoryType, PostCount, PostSummaryType, TagType } from '../../../api/dto'
 import api from '../../../api'
 import { Integer } from '../../../utils/extensions'
-import type { SideBarLinksWithTitle } from '../../../context'
-import { PostsSummaryProvider } from '../../../context'
+import type { SideBarLinksWithTitle, SiteType } from '../../../context'
+import { defaultSite, fetchSite, PostsSummaryProvider } from '../../../context'
 import { getNumbersFrom1 } from '../../../utils'
 import { useRouter } from 'next/router'
-import { Loader } from '../../../common/components'
+import type { PageType } from '../../../common/components'
+import { defaultPage, Loader, SEODetails } from '../../../common/components'
 
 type PostsSummaryPageProps = {
   page: number
   pageCount: number
   posts: PostSummaryType[]
   sideBarLinks: SideBarLinksWithTitle[]
+  site: SiteType
+  pageSEO: PageType
 }
 const PostsSummaryPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = props => {
-  const { pageCount, page, posts, sideBarLinks } = props
+  const { pageCount, page, posts, sideBarLinks, site, pageSEO } = props
   const router = useRouter()
 
   if (router.isFallback) {
@@ -25,9 +28,12 @@ const PostsSummaryPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>>
   }
 
   return (
-    <PostsSummaryProvider sideBarLinks={sideBarLinks} posts={posts} page={page} totalPage={pageCount}>
-      <PostsSummary />
-    </PostsSummaryProvider>
+    <>
+      <SEODetails site={site} page={pageSEO} />
+      <PostsSummaryProvider sideBarLinks={sideBarLinks} posts={posts} page={page} totalPage={pageCount}>
+        <PostsSummary />
+      </PostsSummaryProvider>
+    </>
   )
 }
 
@@ -59,9 +65,14 @@ export const getStaticProps: GetStaticProps<PostsSummaryPageProps> = async ({ pa
     const page = Number(params?.page ?? Integer.ONE)
     const posts: PostSummaryType[] = await api.posts.getPosts(page)
     const sideBarLinks = await fetchSidebarLinks()
-    return { props: { pageCount, posts, sideBarLinks, page }, revalidate: 21600 }
+    const site = await fetchSite()
+    const pageSEO: PageType = { description: defaultPage.description, keywords: [site.title, 'Posts'], title: 'Posts' }
+    return { props: { pageCount, posts, sideBarLinks, page, site, pageSEO }, revalidate: 21600 }
   } catch (error: unknown) {
-    return { props: { pageCount: 0, posts: [], sideBarLinks: [], page: 0 }, revalidate: 30 }
+    return {
+      props: { pageCount: 0, posts: [], sideBarLinks: [], page: 0, site: defaultSite, pageSEO: defaultPage },
+      revalidate: 30
+    }
   }
 }
 

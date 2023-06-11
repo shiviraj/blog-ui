@@ -14,7 +14,7 @@ const AuthorProvider = ({ children }: PropsWithChildren): JSX.Element => {
     if (router.pathname.startsWith('/author')) {
       api.authors
         .validate()
-        .then(author => {
+        .then((author: AuthorType) => {
           setAuthor(author)
         })
         .catch(() => {

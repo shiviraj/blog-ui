@@ -5,6 +5,7 @@ import type { PostContentType } from './PostContentType'
 import type { CommentType } from './CommentType'
 
 export interface PostDetailsType extends Record<string, unknown> {
+  summary: string
   likes: string[]
   content: PostContentType
   tags: TagType[]

@@ -8,7 +8,7 @@
     "start": "next start",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint . --fix",
-    "docker:push": "docker buildx build --platform=linux/arm64,linux/amd64 -t shiviraj/blog-ui:latest --push ."
+    "docker:push": "sh build.sh"
   },
   "dependencies": {
     "@editorjs/checklist": "^1.4.0",
