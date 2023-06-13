@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { Integer } from './extensions'
 
-const formatDate = (date: Date, format?: string): string => {
+const formatDate = (date: Date | string, format?: string): string => {
   return moment(date)
     .local()
     .format(format ?? 'MMM DD, YYYY')

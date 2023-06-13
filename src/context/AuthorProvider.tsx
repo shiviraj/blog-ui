@@ -4,7 +4,15 @@ import type { AuthorType } from '../api/dto'
 import api from '../api'
 import { useRouter } from 'next/router'
 
-const defaultAuthor: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '', username: '' }
+export const defaultAuthor: AuthorType = {
+  authorId: '',
+  bio: '',
+  displayName: '',
+  name: '',
+  profile: '',
+  username: '',
+  registeredAt: ''
+}
 export const AuthorContext = createContext<AuthorType>(defaultAuthor)
 
 const AuthorProvider = ({ children }: PropsWithChildren): JSX.Element => {

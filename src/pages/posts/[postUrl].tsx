@@ -1,10 +1,11 @@
 import React from 'react'
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import api from '../../api'
-import type { AuthorType, PostCount, PostDetailsType as PostDetailsType, PostSummaryType } from '../../api/dto'
+import type { PostCount, PostDetailsType as PostDetailsType, PostSummaryType } from '../../api/dto'
 import { fetchSidebarLinks } from './page/[page]'
 import { Integer } from '../../utils/extensions'
 import type { SideBarLinksWithTitle, SiteType } from '../../context'
+import { defaultAuthor } from '../../context'
 import { defaultSite, fetchSite, PostDetailsProvider } from '../../context'
 import { useMedia } from '../../hooks'
 import { Stack } from '@mui/material'
@@ -50,9 +51,8 @@ export const getStaticProps: GetStaticProps<PostsDetailsPageProps> = async ({ pa
     const page: PageType = { description: post.summary, keywords: [], title: post.title }
     return { props: { post, sideBarLinks, site, page }, revalidate: 21600 }
   } catch (error: unknown) {
-    const author: AuthorType = { authorId: '', bio: '', displayName: '', name: '', profile: '', username: '' }
     const post: PostDetailsType = {
-      author,
+      author: defaultAuthor,
       summary: '',
       categories: [],
       comments: [],

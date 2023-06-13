@@ -9,7 +9,11 @@ const generateRobots = async (): Promise<string> => {
 
 #Sitemap
 Sitemap: https://${site.hostname}/posts/sitemap.xml
-Sitemap: https://${site.hostname}/sitemap.xml`
+Sitemap: https://${site.hostname}/authors/sitemap.xml
+Sitemap: https://${site.hostname}/tags/sitemap.xml
+Sitemap: https://${site.hostname}/categories/sitemap.xml
+Sitemap: https://${site.hostname}/sitemap.xml
+`
 }
 
 export const getServerSideProps: GetServerSideProps<Record<string, unknown>> = async ctx => {

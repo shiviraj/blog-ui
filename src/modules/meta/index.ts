@@ -1,5 +1,5 @@
 import api from '../../api'
-import type { PostSummaryType } from '../../api/dto'
+import type { PostSummaryType, TagType } from '../../api/dto'
 import type { AuthorType, CategoryType } from '../../api/dto'
 import { getNumbersFrom1 } from '../../utils'
 
@@ -9,7 +9,7 @@ enum Meta {
   AUTHORS = 'authors'
 }
 
-export type MetaParamsType = { metaId: string; meta: Meta; page: string }
+export type MetaParamsType = { metaId: string; meta: Meta; page: string; createdAt: string }
 
 const validPaths: string[] = [Meta.TAGS, Meta.CATEGORIES, Meta.AUTHORS]
 
@@ -54,7 +54,7 @@ const getAuthorPaths = async (): Promise<Array<{ params: MetaParamsType }>> => {
       const { pageCount } = await api.authors.getPostsCount(author.username)
       return getNumbersFrom1(pageCount).map(page => {
         paths.push({
-          params: { metaId: author.username, meta: Meta.AUTHORS, page: `${page}` }
+          params: { metaId: author.username, meta: Meta.AUTHORS, page: `${page}`, createdAt: author.registeredAt }
         })
         return {}
       })
@@ -71,7 +71,7 @@ const getCategoriesPaths = async (): Promise<Array<{ params: MetaParamsType }>> 
       const { pageCount } = await api.categories.getPostsCount(category.url)
       return getNumbersFrom1(pageCount).map(page => {
         paths.push({
-          params: { metaId: category.url, meta: Meta.CATEGORIES, page: `${page}` }
+          params: { metaId: category.url, meta: Meta.CATEGORIES, page: `${page}`, createdAt: category.createdAt }
         })
         return {}
       })
@@ -80,4 +80,21 @@ const getCategoriesPaths = async (): Promise<Array<{ params: MetaParamsType }>> 
   return paths
 }
 
-export { getTitle, getAllPosts, getPageCount, Meta, validPaths, getCategoriesPaths, getAuthorPaths }
+const getTagsPaths = async (): Promise<Array<{ params: MetaParamsType }>> => {
+  const tags: TagType[] = await api.tags.getAllTags()
+  const paths: Array<{ params: MetaParamsType }> = []
+  await Promise.all(
+    tags.map(async (tag: TagType) => {
+      const { pageCount } = await api.tags.getPostsCount(tag.url)
+      return getNumbersFrom1(pageCount).map(page => {
+        paths.push({
+          params: { metaId: tag.url, meta: Meta.TAGS, page: `${page}`, createdAt: tag.createdAt }
+        })
+        return {}
+      })
+    })
+  )
+  return paths
+}
+
+export { getTitle, getAllPosts, getPageCount, Meta, validPaths, getCategoriesPaths, getAuthorPaths, getTagsPaths }

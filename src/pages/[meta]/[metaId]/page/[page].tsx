@@ -14,6 +14,7 @@ import {
   getAuthorPaths,
   getCategoriesPaths,
   getPageCount,
+  getTagsPaths,
   getTitle,
   validPaths
 } from '../../../../modules/meta'
@@ -84,8 +85,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const authorPaths = await getAuthorPaths()
     const categories = await getCategoriesPaths()
+    const tags = await getTagsPaths()
 
-    return { paths: authorPaths.concat(categories), fallback: true }
+    return { paths: authorPaths.concat(categories).concat(tags), fallback: true }
   } catch (error: unknown) {
     return { paths: [], fallback: true }
   }
