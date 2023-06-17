@@ -6,15 +6,17 @@ import { Layout, ToastWrapper } from '../common/components'
 import '../../styles/index.css'
 import AuthorProvider from '../context/AuthorProvider'
 import { SiteDetailsProvider } from '../context'
+import { useRouter } from 'next/router'
 
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
+  const router = useRouter()
   return (
     <SiteDetailsProvider>
       <ThemeProvider theme={theme}>
         <ToastWrapper>
           <AuthorProvider>
             <Layout>
-              <Component {...pageProps} />
+              <Component {...pageProps} key={router.asPath} />
             </Layout>
           </AuthorProvider>
         </ToastWrapper>
