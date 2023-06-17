@@ -12,12 +12,6 @@ const Container = styled(Box)(({ theme }) => ({
   }
 }))
 
-const Image = styled('img')(({ theme }) => ({
-  height: theme.spacing(24),
-  borderRadius: theme.spacing(1),
-  border: `1px solid ${theme.palette.divider}`
-}))
-
 type PostViewProps = { post: PostSummaryType }
 const PostView = ({ post }: PostViewProps): JSX.Element => (
   <Container>
@@ -34,7 +28,6 @@ const PostView = ({ post }: PostViewProps): JSX.Element => (
       />
     </Stack>
     <Stack direction={'row'} spacing={2}>
-      {post.featuredImage && <Image src={post.featuredImage} />}
       <div>
         <RawHTML n2br>{post.summary}</RawHTML>
         <Link href={`/posts/${post.url}`} underlineonhover={'true'} color={'primary'}>

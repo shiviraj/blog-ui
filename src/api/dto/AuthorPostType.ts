@@ -7,7 +7,7 @@ export interface AuthorPostType extends Record<string, unknown> {
   createdAt: Date
   visibility: Visibility
   likes: string[]
-  content?: OutputData
+  content: OutputData
   tags: string[]
   categories: string[]
   featuredImage?: string

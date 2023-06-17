@@ -27,7 +27,7 @@ const Body = styled('main')(({ theme }) => ({
 const Layout = ({ children }: PropsWithChildren): JSX.Element => {
   const router = useRouter()
 
-  if (router.pathname.startsWith('/author/')) {
+  if (router.pathname.startsWith('/author') && !router.pathname.startsWith('/authors')) {
     return (
       <Stack overflow={'hidden'}>
         <SideMenubar />

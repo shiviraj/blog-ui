@@ -1,14 +1,17 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import { Stack, styled, TextField, Typography } from '@mui/material'
 import { useForm } from '../../hooks'
-import { Button } from '../../common/components'
-import { useSite } from '../../context'
+import type { PageType } from '../../common/components'
+import { Button, SEODetails } from '../../common/components'
+import type { SiteType } from '../../context'
+import { defaultSite, fetchSite } from '../../context'
 import type { ChangeEvent } from 'react'
 import React, { useState } from 'react'
 import api from '../../api'
 import { setStorage, StorageKeys } from '../../utils'
 import type { ServerError } from '../../api/dto/Errors'
 import { useRouter } from 'next/router'
+import type { InferGetStaticPropsType } from 'next'
 
 const FormContainer = styled('form')(({ theme }) => ({
   margin: theme.spacing(4, 'auto'),
@@ -20,8 +23,9 @@ const FormContainer = styled('form')(({ theme }) => ({
   }
 }))
 
-const Login: NextPage = () => {
-  const { site } = useSite()
+type LoginPropsType = { site: SiteType }
+
+const Login: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ site }) => {
   const router = useRouter()
   const [error, setError] = useState('')
   const { values, onChange, handleSubmit } = useForm({ email: '', password: '' })
@@ -45,8 +49,11 @@ const Login: NextPage = () => {
       })
   }
 
+  const page: PageType = { description: 'login', keywords: [], title: 'Login' }
+
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
+      <SEODetails site={site} page={page} />
       <Stack spacing={2}>
         <Typography variant={'h5'}>{site.title} Login</Typography>
         {error && (
@@ -76,6 +83,15 @@ const Login: NextPage = () => {
       </Stack>
     </FormContainer>
   )
+}
+
+export const getStaticProps: GetStaticProps<LoginPropsType> = async () => {
+  try {
+    const site = await fetchSite()
+    return { props: { site } }
+  } catch (error: unknown) {
+    return { props: { site: defaultSite } }
+  }
 }
 
 export default Login
