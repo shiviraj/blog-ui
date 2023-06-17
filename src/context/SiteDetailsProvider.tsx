@@ -18,8 +18,8 @@ export const defaultSite: SiteType = {
   metaOverviewImage: '',
   hostname: '',
   developer: { name: 'Shiviraj', url: 'https://www.shiviraj.com/about-me' },
-  shortTitle: 'B',
-  title: 'Blog'
+  shortTitle: '',
+  title: ''
 }
 
 type SiteDetailsContextType = { site: SiteType; updateSite: (site: SiteType) => void }

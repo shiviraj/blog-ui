@@ -5,15 +5,14 @@ import type { PostCount, PostDetailsType as PostDetailsType, PostSummaryType } f
 import { fetchSidebarLinks } from './page/[page]'
 import { Integer } from '../../utils/extensions'
 import type { SideBarLinksWithTitle, SiteType } from '../../context'
-import { defaultAuthor } from '../../context'
-import { defaultSite, fetchSite, PostDetailsProvider } from '../../context'
+import { fetchSite, PostDetailsProvider } from '../../context'
 import { useMedia } from '../../hooks'
 import { Stack } from '@mui/material'
 import { SideBar } from '../../modules/posts/components'
 import PostDetails from '../../modules/post'
 import { useRouter } from 'next/router'
 import type { PageType } from '../../common/components'
-import { defaultPage, Loader, SEODetails } from '../../common/components'
+import { Loader, SEODetails } from '../../common/components'
 
 type PostsDetailsPageProps = {
   sideBarLinks: SideBarLinksWithTitle[]
@@ -51,22 +50,7 @@ export const getStaticProps: GetStaticProps<PostsDetailsPageProps> = async ({ pa
     const page: PageType = { description: post.summary, keywords: [], title: post.title }
     return { props: { post, sideBarLinks, site, page }, revalidate: 21600 }
   } catch (error: unknown) {
-    const post: PostDetailsType = {
-      author: defaultAuthor,
-      summary: '',
-      categories: [],
-      comments: [],
-      commentsAllowed: false,
-      content: { time: '', blocks: [] },
-      lastUpdateOn: new Date(),
-      likes: [],
-      postId: '',
-      publishedOn: '',
-      tags: [],
-      title: '',
-      url: ''
-    }
-    return { props: { post, sideBarLinks: [], site: defaultSite, page: defaultPage }, revalidate: 30 }
+    return { notFound: true }
   }
 }
 
