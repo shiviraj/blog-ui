@@ -88,9 +88,9 @@ const Login: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ site 
 export const getStaticProps: GetStaticProps<LoginPropsType> = async () => {
   try {
     const site = await fetchSite()
-    return { props: { site } }
+    return { props: { site }, revalidate: 21600 }
   } catch (error: unknown) {
-    return { props: { site: defaultSite } }
+    return { props: { site: defaultSite }, revalidate: 30 }
   }
 }
 
