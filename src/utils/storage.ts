@@ -1,4 +1,4 @@
-import api from '../api'
+import { AuthorGateway } from '../api'
 
 const UNDEFINED = 'undefined'
 
@@ -35,7 +35,7 @@ export const getStorage = <T extends Record<string, unknown>>(key: StorageKeys):
 export const getVisitorId = (): Promise<string> => {
   const visitor = getStorage<{ visitorId: string }>(StorageKeys.VISITOR_ID)
   if (visitor === null) {
-    return api.authors.getVisitorId().then((visitor: { visitorId: string }) => {
+    return AuthorGateway.getVisitorId().then((visitor: { visitorId: string }) => {
       setStorage(StorageKeys.VISITOR_ID, visitor)
       return visitor.visitorId
     })

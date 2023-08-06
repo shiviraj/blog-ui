@@ -2,7 +2,7 @@ import React from 'react'
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import PostsSummary from '../../../modules/posts'
 import type { CategoryType, PostCount, PostSummaryType, TagType } from '../../../api/dto'
-import api from '../../../api'
+import api, { CategoryGateway } from '../../../api'
 import { Integer } from '../../../utils/extensions'
 import type { SideBarLinksWithTitle, SiteType } from '../../../context'
 import { defaultSite, fetchSite, PostsSummaryProvider } from '../../../context'
@@ -42,7 +42,7 @@ export const fetchSidebarLinks = async (): Promise<SideBarLinksWithTitle[]> => {
     const recentPosts = await api.posts.getPosts(Integer.ONE).then((posts: PostSummaryType[]) => {
       return posts.map(({ title, url }) => ({ name: title, url: `/posts/${url}` }))
     })
-    const categories = await api.categories.getAllCategories().then((categories: CategoryType[]) => {
+    const categories = await CategoryGateway.getAllCategories().then((categories: CategoryType[]) => {
       return categories.map(({ name, url }) => ({ name, url: `/categories/${url}` }))
     })
     const tags = await api.tags.getAllTags().then((tags: TagType[]) => {

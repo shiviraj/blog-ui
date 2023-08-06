@@ -7,11 +7,11 @@ import type { SiteType } from '../../context'
 import { defaultSite, fetchSite } from '../../context'
 import type { ChangeEvent } from 'react'
 import React, { useState } from 'react'
-import api from '../../api'
 import { setStorage, StorageKeys } from '../../utils'
 import type { ServerError } from '../../api/dto/Errors'
 import { useRouter } from 'next/router'
 import type { InferGetStaticPropsType } from 'next'
+import { AuthorGateway } from '../../api'
 
 const FormContainer = styled('form')(({ theme }) => ({
   margin: theme.spacing(4, 'auto'),
@@ -38,8 +38,7 @@ const Login: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ site 
 
   const onSubmit = () => {
     setError('')
-    api.authors
-      .login(values)
+    AuthorGateway.login(values)
       .then(token => {
         setStorage(StorageKeys.AUTH, token)
         return router.push('/author')

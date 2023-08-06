@@ -1,8 +1,8 @@
 import type { PropsWithChildren } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { AuthorType } from '../api/dto'
-import api from '../api'
 import { useRouter } from 'next/router'
+import { AuthorGateway } from '../api'
 
 export const defaultAuthor: AuthorType = {
   authorId: '',
@@ -20,8 +20,7 @@ const AuthorProvider = ({ children }: PropsWithChildren): JSX.Element => {
   const router = useRouter()
   useEffect(() => {
     if (router.pathname.startsWith('/author')) {
-      api.authors
-        .validate()
+      AuthorGateway.validate()
         .then((author: AuthorType) => {
           setAuthor(author)
         })

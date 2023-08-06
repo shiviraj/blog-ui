@@ -2,10 +2,10 @@ import React from 'react'
 import { Avatar, Stack, styled, Typography } from '@mui/material'
 import { Link } from './atom'
 import { useRouter } from 'next/router'
-import api from '../../api'
 import { clearStorage, StorageKeys } from '../../utils'
 import { useToast } from './ToastWrapper'
 import { useAuthor, useSite } from '../../context'
+import { AuthorGateway } from '../../api'
 
 const Container = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.grey[800],
@@ -52,8 +52,7 @@ const SideMenubar = (): JSX.Element => {
   const author = useAuthor()
 
   const handleLogout = () => {
-    api.authors
-      .logout()
+    AuthorGateway.logout()
       .then(() => {
         clearStorage(StorageKeys.AUTH)
       })

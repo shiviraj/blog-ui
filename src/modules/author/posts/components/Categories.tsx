@@ -4,7 +4,7 @@ import { Accordion, Link } from '../../../../common/components'
 import { sort } from '../utils'
 import AddNewCategoryForm from './AddNewCategoryForm'
 import { useAuthorPost } from '../../../../context'
-import api from '../../../../api'
+import { CategoryGateway } from '../../../../api'
 import type { CategoryType } from '../../../../api/dto'
 import theme from '../../../../theme'
 
@@ -20,7 +20,7 @@ const Categories = (): JSX.Element => {
   const [addNewCategory, setAddNewCategory] = useState(false)
 
   useEffect(() => {
-    api.categories.getAllCategories().then(allRegisteredCategories => {
+    CategoryGateway.getAllCategories().then(allRegisteredCategories => {
       setAllCategories(sort(allRegisteredCategories))
     })
   }, [])

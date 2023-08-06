@@ -1,6 +1,5 @@
-import api from '../../api'
-import type { PostSummaryType, TagType } from '../../api/dto'
-import type { AuthorType, CategoryType } from '../../api/dto'
+import api, { AuthorGateway, CategoryGateway } from '../../api'
+import type { AuthorType, CategoryType, PostSummaryType, TagType } from '../../api/dto'
 import { getNumbersFrom1 } from '../../utils'
 
 enum Meta {
@@ -15,31 +14,31 @@ const validPaths: string[] = [Meta.TAGS, Meta.CATEGORIES, Meta.AUTHORS]
 
 const getAllPosts = async (meta: string, metaId: string, page: number): Promise<PostSummaryType[]> => {
   if (meta === Meta.AUTHORS) {
-    return await api.authors.getPosts(metaId, page)
+    return await AuthorGateway.getPosts(metaId, page)
   }
   if (meta === Meta.CATEGORIES) {
-    return await api.categories.getPosts(metaId, page)
+    return await CategoryGateway.getPosts(metaId, page)
   }
   return await api.tags.getPosts(metaId, page)
 }
 
 const getPageCount = async (meta: string, metaId: string): Promise<{ pageCount: number }> => {
   if (meta === Meta.AUTHORS) {
-    return await api.authors.getPostsCount(metaId)
+    return await AuthorGateway.getPostsCount(metaId)
   }
   if (meta === Meta.CATEGORIES) {
-    return await api.categories.getPostsCount(metaId)
+    return await CategoryGateway.getPostsCount(metaId)
   }
   return await api.tags.getPostsCount(metaId)
 }
 
 const getTitle = async (meta: string, metaId: string): Promise<string> => {
   if (meta === Meta.AUTHORS) {
-    const author = await api.authors.getAuthor(metaId)
+    const author = await AuthorGateway.getAuthor(metaId)
     return `Author: ${author.name}`
   }
   if (meta === Meta.CATEGORIES) {
-    const category = await api.categories.getCategory(metaId)
+    const category = await CategoryGateway.getCategory(metaId)
     return `Category: ${category.name}`
   }
   const tag = await api.tags.getTag(metaId)
@@ -47,11 +46,11 @@ const getTitle = async (meta: string, metaId: string): Promise<string> => {
 }
 
 const getAuthorPaths = async (): Promise<Array<{ params: MetaParamsType }>> => {
-  const authors: AuthorType[] = await api.authors.getAllAuthors()
+  const authors: AuthorType[] = await AuthorGateway.getAllAuthors()
   const paths: Array<{ params: MetaParamsType }> = []
   await Promise.all(
     authors.map(async author => {
-      const { pageCount } = await api.authors.getPostsCount(author.username)
+      const { pageCount } = await AuthorGateway.getPostsCount(author.username)
       return getNumbersFrom1(pageCount).map(page => {
         paths.push({
           params: { metaId: author.username, meta: Meta.AUTHORS, page: `${page}`, createdAt: author.registeredAt }
@@ -64,11 +63,11 @@ const getAuthorPaths = async (): Promise<Array<{ params: MetaParamsType }>> => {
 }
 
 const getCategoriesPaths = async (): Promise<Array<{ params: MetaParamsType }>> => {
-  const categories: CategoryType[] = await api.categories.getAllCategories()
+  const categories: CategoryType[] = await CategoryGateway.getAllCategories()
   const paths: Array<{ params: MetaParamsType }> = []
   await Promise.all(
     categories.map(async category => {
-      const { pageCount } = await api.categories.getPostsCount(category.url)
+      const { pageCount } = await CategoryGateway.getPostsCount(category.url)
       return getNumbersFrom1(pageCount).map(page => {
         paths.push({
           params: { metaId: category.url, meta: Meta.CATEGORIES, page: `${page}`, createdAt: category.createdAt }

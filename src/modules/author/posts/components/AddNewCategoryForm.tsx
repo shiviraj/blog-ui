@@ -5,7 +5,7 @@ import { Divider, FormControl, InputLabel, MenuItem, Select, Stack, styled, Text
 import { useAuthorPost } from '../../../../context'
 import type { CategoryType } from '../../../../api/dto'
 import { useForm } from '../../../../hooks'
-import api from '../../../../api'
+import { CategoryGateway } from '../../../../api'
 import { sort } from '../utils'
 import { Button, useToast } from '../../../../common/components'
 
@@ -29,8 +29,7 @@ const AddNewCategoryForm = ({ allCategories, setAllCategories }: AddNewCategoryF
     }
   }
   const onSubmit = (formValues: typeof values) => {
-    api.categories
-      .addNewCategory(formValues)
+    CategoryGateway.addNewCategory(formValues)
       .then(category => {
         updatePost('categories', post.categories.concat(category.categoryId))
         setAllCategories(sort([...allCategories, category]))
