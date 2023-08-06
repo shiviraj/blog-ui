@@ -74,9 +74,11 @@ const rows = [
   createData('Brazil', 'BR', 210147125, 8515767)
 ].map((it, index) => ({ sNo: index + 1, ...it }))
 
-const Pages = () => <Box>
+const Pages = () => (
+  <Box>
     <AddNew addNew={API.pages.addPage} type={'page'} />
     <TableData columns={columns} rows={rows} />
   </Box>
+)
 
 export default Pages

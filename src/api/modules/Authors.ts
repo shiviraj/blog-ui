@@ -1,6 +1,7 @@
 import fetch from '../adapter'
 import type { AuthorType, PostCount, PostSummaryType } from '../dto'
 import { METHODS } from './constants'
+import WebClient from 'web-client-starter/lib'
 
 class Authors {
   private readonly url: string
@@ -18,7 +19,7 @@ class Authors {
   // }
 
   getAuthor(username: string): Promise<AuthorType> {
-    return fetch<AuthorType>(`${this.url}/${username}`)
+    return WebClient.get<AuthorType>({ baseUrl: this.url, path: '/{username}', uriVariables: { username } })
   }
 
   getPostsCount(username: string): Promise<PostCount> {

@@ -1,10 +1,10 @@
 import type { ChangeEvent } from 'react'
 import React from 'react'
-import dynamic from 'next/dynamic'
 import { Box, Divider, Input, Stack, styled } from '@mui/material'
 import { useAuthorPost } from '../../../context'
 import type { OutputData } from '@editorjs/editorjs'
 import { Categories, Discussion, FeaturedImage, Permalink, PostControl, StatusAndVisibility, Tags } from './components'
+import dynamic from 'next/dynamic'
 
 const CustomEditor = dynamic(() => import('../../../common/components/Editor/Editor'), { ssr: false })
 

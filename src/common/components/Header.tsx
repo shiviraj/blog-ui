@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Appbar from './Header/Appbar'
 
 const Header = (): JSX.Element => {
