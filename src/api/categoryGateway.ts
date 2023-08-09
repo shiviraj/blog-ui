@@ -1,7 +1,7 @@
 import { config } from '../config'
 import type { PostCount, PostSummaryType } from './dto'
 import type { CategoryType } from './dto'
-import WebClient from 'web-client-starter/lib'
+import WebClient from './gateway'
 
 const categoryConfig = config.category
 const CategoryGateway = {
