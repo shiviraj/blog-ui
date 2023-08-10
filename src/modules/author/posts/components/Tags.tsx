@@ -4,7 +4,7 @@ import Accordion from '../../../../common/components/Accordion'
 import { Box, Chip, MenuItem, Stack, styled, TextField } from '@mui/material'
 import { useAuthorPost } from '../../../../context'
 import type { TagType } from '../../../../api/dto'
-import api from '../../../../api'
+import { TagGateway } from '../../../../api'
 import { useForm } from '../../../../hooks'
 import { useToast } from '../../../../common/components'
 
@@ -24,7 +24,7 @@ const Tags = (): JSX.Element => {
   const { values, onChange } = useForm({ name: '' })
 
   useEffect(() => {
-    api.tags.getAllTags().then(setTags).catch()
+    TagGateway.getAllTags().then(setTags).catch()
   }, [])
   const handleDelete = (tagId: string) => () => {
     updatePost(
@@ -53,8 +53,7 @@ const Tags = (): JSX.Element => {
 
   const handleAdd = () => {
     if (sIndex === -1) {
-      api.tags
-        .addNewTag(values.name.trim())
+      TagGateway.addNewTag(values.name.trim())
         .then(tag => {
           setTags([...tags, tag])
           updatePost('tags', post.tags.concat(tag.tagId))

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
 import type { AuthorCommentType } from '../../api/dto'
-import api from '../../api'
+import { CommentGateway } from '../../api'
 import { Loader } from '../../common/components'
 import TableData from '../../modules/author/components/TableData'
 import { ActionBar } from '../../modules/author/comments'
@@ -18,8 +18,7 @@ const CommentsPage: NextPage = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    api.comments
-      .getAllAuthorPostsComments()
+    CommentGateway.getAllAuthorPostsComments()
       .then(setComments)
       .finally(() => {
         setLoading(false)

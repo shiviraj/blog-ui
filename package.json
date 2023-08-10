@@ -39,7 +39,6 @@
     "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.11.15",
     "@reduxjs/toolkit": "^1.9.3",
-    "axios": "^1.4.0",
     "html-react-parser": "^3.0.15",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",

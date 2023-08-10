@@ -2,7 +2,7 @@ import type { ChangeEvent } from 'react'
 import React, { useEffect, useState } from 'react'
 import { Stack, TextField } from '@mui/material'
 import { useAuthorPost } from '../../../../context'
-import api from '../../../../api'
+import { PostGateway } from '../../../../api'
 import { Accordion, Link } from '../../../../common/components'
 import { useForm } from '../../../../hooks'
 
@@ -15,8 +15,7 @@ const Permalink = (): JSX.Element => {
   useEffect(() => {
     const regexp = /^[a-z][a-z0-9\\-]+$/i
     if (values.url && regexp.exec(values.url)) {
-      api.posts
-        .isUrlAvailable(post.postId, values.url.trim())
+      PostGateway.isUrlAvailable(post.postId, values.url.trim())
         .then(({ status }) => {
           const errorMessage: string = status ? '' : 'Url is not available!'
           setError(errorMessage)

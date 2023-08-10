@@ -15,5 +15,31 @@ export const config = {
     getPostsPath: '/{categoryUrl}/page/{page}',
     getPostsCountPath: '/{categoryUrl}/count',
     getCategoryPath: '/{categoryUrl}'
+  },
+  comment: {
+    baseUrl: `${BACKEND_URL}/comments`,
+    addCommentPath: '/{postId}',
+    toggleLikePath: '/{commentId}',
+    updateStatusPath: '/{commentId}/update-status'
+  },
+  site: {
+    baseUrl: `${BACKEND_URL}/site`
+  },
+  tag: {
+    baseUrl: `${BACKEND_URL}/tags`,
+    getPostsPath: '/{tagUrl}/page/{page}',
+    getPostsCountPath: '/{tagUrl}/count',
+    getTagPath: '/{tagUrl}'
+  },
+  post: {
+    baseUrl: `${BACKEND_URL}/posts`,
+    validatedBaseUrl: `${BACKEND_URL}/posts/validate`,
+    getPostByUrlPath: '/{postUrl}',
+    getPostsPath: '/page/{page}',
+    getPostsCountPath: '/count',
+    toggleLikePath: '/{postId}/user-reaction',
+    getPostsByPostIdPath: '/{postId}',
+    publishPath: '/{postId}/publish',
+    isUrlAvailablePath: '/{postId}/url-available'
   }
 }

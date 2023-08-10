@@ -1,6 +1,6 @@
 import { config } from '../config'
 import type { AuthorType, PostCount, PostSummaryType } from './dto'
-import WebClient from './gateway'
+import WebClient from './webClient'
 
 const authorConfig = config.author
 const AuthorGateway = {

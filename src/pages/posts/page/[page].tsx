@@ -2,7 +2,7 @@ import React from 'react'
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import PostsSummary from '../../../modules/posts'
 import type { CategoryType, PostCount, PostSummaryType, TagType } from '../../../api/dto'
-import api, { CategoryGateway } from '../../../api'
+import { CategoryGateway, PostGateway, TagGateway } from '../../../api'
 import { Integer } from '../../../utils/extensions'
 import type { SideBarLinksWithTitle, SiteType } from '../../../context'
 import { defaultSite, fetchSite, PostsSummaryProvider } from '../../../context'
@@ -39,13 +39,13 @@ const PostsSummaryPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>>
 
 export const fetchSidebarLinks = async (): Promise<SideBarLinksWithTitle[]> => {
   try {
-    const recentPosts = await api.posts.getPosts(Integer.ONE).then((posts: PostSummaryType[]) => {
+    const recentPosts = await PostGateway.getPosts(Integer.ONE).then((posts: PostSummaryType[]) => {
       return posts.map(({ title, url }) => ({ name: title, url: `/posts/${url}` }))
     })
     const categories = await CategoryGateway.getAllCategories().then((categories: CategoryType[]) => {
       return categories.map(({ name, url }) => ({ name, url: `/categories/${url}` }))
     })
-    const tags = await api.tags.getAllTags().then((tags: TagType[]) => {
+    const tags = await TagGateway.getAllTags().then((tags: TagType[]) => {
       return tags.map(({ name, url }) => ({ name, url: `/tags/${url}` }))
     })
 
@@ -61,9 +61,9 @@ export const fetchSidebarLinks = async (): Promise<SideBarLinksWithTitle[]> => {
 
 export const getStaticProps: GetStaticProps<PostsSummaryPageProps> = async ({ params }) => {
   try {
-    const { pageCount }: PostCount = await api.posts.getPostsCount()
+    const { pageCount }: PostCount = await PostGateway.getPostsCount()
     const page = Number(params?.page ?? Integer.ONE)
-    const posts: PostSummaryType[] = await api.posts.getPosts(page)
+    const posts: PostSummaryType[] = await PostGateway.getPosts(page)
     const sideBarLinks = await fetchSidebarLinks()
     const site = await fetchSite()
     const pageSEO: PageType = { description: defaultPage.description, keywords: [site.title, 'Posts'], title: 'Posts' }
@@ -78,7 +78,7 @@ export const getStaticProps: GetStaticProps<PostsSummaryPageProps> = async ({ pa
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const response: PostCount = await api.posts.getPostsCount().catch(() => ({ postCount: 0, pageCount: 0 }))
+    const response: PostCount = await PostGateway.getPostsCount().catch(() => ({ postCount: 0, pageCount: 0 }))
     const paths: Array<{ params: { page: string } }> = getNumbersFrom1(response.pageCount).map(page => ({
       params: { page: page.toString() }
     }))

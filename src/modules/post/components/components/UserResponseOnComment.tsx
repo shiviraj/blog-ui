@@ -1,7 +1,7 @@
 import { Stack, styled, Typography } from '@mui/material'
 import UserActivity from './UserActivity'
 import { getVisitorId } from '../../../../utils'
-import api from '../../../../api'
+import { CommentGateway } from '../../../../api'
 import type { CommentType } from '../../../../api/dto'
 import { usePostDetails } from '../../../../context'
 import { Reply } from '@mui/icons-material'
@@ -25,7 +25,7 @@ const UserResponseOnComment = (props: UserResponseOnCommentProps): JSX.Element =
 
   const handleLike = () => {
     getVisitorId().then((visitorId: string) => {
-      api.comments.toggleLike(comment.commentId, visitorId).then(({ likes }) => {
+      CommentGateway.toggleLike(comment.commentId, visitorId).then(({ likes }) => {
         comment.likes = likes
         updatePost('comments', [...post.comments])
       })

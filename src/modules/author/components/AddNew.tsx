@@ -4,7 +4,7 @@ import { Add } from '@mui/icons-material'
 import { useRouter } from 'next/router'
 import { useToast } from '../../../common/components'
 import { useState } from 'react'
-import api from '../../../api'
+import { PostGateway } from '../../../api'
 
 const AddNew = (): JSX.Element => {
   const router = useRouter()
@@ -13,8 +13,7 @@ const AddNew = (): JSX.Element => {
 
   const handleAddNewPost = () => {
     setLoading(true)
-    api.posts
-      .addNew()
+    PostGateway.addNew()
       .then(authorPost => router.push(`/author/posts/edit/${authorPost.postId}`))
       .catch(() => {
         toast.error('Failed to add new post')

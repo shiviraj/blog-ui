@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { IconButton, Stack, Tooltip } from '@mui/material'
 import { Delete, Publish, Reply, Unpublished } from '@mui/icons-material'
 import type { AuthorCommentType } from '../../../api/dto'
-import api from '../../../api'
+import { CommentGateway } from '../../../api'
 import { useToast } from '../../../common/components'
 
 type ActionBarReturnType = (props: { id: string }) => JSX.Element
@@ -21,8 +21,7 @@ const ActionBar = (
     const handleApprove = () => {
       if (comment) {
         const updatedStatus = commentStatus === 'UNAPPROVED' ? 'APPROVED' : 'UNAPPROVED'
-        api.comments
-          .updateStatus(comment.commentId, updatedStatus)
+        CommentGateway.updateStatus(comment.commentId, updatedStatus)
           .then(() => {
             comment.status = updatedStatus
             updateComments(comments.slice())

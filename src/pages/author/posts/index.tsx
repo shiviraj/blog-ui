@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
 import { Stack } from '@mui/material'
-import api from '../../../api'
+import { PostGateway } from '../../../api'
 import type { AuthorPostType } from '../../../api/dto'
 import { Loader } from '../../../common/components'
 import { AddNew, TableData } from '../../../modules/author/components'
@@ -20,8 +20,7 @@ const Post: NextPage = () => {
   const [posts, setPosts] = useState<AuthorPostType[]>([])
 
   useEffect(() => {
-    api.posts
-      .getAllMyPosts()
+    PostGateway.getAllMyPosts()
       .then(posts => {
         setPosts(posts)
       })

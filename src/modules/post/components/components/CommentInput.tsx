@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Save } from '@mui/icons-material'
 import { Button, LoadingButton, useToast } from '../../../../common/components'
 import { useForm } from '../../../../hooks'
-import api from '../../../../api'
+import { CommentGateway } from '../../../../api'
 import { getStorage, getVisitorId, setStorage, StorageKeys } from '../../../../utils'
 
 const Container = styled(Box)(({ theme }) => ({
@@ -76,12 +76,11 @@ const CommentInput = (props: CommentInputType): JSX.Element => {
       if (consent) {
         setStorage(StorageKeys.VISITOR, { name: comment.name, email: comment.email, userId })
       }
-      return api.comments
-        .addComment(postId, {
-          user: { name: comment.name, email: comment.email, userId },
-          message: comment.message,
-          parentId: parentComment
-        })
+      return CommentGateway.addComment(postId, {
+        user: { name: comment.name, email: comment.email, userId },
+        message: comment.message,
+        parentId: parentComment
+      })
         .then(() => {
           toast.success('You have made a successful comment, It will be visible on this post once it approved')
           onCancel()

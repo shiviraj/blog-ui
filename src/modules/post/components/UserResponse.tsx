@@ -1,7 +1,7 @@
 import React from 'react'
 import UserActivity from './components/UserActivity'
 import { usePostDetails } from '../../../context'
-import api from '../../../api'
+import { PostGateway } from '../../../api'
 import { getVisitorId } from '../../../utils'
 
 const UserResponse = (): JSX.Element => {
@@ -9,7 +9,7 @@ const UserResponse = (): JSX.Element => {
 
   const handleLike = () => {
     getVisitorId().then((visitorId: string) => {
-      api.posts.toggleLike(post.postId, visitorId).then(({ likes }) => {
+      PostGateway.toggleLike(post.postId, visitorId).then(({ likes }) => {
         updatePost('likes', likes)
       })
     })

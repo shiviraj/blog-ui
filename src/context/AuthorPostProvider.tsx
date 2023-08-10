@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { AuthorPostType } from '../api/dto'
-import api from '../api'
+import { PostGateway } from '../api'
 import { Loader, useToast } from '../common/components'
 
 type AuthorPostContextType = {
@@ -18,8 +18,7 @@ const AuthorPostProvider = ({ children, postId }: PropsWithChildren<{ postId: st
 
   useEffect(() => {
     if (postId) {
-      api.posts
-        .getPostByPostId(postId)
+      PostGateway.getPostByPostId(postId)
         .then(authorPost => {
           setPost(authorPost)
         })
@@ -35,8 +34,7 @@ const AuthorPostProvider = ({ children, postId }: PropsWithChildren<{ postId: st
   useEffect(() => {
     if (post !== null) {
       setLoader(true)
-      api.posts
-        .updatePost(post)
+      PostGateway.updatePost(post)
         .catch()
         .finally(() => {
           setLoader(false)

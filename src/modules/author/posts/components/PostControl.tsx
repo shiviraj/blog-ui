@@ -2,7 +2,7 @@ import { Box, Button, Link, styled, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { useAuthorPost } from '../../../../context'
 import { useToast } from '../../../../common/components'
-import api from '../../../../api'
+import { PostGateway } from '../../../../api'
 
 const Container = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -20,8 +20,7 @@ const PostControl = (): JSX.Element => {
   const status = post.postStatus === 'PUBLISH' ? 'Update' : 'Publish'
 
   const handlePublishOrUpdate = () => {
-    api.posts
-      .publish(post.postId)
+    PostGateway.publish(post.postId)
       .then(() => {
         toast.success(`Successfully ${status.replace('e', '')}ed post`)
       })

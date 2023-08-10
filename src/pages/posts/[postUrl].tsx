@@ -1,6 +1,6 @@
 import React from 'react'
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
-import api from '../../api'
+import { PostGateway } from '../../api'
 import type { PostCount, PostDetailsType as PostDetailsType, PostSummaryType } from '../../api/dto'
 import { fetchSidebarLinks } from './page/[page]'
 import { Integer } from '../../utils/extensions'
@@ -44,7 +44,7 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ si
 
 export const getStaticProps: GetStaticProps<PostsDetailsPageProps> = async ({ params }) => {
   try {
-    const post: PostDetailsType = await api.posts.getPostByUrl(params?.postUrl as string)
+    const post: PostDetailsType = await PostGateway.getPostByUrl(params?.postUrl as string)
     const sideBarLinks = await fetchSidebarLinks()
     const site = await fetchSite()
     const page: PageType = { description: post.summary, keywords: [], title: post.title }
@@ -55,12 +55,12 @@ export const getStaticProps: GetStaticProps<PostsDetailsPageProps> = async ({ pa
 }
 
 export const getAllPosts = async (): Promise<PostSummaryType[]> => {
-  const response: PostCount = await api.posts.getPostsCount()
+  const response: PostCount = await PostGateway.getPostsCount()
   const pages: number[] = new Array(response.pageCount).fill('').map((_str, index) => index + Integer.ONE)
   const allPosts: PostSummaryType[] = []
   await Promise.all(
     pages.map((page: number) => {
-      return api.posts.getPosts(page).then((posts: PostSummaryType[]) => {
+      return PostGateway.getPosts(page).then((posts: PostSummaryType[]) => {
         allPosts.push(...posts)
       })
     })

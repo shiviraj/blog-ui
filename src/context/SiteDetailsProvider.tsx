@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react'
 import { createContext, useContext, useState } from 'react'
-import api from '../api'
+import { SiteGateway } from '../api'
 
 export type SiteType = {
   metaOverviewImage: string
@@ -32,7 +32,7 @@ const SiteDetailsProvider = ({ children }: PropsWithChildren): JSX.Element => {
 }
 
 export const fetchSite = (): Promise<SiteType> => {
-  return api.site.getSiteDetails()
+  return SiteGateway.getSiteDetails()
 }
 export const useSite = (): SiteDetailsContextType => useContext(SiteDetailsContext)
 export default SiteDetailsProvider

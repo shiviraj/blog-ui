@@ -1,4 +1,4 @@
-import api, { AuthorGateway, CategoryGateway } from '../../api'
+import { AuthorGateway, CategoryGateway, TagGateway } from '../../api'
 import type { AuthorType, CategoryType, PostSummaryType, TagType } from '../../api/dto'
 import { getNumbersFrom1 } from '../../utils'
 
@@ -19,7 +19,7 @@ const getAllPosts = async (meta: string, metaId: string, page: number): Promise<
   if (meta === Meta.CATEGORIES) {
     return await CategoryGateway.getPosts(metaId, page)
   }
-  return await api.tags.getPosts(metaId, page)
+  return await TagGateway.getPosts(metaId, page)
 }
 
 const getPageCount = async (meta: string, metaId: string): Promise<{ pageCount: number }> => {
@@ -29,7 +29,7 @@ const getPageCount = async (meta: string, metaId: string): Promise<{ pageCount: 
   if (meta === Meta.CATEGORIES) {
     return await CategoryGateway.getPostsCount(metaId)
   }
-  return await api.tags.getPostsCount(metaId)
+  return await TagGateway.getPostsCount(metaId)
 }
 
 const getTitle = async (meta: string, metaId: string): Promise<string> => {
@@ -41,7 +41,7 @@ const getTitle = async (meta: string, metaId: string): Promise<string> => {
     const category = await CategoryGateway.getCategory(metaId)
     return `Category: ${category.name}`
   }
-  const tag = await api.tags.getTag(metaId)
+  const tag = await TagGateway.getTag(metaId)
   return `Tag: ${tag.name}`
 }
 
@@ -80,11 +80,11 @@ const getCategoriesPaths = async (): Promise<Array<{ params: MetaParamsType }>> 
 }
 
 const getTagsPaths = async (): Promise<Array<{ params: MetaParamsType }>> => {
-  const tags: TagType[] = await api.tags.getAllTags()
+  const tags: TagType[] = await TagGateway.getAllTags()
   const paths: Array<{ params: MetaParamsType }> = []
   await Promise.all(
     tags.map(async (tag: TagType) => {
-      const { pageCount } = await api.tags.getPostsCount(tag.url)
+      const { pageCount } = await TagGateway.getPostsCount(tag.url)
       return getNumbersFrom1(pageCount).map(page => {
         paths.push({
           params: { metaId: tag.url, meta: Meta.TAGS, page: `${page}`, createdAt: tag.createdAt }
